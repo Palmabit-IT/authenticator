@@ -1,0 +1,29 @@
+{
+    "name": "palmabit/authentication",
+    "description": "",
+    "version" : "0.1.0",
+    "license" : "proprietary",
+    "authors": [
+        {
+            "name": "jacopo",
+            "email": "j.beschi@palmabit.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0",
+        "illuminate/support": "4.1.*"
+    },
+    "require-dev": {
+        "orchestra/testbench": "v2.1.1",
+        "mockery/mockery": "0.9.0"
+    },
+    "autoload": {
+        "psr-0": {
+            "Palmabit\\Authentication": "src/"
+        },
+        "classmap": [
+            "src/controllers"
+        ]
+    },
+    "minimum-stability": "stable"
+}
