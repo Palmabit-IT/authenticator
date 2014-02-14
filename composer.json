@@ -10,20 +10,26 @@
             "homepage": "http://www.jacopobeschi.com"
         }
     ],
-    "require": {
-        "php": ">=5.4.0",
-        "illuminate/support": "4.1.*"
-    },
-    "require-dev": {
-        "mockery/mockery": "0.9.0",
-        "orchestra/testbench": "2.1.*"
-    },
     "repositories": [
+        {
+            "type": "composer",
+            "url": "http://95.110.212.212/package_web"
+        },
         {
             "type": "vcs",
             "url": "git://github.com/orchestral/phpseclib.git"
         }
     ],
+    "require": {
+        "php": ">=5.4.0",
+        "illuminate/support": "4.1.*",
+        "palmabit/library" : "dev-master",
+        "cartalyst/sentry": "2.1.*"
+    },
+    "require-dev": {
+        "mockery/mockery": "0.9.0",
+        "orchestra/testbench": "2.1.*"
+    },
     "autoload": {
         "psr-0": {
             "Palmabit\\Authentication": "src/"
