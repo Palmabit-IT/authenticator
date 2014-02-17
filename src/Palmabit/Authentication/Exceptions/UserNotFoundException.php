@@ -6,5 +6,6 @@
  */
 
 use Exception;
+use Palmabit\Library\Exceptions\PalmabitExceptionsInterface;
 
-class UserNotFoundException extends Exception implements AuthenticationExceptionsInterface {}
+class UserNotFoundException extends Exception implements PalmabitExceptionsInterface {}

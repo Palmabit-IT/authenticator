@@ -5,7 +5,7 @@
  * Autenticatore che utilizza sentry
  *
  * @package Auth
- * @author jacopo beschi
+ * @author jacopo beschi j.beschi@palmabit.com
  */
 use Illuminate\Support\MessageBag;
 use Palmabit\Authentication\Exceptions\UserNotFoundException;

@@ -45,7 +45,7 @@ class ReminderService {
      *
      * @var string
      */
-    protected $template = "admin.auth.mailmessage";
+    protected $template = "authentication::auth.mailmessage";
     /**
      * Errors
      *
@@ -126,7 +126,7 @@ class ReminderService {
 
     protected function preparaBody($token, $to)
     {
-        $this->body = link_to("/change-password","Clicca qui per cambiare password.", array("email"=> $to, "token"=> $token) );
+        $this->body = link_to_action("Palmabit\\Authentication\\Controllers\\AuthController@getChangePassword","Clicca qui per cambiare password.", ["email"=> $to, "token"=> $token] );
     }
 
 } 

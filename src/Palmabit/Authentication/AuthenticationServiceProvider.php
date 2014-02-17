@@ -3,6 +3,7 @@
 use Illuminate\Support\ServiceProvider;
 use Palmabit\Library\Email\SwiftMailer;
 use Palmabit\Authentication\Classes\SentryAuthenticator;
+use Illuminate\Foundation\AliasLoader;
 
 class AuthenticationServiceProvider extends ServiceProvider {
 
@@ -21,14 +22,15 @@ class AuthenticationServiceProvider extends ServiceProvider {
 	public function register()
 	{
         $this->package('palmabit/authentication');
+        // register other service providers
         $this->app->register('Cartalyst\Sentry\SentryServiceProvider');
+        $this->app->register('Way\Form\FormServiceProvider');
+        // register aliases
+        AliasLoader::getInstance()->alias("Sentry",'Cartalyst\Sentry\Facades\Laravel\Sentry');
     }
 
     public function boot()
     {
-        // include routes.php
-        require_once __DIR__ . "/../../routes.php";
-
         $this->app->bind('palmamailer', function()
         {
             return new SwiftMailer;
@@ -37,6 +39,13 @@ class AuthenticationServiceProvider extends ServiceProvider {
         {
             return new SentryAuthenticator;
         });
+
+        // include filters
+        require_once __DIR__ . "/../../filters.php";
+        // include routes.php
+        require_once __DIR__ . "/../../routes.php";
+        // include view composers
+        require_once __DIR__ . "/../../composers.php";
     }
 
 	/**

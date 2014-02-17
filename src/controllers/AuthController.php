@@ -5,7 +5,7 @@ use View;
 use Sentry;
 use Input;
 use Redirect;
-use Palmabit\Authentication\Exceptions\AuthenticationExceptionsInterface as Aei;
+use Palmabit\Library\Exceptions\PalmabitExceptionsInterface as Pbi;
 use Palmabit\Authentication\Classes\SentryAuthenticator;
 use Palmabit\Authentication\Classes\ReminderService;
 
@@ -83,9 +83,9 @@ class AuthController extends BaseController {
         try
         {
             $this->reminder->send($email);
-            return Redirect::action("Palmabit\\Authentication\\Controllers\\AuthController@getReminder")->with(array("message"=> "Nuova password inviata con successo, controlla la tua mail box."));
+            return Redirect::action("Palmabit\\Authentication\\Controllers\\AuthController@getReminder")->with(array("message"=> "Abbiamo inviato un mail per il recupero password. Per piaciere controlla la tua mail box."));
         }
-        catch(Aei $e)
+        catch(Pbi $e)
         {
             $errors = $this->reminder->getErrors();
             return Redirect::action("Palmabit\\Authentication\\Controllers\\AuthController@getReminder")->withErrors($errors);
@@ -97,7 +97,7 @@ class AuthController extends BaseController {
         $email = Input::get('email');
         $token = Input::get('token');
 
-        return View::make("admin.auth.changepassword", array("email" => $email, "token" => $token) );
+        return View::make("authentication::auth.changepassword", array("email" => $email, "token" => $token) );
     }
 
     public function postChangePassword()
@@ -109,12 +109,12 @@ class AuthController extends BaseController {
         try
         {
             $this->reminder->reset($email, $token, $password);
-            return Redirect::action("Auth\\Controllers\\AuthController@getChangePassword")->with(array("message"=> "Password modificata con successo!"));
+            return Redirect::action("Palmabit\\Authentication\\Controllers\\AuthController@getChangePassword")->with(array("message"=> "Password modificata con successo!"));
         }
-        catch(Aei $e)
+        catch(Pbi $e)
         {
             $errors = $this->reminder->getErrors();
-            return Redirect::action("Auth\\Controllers\\AuthController@getChangePassword")->withErrors($errors);
+            return Redirect::action("Palmabit\\Authentication\\Controllers\\AuthController@getChangePassword")->withErrors($errors);
         }
 
     }

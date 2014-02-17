@@ -10,7 +10,7 @@
             <div class="alert alert-danger">{{$error}}</div>
         @endforeach
     @endif
-    {{Form::open(array('url' => URL::action("Palmabit\Authentication\AuthController@postChangePassword"), 'method' => 'post') )}}
+    {{Form::open(array('url' => URL::action("Palmabit\Authentication\Controllers\AuthController@postChangePassword"), 'method' => 'post') )}}
             {{FormField::password(array('label' => 'password' ))}}
             {{Form::hidden('email',$email)}}
             {{Form::hidden('token',$token)}}
