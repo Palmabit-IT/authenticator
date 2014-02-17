@@ -1,4 +1,4 @@
-@extends('admin.layouts.baseauth')
+@extends('authentication::layouts.baseauth')
 @section('container')
     <h1>Recupero password</h1>
     <?php $message = Session::get('message'); ?>
@@ -10,7 +10,7 @@
             <div class="alert alert-danger">{{$error}}</div>
         @endforeach
     @endif
-    {{Form::open(array('url' => URL::action("Auth\Controllers\AuthController@postReminder"), 'method' => 'post') )}}
+    {{Form::open(array('url' => URL::action("Palmabit\Authentication\Controllers\AuthController@postReminder"), 'method' => 'post') )}}
     {{FormField::email(array('label' => "email") )}}
     {{Form::submit('Invia', array("class"=>"btn btn-large btn-primary"))}}
     {{Form::close()}}

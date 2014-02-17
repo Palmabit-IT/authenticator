@@ -21,6 +21,7 @@ class AuthenticationServiceProvider extends ServiceProvider {
 	public function register()
 	{
         $this->package('palmabit/authentication');
+        $this->app->register('Cartalyst\Sentry\SentryServiceProvider');
     }
 
     public function boot()

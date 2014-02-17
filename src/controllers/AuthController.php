@@ -6,8 +6,8 @@ use Sentry;
 use Input;
 use Redirect;
 use Palmabit\Authentication\Exceptions\AuthenticationExceptionsInterface as Aei;
-use Palmabit\Authentication\SentryAuthenticator;
-use Palmabit\Authentication\ReminderService;
+use Palmabit\Authentication\Classes\SentryAuthenticator;
+use Palmabit\Authentication\Classes\ReminderService;
 
 class AuthController extends BaseController {
 
@@ -27,7 +27,7 @@ class AuthController extends BaseController {
      */
     public function getLogin()
     {
-        return View::make('admin.auth.login');
+        return View::make('authentication::auth.login');
     }
 
     public function postLogin()
@@ -47,7 +47,7 @@ class AuthController extends BaseController {
         else
         {
             $errors = $this->auth->getErrors();
-            return Redirect::action('Auth\Controllers\AuthController@getLogin')->withInput()->withErrors($errors);
+            return Redirect::action('Palmabit\Authentication\Controllers\AuthController@getLogin')->withInput()->withErrors($errors);
         }
     }
 
@@ -68,7 +68,7 @@ class AuthController extends BaseController {
      */
     public function getReminder()
     {
-        return View::make("admin.auth.reminder");
+        return View::make("authentication::auth.reminder");
     }
 
     /**
@@ -83,12 +83,12 @@ class AuthController extends BaseController {
         try
         {
             $this->reminder->send($email);
-            return Redirect::action("Auth\\Controllers\\AuthController@getReminder")->with(array("message"=> "Nuova password inviata con successo, controlla la tua mail box."));
+            return Redirect::action("Palmabit\\Authentication\\Controllers\\AuthController@getReminder")->with(array("message"=> "Nuova password inviata con successo, controlla la tua mail box."));
         }
         catch(Aei $e)
         {
             $errors = $this->reminder->getErrors();
-            return Redirect::action("Auth\\Controllers\\AuthController@getReminder")->withErrors($errors);
+            return Redirect::action("Palmabit\\Authentication\\Controllers\\AuthController@getReminder")->withErrors($errors);
         }
     }
 
