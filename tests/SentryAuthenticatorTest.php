@@ -1,8 +1,9 @@
 <?php
 use Mockery as m;
 use Palmabit\Authentication\Classes\SentryAuthenticator;
+use Palmabit\Authentication\Tests\TestCase;
 
-class SentryAuthenticatorTest extends Orchestra\Testbench\TestCase {
+class SentryAuthenticatorTest extends TestCase {
 
     public function tearDown()
     {
@@ -34,7 +35,7 @@ class SentryAuthenticatorTest extends Orchestra\Testbench\TestCase {
     public function testGetTokenWorks()
     {
         $mock_user = m::mock('StdClass')->shouldReceive('getResetPasswordCode')->andReturn(true)->getMock();
-        $mock_auth = m::mock('Auth\SentryAuthenticator')->makePartial();
+        $mock_auth = m::mock('Palmabit\Authentication\Classes\SentryAuthenticator')->makePartial();
         $mock_auth->shouldReceive('getUser')->andReturn($mock_user);
 
         $token = $mock_auth->getToken("");

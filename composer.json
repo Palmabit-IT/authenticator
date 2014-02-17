@@ -34,6 +34,9 @@
         "psr-0": {
             "Palmabit\\Authentication": "src/"
         },
+        "psr-4": {
+            "Palmabit\\Authentication\\Tests\\" : "tests/"
+        },
         "classmap": [
             "src/controllers"
         ]

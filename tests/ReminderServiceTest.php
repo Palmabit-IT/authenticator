@@ -2,8 +2,9 @@
 
 use Palmabit\Authentication\Classes\ReminderService as Reminder;
 use Mockery as m;
+use Palmabit\Authentication\Tests\TestCase;
 
-class ReminderServiceTest extends Orchestra\Testbench\TestCase {
+class ReminderServiceTest extends TestCase {
 
     protected $token;
 
@@ -37,7 +38,7 @@ class ReminderServiceTest extends Orchestra\Testbench\TestCase {
     }
 
     /**
-     * @expectedException Exceptions\MailException
+     * @expectedException Palmabit\Library\Exceptions\MailException
      */
     public function testSendThrowsException()
     {
