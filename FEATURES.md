@@ -1,0 +1,11 @@
+- login utente
+- logout utente
+- recupero password
+- creazione utente e modifica e cancellazione
+- creazioe gruppo modifica e cancellazione
+- crud permessi
+- profilo utente
+- menu configurabile in base ai permessi
+- configurabile login field e algo di hash?
+- user throttling (?)
+- migration compresa di sentry
