@@ -8,7 +8,14 @@ use Cartalyst\Sentry\Users\Eloquent\User as CartaUser;
 
 class User extends CartaUser
 {
-    protected $fillable = ["id", "email", "password", "first_name", "last_name", "permissions", "activated", "activation_code", "activated_at", "last_login"];
+    protected $fillable = ["email", "password", "first_name", "last_name", "permissions", "activated", "activation_code", "activated_at", "last_login"];
+
+    protected $guarded = ["id"];
+
+    public function getConnection()
+    {
+        return static::resolveConnection('authentication');
+    }
 
     /**
      * Validates the user and throws a number of

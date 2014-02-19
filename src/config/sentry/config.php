@@ -95,7 +95,7 @@
             |
             */
 
-            'model' => 'Cartalyst\Sentry\Groups\Eloquent\Group',
+            'model' => 'Palmabit\Authentication\Models\Group',
 
         ),
 
@@ -174,7 +174,7 @@
             |
             */
 
-            'enabled' => true,
+            'enabled' => false,
 
             /*
             |--------------------------------------------------------------------------

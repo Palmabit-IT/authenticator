@@ -8,6 +8,7 @@ namespace Palmabit\Authentication\Repository;
 use Palmabit\Library\Repository\Interfaces\BaseRepositoryInterface;
 use Palmabit\Authentication\Exceptions\UserNotFoundException as NotFoundException;
 use Cartalyst\Sentry\Users\UserNotFoundException;
+use Palmabit\Authentication\Models\User;
 
 class SentryUserRepository implements BaseRepositoryInterface
 {
@@ -97,7 +98,7 @@ class SentryUserRepository implements BaseRepositoryInterface
      */
     public function all()
     {
-        return $this->sentry->findAllUsers();
+        return User::all();
     }
 
     /**

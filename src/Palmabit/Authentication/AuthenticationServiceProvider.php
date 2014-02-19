@@ -22,8 +22,6 @@ class AuthenticationServiceProvider extends ServiceProvider {
 	 */
 	public function register()
 	{
-        $this->package('palmabit/authentication');
-
         $this->loadOtherProviders();
 
         $this->registerAliases();
@@ -31,6 +29,8 @@ class AuthenticationServiceProvider extends ServiceProvider {
 
     public function boot()
     {
+        $this->package('palmabit/authentication');
+
         $this->bindMailer();
 
         $this->bindAuthenticator();
@@ -43,8 +43,9 @@ class AuthenticationServiceProvider extends ServiceProvider {
         require __DIR__ . "/../../composers.php";
 
         $this->overwriteSentryConfig();
-
         $this->overwriteWayFormConfig();
+
+        $this->setupConnection();
     }
 
 	/**
@@ -90,6 +91,23 @@ class AuthenticationServiceProvider extends ServiceProvider {
     protected function registerAliases()
     {
         AliasLoader::getInstance()->alias("Sentry", 'Cartalyst\Sentry\Facades\Laravel\Sentry');
+    }
+
+    protected function setupConnection()
+    {
+        $connection = Config::get('authentication::database.default');
+
+        if ($connection !== 'default')
+        {
+            $authenticator_conn = Config::get('authentication::database.connections.'.$connection);
+        }
+        else
+        {
+            $connection = Config::get('database.default');
+            $authenticator_conn = Config::get('database.connections.'.$connection);
+        }
+
+        Config::set('database.connections.authentication', $authenticator_conn);
     }
 
 }

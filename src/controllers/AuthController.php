@@ -42,7 +42,7 @@ class AuthController extends BaseController {
                                              ), $remember);
         if($success)
         {
-            return Redirect::to('/admin/home');
+            return Redirect::to('/admin/users/list');
         }
         else
         {
@@ -60,7 +60,7 @@ class AuthController extends BaseController {
     {
         $this->auth->logout();
 
-        return Redirect::to('/');
+        return Redirect::to('/user/login');
     }
 
     /**

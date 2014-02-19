@@ -1,7 +1,7 @@
 @extends('authentication::layouts.base-2cols')
 
 @section('title')
-Admin area: lista utenti
+Admin area: modifica utenti
 @stop
 
 @section('content')

@@ -22,8 +22,15 @@ Route::group( ['before' => 'logged'], function()
         return View::make('authentication::home.home');
     }]);
 
+    // gestione utente
     Route::get('/admin/users/list', ['as' => 'users.list', 'uses' => 'Palmabit\Authentication\Controllers\UserController@getList']);
     Route::get('/admin/users/edit', ['as' => 'users.edit', 'uses' => 'Palmabit\Authentication\Controllers\UserController@editUser']);
     Route::post('/admin/users/edit', ["before" => "csrf", 'as' => 'users.edit', 'uses' => 'Palmabit\Authentication\Controllers\UserController@postEditUser']);
     Route::get('/admin/users/delete', ["before" => "csrf", 'as' => 'users.delete', 'uses' => 'Palmabit\Authentication\Controllers\UserController@deleteUser']);
+
+    // gestione gruppi
+    Route::get('/admin/groups/list', ['as' => 'users.groups.list', 'uses' => 'Palmabit\Authentication\Controllers\GroupController@getList']);
+    Route::get('/admin/groups/edit', ['as' => 'users.groups.edit', 'uses' => 'Palmabit\Authentication\Controllers\GroupController@editGroup']);
+    Route::post('/admin/groups/edit', ["before" => "csrf", 'as' => 'users.groups.edit', 'uses' => 'Palmabit\Authentication\Controllers\GroupController@postEditGroup']);
+    Route::get('/admin/groups/delete', ["before" => "csrf", 'as' => 'users.groups.delete', 'uses' => 'Palmabit\Authentication\Controllers\GroupController@deleteGroup']);
 });
