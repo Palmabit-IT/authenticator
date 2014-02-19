@@ -21,12 +21,18 @@ class SentryMenuItem implements MenuInterface
      * @var String
      */
     protected $permission;
+    /**
+     * The route name
+     * @var String
+     */
+    protected $route;
 
-    function __construct($link, $name, $permission)
+    function __construct($link, $name, $permission, $route)
     {
         $this->link = $link;
         $this->name = $name;
         $this->permission = $permission;
+        $this->route = $route;
     }
 
     /**
@@ -67,6 +73,15 @@ class SentryMenuItem implements MenuInterface
     public function getPermission()
     {
         return $this->permission;
+    }
+
+    /**
+     * Obtain the route name
+     * @return String
+     */
+    public function getRoute()
+    {
+        return $this->route;
     }
 
 }

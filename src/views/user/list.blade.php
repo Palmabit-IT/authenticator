@@ -1,4 +1,4 @@
-@extends('authentication::layouts.base-1cols')
+@extends('authentication::layouts.base-2cols')
 
 @section('title')
     Admin area: lista utenti
@@ -26,7 +26,8 @@
                 <span class="
 glyphicon glyphicon-comment"></span> {{$user->email}} <span class="glyphicon glyphicon-user
 "></span> {{ucfirst($user->first_name)}} {{ucfirst($user->last_name)}}
-                <a href="{{URL::action('Palmabit\Authentication\Controllers\UserController@deleteUser',['id' => $user->id, '_token' => csrf_token()])}}" ><span class="glyphicon glyphicon-trash pull-right margin-left-5">cancella </span></a>
+                <span class="glyphicon glyphicon-lock margin-left-5">Attivo:{{$user->activated ? 'Sì' : 'No'}}</span>
+                <a href="{{URL::action('Palmabit\Authentication\Controllers\UserController@deleteUser',['id' => $user->id, '_token' => csrf_token()])}}" ><span class="glyphicon glyphicon-trash pull-right margin-left-5 delete">cancella </span></a>
                 <a href="{{URL::action('Palmabit\Authentication\Controllers\UserController@editUser', ['id' => $user->id])}}"><span class="glyphicon glyphicon-cog pull-right">modifica </span></a>
                 <span class="clearfix"></span>
             </li>
@@ -35,6 +36,14 @@ glyphicon glyphicon-comment"></span> {{$user->email}} <span class="glyphicon gly
     @else
         <h5>Non ci sono utenti presenti nel sistema.</h5>
     @endif
-    <a href="{{URL::action('Palmabit\Authentication\Controllers\UserController@deleteUser')}}" class="btn btn-primary pull-right">Add</a>
+    <a href="{{URL::action('Palmabit\Authentication\Controllers\UserController@deleteUser')}}" class="btn btn-primary pull-right">Aggiungi</a>
 </div>
+@stop
+
+@section('footer_scripts')
+    <script>
+        $(".delete").click(function(){
+            return confirm("Sei sicuro di volere eliminare l'elemento selezionato?");
+        });
+    </script>
 @stop

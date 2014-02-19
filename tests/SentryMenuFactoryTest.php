@@ -20,12 +20,14 @@ class SentryMenuFactoryTest extends TestCase {
                 [
                     "name" => "name1",
                     "link" => "link1",
-                    "permission" => "permission1"
+                    "permission" => "permission1",
+                    "route" => "route1",
                 ],
                 [
                     "name" => "name1",
                     "link" => "link1",
-                    "permission" => "permission1"
+                    "permission" => "permission1",
+                    "route" => "route2"
                 ]
         ];
         Config::shouldReceive('get')->andReturn($config_arr);
@@ -35,6 +37,7 @@ class SentryMenuFactoryTest extends TestCase {
         $items = $collection->getItemList();
         $this->assertEquals(2, count($items));
         $this->assertEquals("name1", $items[0]->getName());
+        $this->assertEquals("route2", $items[1]->getRoute());
     }
 }
  

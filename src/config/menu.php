@@ -2,13 +2,9 @@
 
 return [
         [
-            "name" => "name1",
-            "link" => "link1",
+            "name" => "Utenti",
+            "route" => "users",
+            "link" => URL::route('users.list'),
             "permission" => "permission1"
         ],
-        [
-            "name" => "name2",
-            "link" => "link2",
-            "permission" => "permission2"
-        ]
 ];

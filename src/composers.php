@@ -15,3 +15,13 @@ View::composer('authentication::layouts.*', function ($view){
     $menu_items = SentryMenuFactory::create()->getItemListAvailable();
     $view->with('menu_items', $menu_items);
 });
+
+/**
+ * Create users sidebar
+ */
+View::composer(['authentication::user.*'], function ($view){
+    $view->with('sidebar_items', [
+                                    "Lista utenti" => URL::route('users.list'),
+                                    "Aggiungi utente" => URL::route('users.edit')
+                                 ]);
+});

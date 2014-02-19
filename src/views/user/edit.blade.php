@@ -1,4 +1,4 @@
-@extends('authentication::layouts.base-1cols')
+@extends('authentication::layouts.base-2cols')
 
 @section('title')
 Admin area: lista utenti
@@ -27,6 +27,15 @@ Admin area: lista utenti
         {{Form::select('activated', ["1" => "Sì", "0" => "No"], (isset($user->activated) && $user->activated) ? $user->activated : "0", ["class"=> "form-control"] )}}
     </div>
     {{Form::hidden('id')}}
+    <a href="{{URL::action('Palmabit\Authentication\Controllers\UserController@deleteUser',['id' => $user->id, '_token' => csrf_token()])}}" class="btn btn-danger pull-right margin-left-5 delete">Cancella</a>
     {{Form::submit('Salva', array("class"=>"btn btn-primary pull-right "))}}
     {{Form::close()}}
+@stop
+
+@section('footer_scripts')
+<script>
+    $(".delete").click(function(){
+        return confirm("Sei sicuro di volere eliminare l'elemento selezionato?");
+    });
+</script>
 @stop

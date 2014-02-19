@@ -38,11 +38,11 @@ class UserController extends \BaseController
         return View::make('authentication::user.list')->with(["users" => $users]);
     }
 
-    public function editUser($id = null)
+    public function editUser()
     {
         try
         {
-            $user = $this->r->find($id);
+            $user = $this->r->find(Input::get('id'));
         }
         catch(UserNotFoundException $e)
         {
