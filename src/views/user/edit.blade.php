@@ -16,7 +16,7 @@ Admin area: modifica utenti
     {{Form::model($user, [ 'url' => [URL::action('Palmabit\Authentication\Controllers\UserController@postEditUser'), $user->id], 'method' => 'post'] ) }}
     {{FormField::email(["autocomplete" => "off"])}}
     <span class="text-danger">{{$errors->first('email')}}</span>
-    {{FormField::password()}}
+    {{FormField::password(["label" => isset($user->id) ? "modifica password" : "password"])}}
     <span class="text-danger">{{$errors->first('password')}}</span>
     {{FormField::last_name( ["autocomplete" => "off", "label" => "Nome"] ) }}
     <span class="text-danger">{{$errors->first('last_name')}}</span>

@@ -36,7 +36,7 @@ glyphicon glyphicon-comment"></span> {{$user->email}} <span class="glyphicon gly
     @else
         <h5>Non ci sono utenti presenti nel sistema.</h5>
     @endif
-    <a href="{{URL::action('Palmabit\Authentication\Controllers\UserController@deleteUser')}}" class="btn btn-primary pull-right">Aggiungi</a>
+    <a href="{{URL::action('Palmabit\Authentication\Controllers\UserController@editUser')}}" class="btn btn-primary pull-right">Aggiungi</a>
 </div>
 @stop
 

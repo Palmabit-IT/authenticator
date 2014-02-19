@@ -19,13 +19,13 @@ View::composer('authentication::layouts.*', function ($view){
 /**
  * Create users sidebar
  */
-View::composer(['authentication::user.*', 'authentication::group.*'], function ($view){
+View::composer(['authentication::user.*', 'authentication::group.*', 'authentication::permission.*'], function ($view){
     $view->with('sidebar_items', [
                                     "Lista utenti" => URL::route('users.list'),
                                     "Aggiungi utente" => URL::route('users.edit'),
                                     "Lista gruppi" => URL::route('users.groups.list'),
                                     "Aggiungi gruppo" => URL::route('users.groups.edit'),
-                                    "Lista permessi" => "#",
-                                    "Aggiungi permesso" => "#",
+                                    "Lista permessi" => URL::route('users.permission.list'),
+                                    "Aggiungi permesso" => URL::route('users.permission.edit'),
                                  ]);
 });

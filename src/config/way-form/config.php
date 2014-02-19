@@ -32,7 +32,6 @@
             'email' => 'email',
             'emailAddress' => 'email',
             'descrizione_estesa' => 'textarea',
-            'description' => 'textarea',
             'bio' => 'textarea',
             'body' => 'textarea',
             'lingua' => "select",
