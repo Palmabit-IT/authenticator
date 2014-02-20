@@ -5,6 +5,6 @@ return [
             "name" => "Utenti",
             "route" => "users",
             "link" => URL::route('users.list'),
-            "permission" => "permission1"
+            "permissions" => ["_admin"]
         ],
 ];

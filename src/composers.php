@@ -29,3 +29,21 @@ View::composer(['authentication::user.*', 'authentication::group.*', 'authentica
                                     "Aggiungi permesso" => URL::route('users.permission.edit'),
                                  ]);
 });
+
+use Palmabit\Authentication\Helpers\FormHelper;
+/**
+ * Sends the permission select to the view
+ */
+View::composer(['authentication::user.edit','authentication::group.edit'], function ($view){
+    $fh = new FormHelper();
+    $values_permission = $fh->getSelectValuesPermission();
+    $view->with('permission_values', $values_permission);
+});
+/**
+ * Sends the group select to the view
+ */
+View::composer(['authentication::user.edit','authentication::group.edit'], function ($view){
+    $fh = new FormHelper();
+    $values_group = $fh->getSelectValuesGroups();
+    $view->with('group_values', $values_group);
+});

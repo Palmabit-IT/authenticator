@@ -4,6 +4,7 @@
  *
  * @author jacopo beschi jacopo@jacopobeschi.com
  */
+use Illuminate\Support\MessageBag;
 use Palmabit\Authentication\Repository\SentryUserRepository as Repo;
 use Palmabit\Library\Form\FormModel;
 use Palmabit\Authentication\Models\User;
@@ -78,5 +79,37 @@ class UserController extends \BaseController
             return Redirect::action('Palmabit\Authentication\Controllers\UserController@getList')->withErrors($errors);
         }
         return Redirect::action('Palmabit\Authentication\Controllers\UserController@getList')->withMessage("Utente cancellato con successo.");
+    }
+
+    public function addGroup()
+    {
+        $id = Input::get('id');
+        $group_id = Input::get('group_id');
+
+        try
+        {
+            $this->r->addGroup($group_id);
+        }
+        catch(PalmabitExceptionsInterface $e)
+        {
+            return Redirect::action('Palmabit\Authentication\Controllers\UserController@editUser', ["id" => $id])->withErrors(new MessageBag(["name" => "Gruppo non presente."]));
+        }
+        return Redirect::action('Palmabit\Authentication\Controllers\UserController@editUser',["id" => $id])->withMessage("Gruppo aggiunto con successo.");
+    }
+
+    public function deleteGroup()
+    {
+        $id = Input::get('id');
+        $group_id = Input::get('group_id');
+
+        try
+        {
+            $this->r->removeGroup($group_id);
+        }
+        catch(PalmabitExceptionsInterface $e)
+        {
+            return Redirect::action('Palmabit\Authentication\Controllers\UserController@editUser', ["id" => $id])->withErrors(new MessageBag(["name" => "Gruppo non presente."]));
+        }
+        return Redirect::action('Palmabit\Authentication\Controllers\UserController@editUser',["id" => $id])->withMessage("Gruppo cancellato con successo.");
     }
 } 

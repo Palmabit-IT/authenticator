@@ -9,6 +9,8 @@ use Palmabit\Library\Repository\Interfaces\BaseRepositoryInterface;
 use Palmabit\Authentication\Exceptions\UserNotFoundException as NotFoundException;
 use Cartalyst\Sentry\Users\UserNotFoundException;
 use Palmabit\Authentication\Models\User;
+use Palmabit\Authentication\Models\Group;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class SentryUserRepository implements BaseRepositoryInterface
 {
@@ -39,7 +41,7 @@ class SentryUserRepository implements BaseRepositoryInterface
                 "activated" => $input["activated"],
         );
         $user = $this->sentry->createUser($data);
-        return $user;
+        return $user->with('groups');
     }
 
     /**
@@ -108,5 +110,42 @@ class SentryUserRepository implements BaseRepositoryInterface
     protected function ClearEmptyPassword(array &$data)
     {
         if (empty($data["password"])) unset($data["password"]);
+    }
+
+    /**
+     * Add a group to the user
+     * @param $id group id
+     * @throws \Palmabit\Authentication\Exceptions\UserNotFoundException
+     * @todo test
+     */
+    public function addGroup($id)
+    {
+        try
+        {
+            $group = Group::findOrFail($id);
+            $this->sentry->addGroup($group);
+        }
+        catch(ModelNotFoundException $e)
+        {
+            throw new NotFoundException;
+        }
+    }
+    /**
+     * Remove a group to the user
+     * @param $id group id
+     * @throws \Palmabit\Authentication\Exceptions\UserNotFoundException
+     * @todo test
+     */
+    public function removeGroup($id)
+    {
+        try
+        {
+            $group = Group::findOrFail($id);
+            $this->sentry->removeGroup($group);
+        }
+        catch(ModelNotFoundException $e)
+        {
+            throw new NotFoundException;
+        }
     }
 }

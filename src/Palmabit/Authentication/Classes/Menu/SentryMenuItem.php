@@ -4,7 +4,9 @@
  *
  * @author jacopo beschi jacopo@jacopobeschi.com
  */
+use Palmabit\Authentication\Helpers\SentryAuthenticationHelper;
 use Palmabit\Authentication\Interfaces\MenuInterface;
+use App;
 
 class SentryMenuItem implements MenuInterface
 {
@@ -20,19 +22,24 @@ class SentryMenuItem implements MenuInterface
      * The permission needed to see the menu
      * @var String
      */
-    protected $permission;
+    protected $permissions;
     /**
      * The route name
      * @var String
      */
     protected $route;
+    /**
+     * Sentry user instance
+     */
+    protected $sentry;
 
-    function __construct($link, $name, $permission, $route)
+    function __construct($link, $name, $permissions, $route)
     {
         $this->link = $link;
         $this->name = $name;
-        $this->permission = $permission;
+        $this->permissions = $permissions;
         $this->route = $route;
+        $this->sentry = App::make('sentry');
     }
 
     /**
@@ -42,8 +49,7 @@ class SentryMenuItem implements MenuInterface
      */
     public function havePermission()
     {
-        //@todo use sentry check
-        return true;
+        return SentryAuthenticationHelper::hasPermission($this->permissions);
     }
 
     /**
@@ -70,9 +76,9 @@ class SentryMenuItem implements MenuInterface
      * Obtain the permission to see the menu
      * @return String
      */
-    public function getPermission()
+    public function getPermissions()
     {
-        return $this->permission;
+        return $this->permissions;
     }
 
     /**

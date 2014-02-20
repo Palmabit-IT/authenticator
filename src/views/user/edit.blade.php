@@ -12,7 +12,8 @@ Admin area: modifica utenti
     <div class="alert alert-success">{{$message}}</div>
     @endif
     <h3><i class="glyphicon glyphicon-user"></i> Modifica utente</h3>
-
+    <div class="col-md-6">
+    <h3>Dati generali</h3>
     {{Form::model($user, [ 'url' => [URL::action('Palmabit\Authentication\Controllers\UserController@postEditUser'), $user->id], 'method' => 'post'] ) }}
     {{FormField::email(["autocomplete" => "off"])}}
     <span class="text-danger">{{$errors->first('email')}}</span>
@@ -30,6 +31,11 @@ Admin area: modifica utenti
     <a href="{{URL::action('Palmabit\Authentication\Controllers\UserController@deleteUser',['id' => $user->id, '_token' => csrf_token()])}}" class="btn btn-danger pull-right margin-left-5 delete">Cancella</a>
     {{Form::submit('Salva', array("class"=>"btn btn-primary pull-right "))}}
     {{Form::close()}}
+    </div>
+    <div class="col-md-6">
+        <h3>Gruppi</h3>
+        @include('authentication::user.groups')
+    </div>
 @stop
 
 @section('footer_scripts')

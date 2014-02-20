@@ -12,6 +12,10 @@ class User extends CartaUser
 
     protected $guarded = ["id"];
 
+    /**
+     * @override
+     * @return \Illuminate\Database\Connection
+     */
     public function getConnection()
     {
         return static::resolveConnection('authentication');
@@ -21,6 +25,7 @@ class User extends CartaUser
      * Validates the user and throws a number of
      * Exceptions if validation fails.
      *
+     * @override
      * @return bool
      * @throws \Cartalyst\Sentry\Users\UserExistsException
      */
