@@ -17,7 +17,7 @@ class AuthenticationServiceProvider extends ServiceProvider {
 
 	/**
 	 * Register the service provider.
-	 *
+	 * @override
 	 * @return void
 	 */
 	public function register()
@@ -27,6 +27,9 @@ class AuthenticationServiceProvider extends ServiceProvider {
         $this->registerAliases();
     }
 
+    /**
+     * @override
+     */
     public function boot()
     {
         $this->package('palmabit/authentication');
@@ -41,6 +44,8 @@ class AuthenticationServiceProvider extends ServiceProvider {
         require __DIR__ . "/../../routes.php";
         // include view composers
         require __DIR__ . "/../../composers.php";
+        // include event subscribers
+        require __DIR__ . "/../../subscribers.php";
 
         $this->overwriteSentryConfig();
         $this->overwriteWayFormConfig();
@@ -52,6 +57,7 @@ class AuthenticationServiceProvider extends ServiceProvider {
 	 * Get the services provided by the provider.
 	 *
 	 * @return array
+     * @override
 	 */
 	public function provides()
 	{

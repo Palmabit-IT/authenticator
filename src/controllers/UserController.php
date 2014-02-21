@@ -45,7 +45,7 @@ class UserController extends \BaseController
         {
             $user = $this->r->find(Input::get('id'));
         }
-        catch(UserNotFoundException $e)
+        catch(PalmabitExceptionsInterface $e)
         {
             $user = new User;
         }
@@ -55,6 +55,8 @@ class UserController extends \BaseController
 
     public function postEditUser()
     {
+        $id = Input::get('id');
+
         try
         {
             $obj = $this->f->process(Input::all());
@@ -62,8 +64,10 @@ class UserController extends \BaseController
         catch(PalmabitExceptionsInterface $e)
         {
             $errors = $this->f->getErrors();
-            return Redirect::route("users.edit")->withInput()->withErrors($errors);
+            // passing the id incase fails editing an already existing item
+            return Redirect::route("users.edit", $id ? ["id" => $id]: [])->withInput()->withErrors($errors);
         }
+
         return Redirect::action('Palmabit\Authentication\Controllers\UserController@editUser',["id" => $obj->id])->withMessage("Utente modificato con successo.");
     }
 
@@ -73,7 +77,7 @@ class UserController extends \BaseController
         {
             $this->f->delete(Input::all());
         }
-        catch(ModelNotFoundException $e)
+        catch(PalmabitExceptionsInterface $e)
         {
             $errors = $this->f->getErrors();
             return Redirect::action('Palmabit\Authentication\Controllers\UserController@getList')->withErrors($errors);
@@ -83,33 +87,33 @@ class UserController extends \BaseController
 
     public function addGroup()
     {
-        $id = Input::get('id');
+        $user_id = Input::get('id');
         $group_id = Input::get('group_id');
 
         try
         {
-            $this->r->addGroup($group_id);
+            $this->r->addGroup($user_id, $group_id);
         }
         catch(PalmabitExceptionsInterface $e)
         {
-            return Redirect::action('Palmabit\Authentication\Controllers\UserController@editUser', ["id" => $id])->withErrors(new MessageBag(["name" => "Gruppo non presente."]));
+            return Redirect::action('Palmabit\Authentication\Controllers\UserController@editUser', ["id" => $user_id])->withErrors(new MessageBag(["name" => "Gruppo non presente."]));
         }
-        return Redirect::action('Palmabit\Authentication\Controllers\UserController@editUser',["id" => $id])->withMessage("Gruppo aggiunto con successo.");
+        return Redirect::action('Palmabit\Authentication\Controllers\UserController@editUser',["id" => $user_id])->withMessage("Gruppo aggiunto con successo.");
     }
 
     public function deleteGroup()
     {
-        $id = Input::get('id');
+        $user_id = Input::get('id');
         $group_id = Input::get('group_id');
 
         try
         {
-            $this->r->removeGroup($group_id);
+            $this->r->removeGroup($user_id, $group_id);
         }
         catch(PalmabitExceptionsInterface $e)
         {
-            return Redirect::action('Palmabit\Authentication\Controllers\UserController@editUser', ["id" => $id])->withErrors(new MessageBag(["name" => "Gruppo non presente."]));
+            return Redirect::action('Palmabit\Authentication\Controllers\UserController@editUser', ["id" => $user_id])->withErrors(new MessageBag(["name" => "Gruppo non presente."]));
         }
-        return Redirect::action('Palmabit\Authentication\Controllers\UserController@editUser',["id" => $id])->withMessage("Gruppo cancellato con successo.");
+        return Redirect::action('Palmabit\Authentication\Controllers\UserController@editUser',["id" => $user_id])->withMessage("Gruppo cancellato con successo.");
     }
 } 

@@ -28,7 +28,7 @@ glyphicon glyphicon-comment"></span> {{$user->email}} <span class="glyphicon gly
 "></span> {{ucfirst($user->first_name)}} {{ucfirst($user->last_name)}}
                 <span class="glyphicon glyphicon-lock margin-left-5">Attivo:{{$user->activated ? 'Sì' : 'No'}}</span>
                 <a href="{{URL::action('Palmabit\Authentication\Controllers\UserController@deleteUser',['id' => $user->id, '_token' => csrf_token()])}}" ><span class="glyphicon glyphicon-trash pull-right margin-left-5 delete">cancella </span></a>
-                <a href="{{URL::action('Palmabit\Authentication\Controllers\UserController@editUser', ['id' => $user->id])}}"><span class="glyphicon glyphicon-cog pull-right">modifica </span></a>
+                <a href="{{URL::action('Palmabit\Authentication\Controllers\UserController@editUser', ['id' => $user->id])}}"><span class="glyphicon glyphicon-edit pull-right">modifica </span></a>
                 <span class="clearfix"></span>
             </li>
             @endforeach

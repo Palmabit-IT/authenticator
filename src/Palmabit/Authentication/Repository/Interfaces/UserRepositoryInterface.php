@@ -1,4 +1,4 @@
-<?php namespace Classes\Repository\Interfaces;
+<?php namespace Palmabit\Authentication\Repository\Interfaces;
 /**
  * Interface UserRepositoryInterface
  *
@@ -28,4 +28,19 @@ interface UserRepositoryInterface
      * @return mixed
      */
     public function suspend($id, $duration);
+
+    /**
+     * @param $group_id
+     * @param $user_id
+     * @return mixed
+     */
+    public function addGroup($user_id, $group_id);
+
+    /**
+     * @param $group_id
+     * @param $user_id
+     * @return mixed
+     */
+    public function removeGroup($user_id, $group_id);
+
 }

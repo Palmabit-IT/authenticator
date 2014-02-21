@@ -16,7 +16,7 @@ Route::post('/user/recupero-password', ["before" => "csrf", 'uses' => "Palmabit\
 
 //////////////////// Admin Panel //////////////////////////
 
-Route::group( ['before' => 'logged'], function()
+Route::group( ['before' => ['logged', 'can_see']], function()
 {
     Route::get('/admin/home', ['as' => 'home', function(){
         return View::make('authentication::home.home');

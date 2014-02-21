@@ -7,10 +7,12 @@ Admin area: modifica utenti
 @section('content')
 
 <div class="row">
+    {{-- successful message --}}
     <?php $message = Session::get('message'); ?>
     @if( isset($message) )
     <div class="alert alert-success">{{$message}}</div>
     @endif
+
     <h3><i class="glyphicon glyphicon-user"></i> Modifica utente</h3>
     <div class="col-md-6">
     <h3>Dati generali</h3>

@@ -5,6 +5,7 @@ namespace Palmabit\Authentication\Repository;
  *
  * @author jacopo beschi j.beschi@palmabit.com
  */
+use Palmabit\Authentication\Repository\Interfaces\UserRepositoryInterface;
 use Palmabit\Library\Repository\Interfaces\BaseRepositoryInterface;
 use Palmabit\Authentication\Exceptions\UserNotFoundException as NotFoundException;
 use Cartalyst\Sentry\Users\UserNotFoundException;
@@ -12,7 +13,7 @@ use Palmabit\Authentication\Models\User;
 use Palmabit\Authentication\Models\Group;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
-class SentryUserRepository implements BaseRepositoryInterface
+class SentryUserRepository implements BaseRepositoryInterface, UserRepositoryInterface
 {
     /**
      * Sentry instance
@@ -118,12 +119,13 @@ class SentryUserRepository implements BaseRepositoryInterface
      * @throws \Palmabit\Authentication\Exceptions\UserNotFoundException
      * @todo test
      */
-    public function addGroup($id)
+    public function addGroup($user_id, $group_id)
     {
         try
         {
-            $group = Group::findOrFail($id);
-            $this->sentry->addGroup($group);
+            $group = Group::findOrFail($group_id);
+            $user = User::findOrFail($user_id);
+            $user->addGroup($group);
         }
         catch(ModelNotFoundException $e)
         {
@@ -136,16 +138,51 @@ class SentryUserRepository implements BaseRepositoryInterface
      * @throws \Palmabit\Authentication\Exceptions\UserNotFoundException
      * @todo test
      */
-    public function removeGroup($id)
+    public function removeGroup($user_id, $group_id)
     {
         try
         {
-            $group = Group::findOrFail($id);
-            $this->sentry->removeGroup($group);
+            $group = Group::findOrFail($group_id);
+            $user = User::findOrFail($user_id);
+            $user->removeGroup($group);
         }
         catch(ModelNotFoundException $e)
         {
             throw new NotFoundException;
         }
+    }
+
+    /**
+     * Activates a user
+     *
+     * @param integer id
+     * @return mixed
+     */
+    public function activate($id)
+    {
+        // TODO: Implement activate() method.
+    }
+
+    /**
+     * Deactivate a user
+     *
+     * @param $id
+     * @return mixed
+     */
+    public function deactivate($id)
+    {
+        // TODO: Implement deactivate() method.
+    }
+
+    /**
+     * Suspends a user
+     *
+     * @param $id
+     * @param $duration in minutes
+     * @return mixed
+     */
+    public function suspend($id, $duration)
+    {
+        // TODO: Implement suspend() method.
     }
 }

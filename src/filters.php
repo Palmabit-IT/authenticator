@@ -18,7 +18,15 @@ Route::filter('logged', function()
 | Permission Filter
 |--------------------------------------------------------------------------
 |
-| Check that the current user is logged and active
+| Check that the current user is logged in and has a the permission corresponding to the config menu file
 |
 */
+use Palmabit\Authentication\Helpers\FileRouteHelper;
+use Palmabit\Authentication\Helpers\SentryAuthenticationHelper as AuthHelper;
 
+Route::filter('can_see', function()
+{
+    $helper = new FileRouteHelper;
+    echo "<br/><br/><br/><br/>";
+    if( ! (AuthHelper::hasPermission( $helper->getPermFromCurrentRoute() ) ) ) App::abort('401');
+});
