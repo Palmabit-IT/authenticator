@@ -4,7 +4,7 @@
 		<meta charset="utf-8">
 	</head>
 	<body>
-		<h2>Recupero password Gervasio</h2>
+		<h2>Recupero password {{\Config::get('authentication::app_name')}}</h2>
 
 		<div>
             {{$body}}
