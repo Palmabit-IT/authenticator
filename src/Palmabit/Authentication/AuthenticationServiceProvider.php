@@ -51,6 +51,8 @@ class AuthenticationServiceProvider extends ServiceProvider {
         $this->overwriteWayFormConfig();
 
         $this->setupConnection();
+
+        $this->overrideValidationConnection();
     }
 
 	/**
@@ -114,6 +116,11 @@ class AuthenticationServiceProvider extends ServiceProvider {
         }
 
         Config::set('database.connections.authentication', $authenticator_conn);
+    }
+
+    protected function overrideValidationConnection()
+    {
+        $this->app['validation.presence']->setConnection('authentication');
     }
 
 }
