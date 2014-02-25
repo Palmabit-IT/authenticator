@@ -2,7 +2,7 @@
 /**
  * Class DbTestCase
  *
- * @author jacopo beschi jacopo@jacopobeschi.com
+ * @author jacopo beschi j.beschi@palmabit.com
  */
 use Artisan;
 use DB;
