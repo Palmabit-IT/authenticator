@@ -9,7 +9,7 @@ use Palmabit\Library\Repository\EloquentBaseRepository;
 use Event;
 use Palmabit\Authentication\Repository\SentryGroupRepository as GroupRepo;
 
-class PermissionRepository extends EloquentBaseRepository
+class EloquentPermissionRepository extends EloquentBaseRepository
 {
     protected $model_name = '\Palmabit\Authentication\Models\Permission';
     /**

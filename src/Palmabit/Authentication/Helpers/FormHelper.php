@@ -4,7 +4,7 @@
  *
  * @author jacopo beschi j.beschi@palmabit.com
  */
-use Palmabit\Authentication\Repository\PermissionRepository;
+use Palmabit\Authentication\Repository\EloquentPermissionRepository;
 use Palmabit\Authentication\Repository\SentryGroupRepository;
 
 class FormHelper 
@@ -18,9 +18,9 @@ class FormHelper
      */
     protected $rg;
 
-    public function __construct(PermissionRepository $rp = null, SentryGroupRepository $rg = null)
+    public function __construct(EloquentPermissionRepository $rp = null, SentryGroupRepository $rg = null)
     {
-        $this->rp = $rp ? $rp : new PermissionRepository();
+        $this->rp = $rp ? $rp : new EloquentPermissionRepository();
         $this->rg = $rg ? $rg : new SentryGroupRepository();
     }
 

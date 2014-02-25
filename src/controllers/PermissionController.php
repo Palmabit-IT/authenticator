@@ -4,7 +4,7 @@
  *
  * @author jacopo beschi jacopo@jacopobeschi.com
  */
-use Palmabit\Authentication\Repository\PermissionRepository as Repo;
+use Palmabit\Authentication\Repository\EloquentPermissionRepository as Repo;
 use Palmabit\Library\Form\FormModel;
 use Palmabit\Authentication\Models\Permission;
 use Palmabit\Authentication\Validators\PermissionValidator;
