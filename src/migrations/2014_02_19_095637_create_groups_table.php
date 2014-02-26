@@ -17,7 +17,7 @@ class CreateGroupsTable extends Migration {
             $table->increments('id');
             $table->string('name');
             $table->text('permissions')->nullable();
-            $table->boolean('editable')->default(true);
+            $table->boolean("blocked")->default(0);
             $table->timestamps();
             // setup index
             $table->unique('name');

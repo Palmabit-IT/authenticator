@@ -3,7 +3,7 @@
 /**
  * Send to the view the site name
  */
-View::composer('authentication::*', function ($view){
+View::composer('*', function ($view){
     $view->with('app_name', Config::get('authentication::app_name') );
 });
 

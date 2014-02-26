@@ -7,7 +7,7 @@
  */
 use Mockery as m;
 use Palmabit\Authentication\Models\Permission;
-use Palmabit\Authentication\Repository\PermissionRepository;
+use Palmabit\Authentication\Repository\EloquentPermissionRepository as PermissionRepository;
 
 class PermissionRepositoryTest extends TestCase {
 

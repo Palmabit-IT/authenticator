@@ -12,6 +12,7 @@ use Cartalyst\Sentry\Users\UserNotFoundException;
 use Palmabit\Authentication\Models\User;
 use Palmabit\Authentication\Models\Group;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Event;
 
 class SentryUserRepository implements BaseRepositoryInterface, UserRepositoryInterface
 {
@@ -57,6 +58,7 @@ class SentryUserRepository implements BaseRepositoryInterface, UserRepositoryInt
     {
         $this->ClearEmptyPassword($data);
         $obj = $this->find($id);
+        Event::fire('repository.updating', [$obj]);
         $obj->update($data);
         return $obj;
     }
@@ -70,6 +72,7 @@ class SentryUserRepository implements BaseRepositoryInterface, UserRepositoryInt
     public function delete($id)
     {
         $obj = $this->find($id);
+        Event::fire('repository.deleting', [$obj]);
         return $obj->delete();
     }
 

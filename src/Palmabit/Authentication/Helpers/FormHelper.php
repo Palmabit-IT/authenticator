@@ -10,7 +10,7 @@ use Palmabit\Authentication\Repository\SentryGroupRepository;
 class FormHelper 
 {
     /**
-     * @var \Palmabit\Authentication\Repository\PermissionRepository
+     * @var \Palmabit\Authentication\Repository\EloquentPermissionRepository
      */
     protected $rp;
     /**

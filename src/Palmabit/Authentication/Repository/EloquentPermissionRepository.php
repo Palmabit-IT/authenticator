@@ -21,7 +21,7 @@ class EloquentPermissionRepository extends EloquentBaseRepository
     {
         $this->group_repo = $group_repo ? $group_repo : new GroupRepo;
 
-        Event::listen('repository.deleting', '\Palmabit\Authentication\Repository\PermissionRepository@checkIsNotAssociatedToAnyGroup');
+        Event::listen('repository.deleting', '\Palmabit\Authentication\Repository\EloquentPermissionRepository@checkIsNotAssociatedToAnyGroup');
     }
 
     /**

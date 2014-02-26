@@ -24,11 +24,14 @@ class SentryAuthenticationHelperTest extends TestCase {
         $mock_current = m::mock('StdClass')->shouldReceive('getUser')->andReturn($mock_sentry)->getMock();
         \App::instance('sentry', $mock_current);
 
-        $success = SentryAuthenticationHelper::hasPermission([]);
+        $success = SentryAuthenticationHelper::hasPermission(["_admin"]);
         $this->assertTrue($success);
 
-        $success = SentryAuthenticationHelper::hasPermission([]);
+        $success = SentryAuthenticationHelper::hasPermission(["_admin"]);
         $this->assertFalse($success);
+
+        $success = SentryAuthenticationHelper::hasPermission([]);
+        $this->assertTrue($success);
     }
 }
  

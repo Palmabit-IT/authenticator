@@ -9,13 +9,13 @@ use Palmabit\Authentication\Exceptions\PermissionException;
 
 class EditableSubscriber
 {
-    protected $editable_field = "editable";
+    protected $editable_field = "blocked";
     /**
      * Check if the object is editable
      */
     public function isEditable($object)
     {
-        if($object->editable != true) throw new PermissionException;
+        if($object->{$this->editable_field} == true) throw new PermissionException;
     }
 
     /**
