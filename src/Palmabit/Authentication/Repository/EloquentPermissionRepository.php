@@ -5,13 +5,13 @@
  * @author jacopo beschi j.beschi@palmabit.com
  */
 use Palmabit\Authentication\Exceptions\PermissionException;
+use Palmabit\Authentication\Models\Permission;
 use Palmabit\Library\Repository\EloquentBaseRepository;
 use Event;
 use Palmabit\Authentication\Repository\SentryGroupRepository as GroupRepo;
 
 class EloquentPermissionRepository extends EloquentBaseRepository
 {
-    protected $model_name = '\Palmabit\Authentication\Models\Permission';
     /**
      * @var \Palmabit\Authentication\Repository\SentryGroupRepository
      */
@@ -22,6 +22,8 @@ class EloquentPermissionRepository extends EloquentBaseRepository
         $this->group_repo = $group_repo ? $group_repo : new GroupRepo;
 
         Event::listen('repository.deleting', '\Palmabit\Authentication\Repository\EloquentPermissionRepository@checkIsNotAssociatedToAnyGroup');
+
+        return parent::__construct(new Permission);
     }
 
     /**

@@ -3,6 +3,7 @@
 use Illuminate\Support\ServiceProvider;
 use Palmabit\Library\Email\SwiftMailer;
 use Palmabit\Authentication\Classes\SentryAuthenticator;
+use Palmabit\Authentication\Helpers\SentryAuthenticationHelper;
 use Illuminate\Foundation\AliasLoader;
 use Config;
 
@@ -37,6 +38,8 @@ class AuthenticationServiceProvider extends ServiceProvider {
         $this->bindMailer();
 
         $this->bindAuthenticator();
+
+        $this->bindAuthHelper();
 
         // include filters
         require __DIR__ . "/../../filters.php";
@@ -87,6 +90,13 @@ class AuthenticationServiceProvider extends ServiceProvider {
     {
         $this->app->bind('authenticator', function () {
             return new SentryAuthenticator;
+        });
+    }
+
+    protected function bindAuthHelper()
+    {
+        $this->app->bind('authentication_helper', function () {
+            return new SentryAuthenticationHelper;
         });
     }
 

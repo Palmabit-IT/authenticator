@@ -16,7 +16,7 @@ class SentryAuthenticationHelper implements AuthenticationHelperInterface
      * @param $permissions
      * @return boolean
      */
-    public static function hasPermission(array $permissions)
+    public function hasPermission(array $permissions)
     {
         $sentry = \App::make('sentry');
         $current_user = $sentry->getUser();

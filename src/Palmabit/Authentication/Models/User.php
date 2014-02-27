@@ -42,4 +42,9 @@ class User extends CartaUser
         return true;
     }
 
+    public function user_profile()
+    {
+        return $this->hasMany('Palmabit\Authentication\Models\UserProfile');
+    }
+
 } 
