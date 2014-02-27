@@ -15,6 +15,10 @@ class UserValidator extends AbstractValidator
     {
         Event::listen('validating', function($input)
         {
+            // if the input comes from other form i just ignore that
+            if(!isset($input['form_name']) || $input['form_name']!='user')
+                return true;
+
             static::$rules["email"][] = "unique:users,email,{$input['id']}";
 
             if(empty($input["id"]))

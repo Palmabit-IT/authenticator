@@ -5,14 +5,18 @@
  * @author jacopo beschi jacopo@jacopobeschi.com
  */
 use Illuminate\Support\MessageBag;
+use Palmabit\Authentication\Exceptions\ProfileNotFoundException;
+use Palmabit\Authentication\Models\UserProfile;
 use Palmabit\Authentication\Repository\SentryUserRepository as Repo;
 use Palmabit\Library\Form\FormModel;
 use Palmabit\Authentication\Models\User;
 use Palmabit\Authentication\Exceptions\UserNotFoundException;
 use Palmabit\Authentication\Validators\UserValidator;
+use Palmabit\Authentication\Validators\UserProfileValidator;
 use Palmabit\Library\Exceptions\PalmabitExceptionsInterface;
-use View, Input, Redirect;
+use View, Input, Redirect, App;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Palmabit\Authentication\Services\UserProfileService;
 
 class UserController extends \BaseController
 {
@@ -24,12 +28,22 @@ class UserController extends \BaseController
      * @var \Palmabit\Authentication\Validators\UserValidator
      */
     protected $v;
+    /**
+     * Profile repository
+     */
+    protected $r_p;
+    /**
+     * @var \Palmabit\Authentication\Validators\UserProfileValidator
+     */
+    protected $v_p;
 
-    public function __construct(Repo $r, UserValidator $v)
+    public function __construct(Repo $r, UserValidator $v, UserProfileValidator $vp)
     {
         $this->r = $r;
         $this->v = $v;
         $this->f = new FormModel($this->v, $this->r);
+        $this->v_p = $vp;
+        $this->r_p = App::make('profile_repository');
     }
 
     public function getList()
@@ -115,5 +129,49 @@ class UserController extends \BaseController
             return Redirect::action('Palmabit\Authentication\Controllers\UserController@editUser', ["id" => $user_id])->withErrors(new MessageBag(["name" => "Gruppo non presente."]));
         }
         return Redirect::action('Palmabit\Authentication\Controllers\UserController@editUser',["id" => $user_id])->withMessage("Gruppo cancellato con successo.");
+    }
+
+    public function editProfile()
+    {
+        $user_id = Input::get('user_id');
+
+        try
+        {
+            //@todo add check perm
+            $user_profile = $this->r_p->getFromUserId($user_id);
+        }
+        catch(UserNotFoundException $e)
+        {
+            return Redirect::action('Palmabit\Authentication\Controllers\UserController@getList')->withErrors(new MessageBag(['model' => 'Utente non presente.']));
+        }
+        catch(ProfileNotFoundException $e)
+        {
+            $user_profile = new UserProfile(["user_id" => $user_id]);
+        }
+
+        return View::make('authentication::user.profile')->with(['user_profile' => $user_profile]);
+    }
+
+    public function postEditProfile()
+    {
+        $input = Input::all();
+        $service = new UserProfileService($this->v_p);
+
+        try
+        {
+            $user_profile = $service->processForm($input);
+        }
+        catch(PalmabitExceptionsInterface $e)
+        {
+            $erros = $service->getErrors();
+            return Redirect::route("users.profile.edit", $id ? ["user_id" => $user_profile->user_id]: [])->withInput()->withErrors($errors);
+        }
+
+        return Redirect::action('Palmabit\Authentication\Controllers\UserController@editProfile',["user_id" => $user_profile->user_id])->withMessage("Profilo modificato con successo.");
+    }
+
+    public function deleteProfile()
+    {
+
     }
 } 

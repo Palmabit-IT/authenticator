@@ -14,10 +14,11 @@ class CreateProfileTable extends Migration {
 	{
         Schema::create('user_profile', function($table)
         {
+            $table->increments('id');
             $table->integer('user_id')->unsigned();
             $table->string('code')->nullable();
-            $table->string('name')->nullable();
-            $table->string('surname')->nullable();
+            $table->string('first_name')->nullable();
+            $table->string('last_name')->nullable();
             $table->string('phone')->nullable();
             $table->string('vat')->nullable();
             $table->string('cf')->nullable();

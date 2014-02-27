@@ -12,8 +12,8 @@ class UserProfile extends BaseModel
     protected $fillable = [
         'user_id',
         'code',
-        'name',
-        'surname',
+        'first_name',
+        'last_name',
         'phone',
         'vat',
         'cf',

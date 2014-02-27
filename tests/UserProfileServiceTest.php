@@ -1,0 +1,93 @@
+<?php  namespace Palmabit\Authentication\Tests;
+
+use Palmabit\Authentication\Models\UserProfile;
+use Palmabit\Authentication\Services\UserProfileService;
+use Palmabit\Library\Exceptions\ValidationException;
+use Palmabit\Library\Validators\AbstractValidator;
+use Mockery as m;
+use App;
+/**
+ * Test UserProfileServiceTest
+ *
+ * @author jacopo beschi j.beschi@palmabit.com
+ */
+class UserProfileServiceTest extends TestCase {
+
+    public function setUp()
+    {
+        parent::setUp();
+
+    }
+
+    public function tearDown()
+    {
+        m::close();
+    }
+
+    /**
+     * @test
+     **/
+    public function it_create_a_profile()
+    {
+        $mock_form_profile_success = m::mock('Palmabit\Library\Form\FormModel')->shouldReceive('process')->once()->andReturn(true)->getMock();
+
+        $service = new UserProfileService(new VoidValidator(), $mock_form_profile_success);
+
+        $service->processForm([]);
+    }
+
+    /**
+     * @test
+     * @expectedException \Palmabit\Library\Exceptions\InvalidException
+     **/
+    public function it_throw_exception_if_cannot_process()
+    {
+        $mock_form_profile = m::mock('Palmabit\Library\Form\FormModel');
+        $mock_form_profile->shouldReceive('process')->once()->andThrow(new ValidationException);
+        $mock_form_profile->shouldReceive('getErrors')->once()->andReturn(["error"]);
+
+        $service = new UserProfileService(new VoidValidator(), $mock_form_profile);
+
+        $service->processForm([]);
+        $this->assertEquals("error", $service->getErrors());
+    }
+
+    /**
+     * @test
+     **/
+    public function it_update_user_password_if_given()
+    {
+        $mock_form_profile_success = m::mock('Palmabit\Library\Form\FormModel')->shouldReceive('process')->andReturn(true)->getMock();
+        // mock user repository
+        $mock_user_repo = m::mock('StdClass')->shouldReceive('update')->once()->andReturn(true)->getMock();
+        App::instance('user_repository',$mock_user_repo);
+        $service = new UserProfileService(new VoidValidator(), $mock_form_profile_success);
+        $service->processForm(["new_password" => 'pass', "user_id" => '']);
+    }
+
+    /**
+     * @test
+     **/
+    public function it_not_update_user_if_password_not_given()
+    {
+        $mock_form_profile_success = m::mock('Palmabit\Library\Form\FormModel')->shouldReceive('process')->andReturn(true)->getMock();
+        // mock user repository
+        App::instance('user_repository','');
+        $service = new UserProfileService(new VoidValidator(), $mock_form_profile_success);
+        $service->processForm(["new_password" => '', "user_id" => '']);
+    }
+    
+    /**
+     * @test
+     **/
+    public function it_return_user_profile_if_success()
+    {
+        $mock_form_profile_success = m::mock('Palmabit\Library\Form\FormModel')->shouldReceive('process')->andReturn(new UserProfile)->getMock();
+        $service = new UserProfileService(new VoidValidator(), $mock_form_profile_success);
+        $profile = $service->processForm([]);
+        $this->assertInstanceOf('Palmabit\Authentication\Models\UserProfile', $profile);
+    }
+}
+
+class VoidValidator extends AbstractValidator
+{}

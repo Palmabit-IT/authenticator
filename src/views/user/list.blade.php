@@ -30,6 +30,7 @@ glyphicon glyphicon-comment"></span> {{$user->email}} <span class="glyphicon gly
                 @if(! $user->blocked)
                 <a href="{{URL::action('Palmabit\Authentication\Controllers\UserController@deleteUser',['id' => $user->id, '_token' => csrf_token()])}}" ><span class="glyphicon glyphicon-trash pull-right margin-left-5 delete">cancella </span></a>
                 <a href="{{URL::action('Palmabit\Authentication\Controllers\UserController@editUser', ['id' => $user->id])}}"><span class="glyphicon glyphicon-edit pull-right">modifica </span></a>
+                <a href="{{URL::action('Palmabit\Authentication\Controllers\UserController@editProfile', ['user_id' => $user->id])}}"><span class="glyphicon glyphicon-user pull-right">profilo </span></a>
                 @endif
                 <span class="clearfix"></span>
             </li>

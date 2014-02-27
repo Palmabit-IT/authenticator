@@ -1,6 +1,8 @@
 <?php namespace Palmabit\Authentication;
 
 use Illuminate\Support\ServiceProvider;
+use Palmabit\Authentication\Repository\EloquentUserProfileRepository;
+use Palmabit\Authentication\Repository\SentryUserRepository;
 use Palmabit\Library\Email\SwiftMailer;
 use Palmabit\Authentication\Classes\SentryAuthenticator;
 use Palmabit\Authentication\Helpers\SentryAuthenticationHelper;
@@ -40,6 +42,8 @@ class AuthenticationServiceProvider extends ServiceProvider {
         $this->bindAuthenticator();
 
         $this->bindAuthHelper();
+
+        $this->bindRepositories();
 
         // include filters
         require __DIR__ . "/../../filters.php";
@@ -97,6 +101,16 @@ class AuthenticationServiceProvider extends ServiceProvider {
     {
         $this->app->bind('authentication_helper', function () {
             return new SentryAuthenticationHelper;
+        });
+    }
+
+    protected function bindRepositories()
+    {
+        $this->app->bind('profile_repository', function () {
+            return new EloquentUserProfileRepository;
+        });
+        $this->app->bind('user_repository', function () {
+            return new SentryUserRepository;
         });
     }
 
