@@ -43,4 +43,11 @@ interface UserRepositoryInterface
      */
     public function removeGroup($user_id, $group_id);
 
+    /**
+     * Obtain a list of user from a given group
+     * @param String $group_name
+     * @return mixed
+     */
+    public function findFromGroupName($group_name);
+
 }

@@ -66,5 +66,19 @@ class SentryAuthenticationHelperTest extends TestCase {
 
         $this->assertTrue($can);
     }
+
+    /**
+     * @test
+     **/
+    public function it_gets_user_emails_that_need_to_be_notificated_on_user_subscription()
+    {
+        $helper = new SentryAuthenticationHelper;
+        $mock_user_repo = m::mock('StdClass')->shouldReceive('findFromGroupName')->andReturn(["admin@admin.com"])->getMock();
+        \App::instance('user_repository', $mock_user_repo);
+
+        $mail = $helper->getNotificationRegistrationUsersEmail();
+
+        $this->assertEquals(["admin@admin.com"], $mail);
+    }
 }
  

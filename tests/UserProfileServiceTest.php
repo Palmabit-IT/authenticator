@@ -110,8 +110,8 @@ class UserProfileServiceTest extends TestCase {
 
         $service = new UserProfileService(new VoidValidator());
         try
-        $service->processForm(["user_id" => 1]);
         {
+            $service->processForm(["user_id" => 1]);
         }
         catch(\Palmabit\Authentication\Exceptions\PermissionException $e)
         {}

@@ -26,6 +26,7 @@ class SentryUserRepository implements BaseRepositoryInterface, UserRepositoryInt
     public function __construct($factory = null)
     {
         $this->sentry = \App::make('sentry');
+        Event::listen('repository.updating', 'Palmabit\Authentication\Services\UserRegisterService@sendActivationEmailToClient');
     }
 
     /**
@@ -38,8 +39,6 @@ class SentryUserRepository implements BaseRepositoryInterface, UserRepositoryInt
         $data = array(
                 "email" => $input["email"],
                 "password" => $input["password"],
-                "first_name" => $input["first_name"],
-                "last_name" => $input["last_name"],
                 "activated" => $input["activated"],
         );
         $user = $this->sentry->createUser($data);
@@ -58,7 +57,7 @@ class SentryUserRepository implements BaseRepositoryInterface, UserRepositoryInt
     {
         $this->ClearEmptyPassword($data);
         $obj = $this->find($id);
-        Event::fire('repository.updating', [$obj]);
+        Event::fire('repository.updating', [$obj, $data]);
         $obj->update($data);
         return $obj;
     }
@@ -187,5 +186,20 @@ class SentryUserRepository implements BaseRepositoryInterface, UserRepositoryInt
     public function suspend($id, $duration)
     {
         // TODO: Implement suspend() method.
+    }
+
+    /**
+     * Obtain a list of user from a given group
+     *
+     * @param String $group_name
+     * @throws \Palmabit\Authentication\Exceptions\UserNotFoundException
+     * @return mixed
+     */
+    public function findFromGroupName($group_name)
+    {
+        $group = $this->sentry->findGroupByName($group_name);
+        if(! $group) throw new UserNotFoundException;
+
+        return $group->users;
     }
 }

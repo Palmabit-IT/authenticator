@@ -7,7 +7,7 @@
 use Illuminate\Support\Facades\Config;
 use Palmabit\Authentication\Interfaces\AuthenticationHelperInterface;
 use Palmabit\Authentication\Interfaces\PermissionProfileHelperInterface;
-use Session;
+use Session, App;
 
 class SentryAuthenticationHelper implements AuthenticationHelperInterface, PermissionProfileHelperInterface
 {
@@ -20,7 +20,7 @@ class SentryAuthenticationHelper implements AuthenticationHelperInterface, Permi
      */
     public function hasPermission(array $permissions)
     {
-        $sentry = \App::make('sentry');
+        $sentry = App::make('sentry');
         $current_user = $sentry->getUser();
         if(! $current_user)
             return false;
@@ -37,7 +37,7 @@ class SentryAuthenticationHelper implements AuthenticationHelperInterface, Permi
      */
     public function checkProfileEditPermission($user_id)
     {
-        $current_user_id = \App::make('sentry')->getUser()->id;
+        $current_user_id = App::make('sentry')->getUser()->id;
 
         // edit his profile
         if($user_id == $current_user_id) return true;
@@ -47,4 +47,19 @@ class SentryAuthenticationHelper implements AuthenticationHelperInterface, Permi
 
         return false;
     }
+
+    /**
+     * Obtain the user that needs to be notificated on registration
+     *
+     * @return array
+     */
+    public function getNotificationRegistrationUsersEmail()
+    {
+        $group_name = Config::get('authentication::permissions.profile_notification_group');
+        $user_r = App::make('user_repository');
+        $users = $user_r->findFromGroupName($group_name);
+
+        return $users;
+    }
+
 }

@@ -2,6 +2,7 @@
 
 use Illuminate\Support\ServiceProvider;
 use Palmabit\Authentication\Repository\EloquentUserProfileRepository;
+use Palmabit\Authentication\Repository\SentryGroupRepository;
 use Palmabit\Authentication\Repository\SentryUserRepository;
 use Palmabit\Library\Email\SwiftMailer;
 use Palmabit\Authentication\Classes\SentryAuthenticator;
@@ -111,6 +112,9 @@ class AuthenticationServiceProvider extends ServiceProvider {
         });
         $this->app->bind('user_repository', function () {
             return new SentryUserRepository;
+        });
+        $this->app->bind('group_repository', function () {
+            return new SentryGroupRepository;
         });
     }
 
