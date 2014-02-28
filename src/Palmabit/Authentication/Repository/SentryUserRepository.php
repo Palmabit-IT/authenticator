@@ -43,7 +43,7 @@ class SentryUserRepository implements BaseRepositoryInterface, UserRepositoryInt
                 "activated" => $input["activated"],
         );
         $user = $this->sentry->createUser($data);
-        return $user->with('groups');
+        return $user;
     }
 
     /**

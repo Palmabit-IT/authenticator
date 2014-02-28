@@ -163,10 +163,9 @@ class UserController extends \BaseController
         }
         catch(PalmabitExceptionsInterface $e)
         {
-            $erros = $service->getErrors();
-            return Redirect::route("users.profile.edit", $id ? ["user_id" => $user_profile->user_id]: [])->withInput()->withErrors($errors);
+            $errors = $service->getErrors();
+            return Redirect::route("users.profile.edit", ["user_id" => $input['user_id'] ])->withInput()->withErrors($errors);
         }
-
         return Redirect::action('Palmabit\Authentication\Controllers\UserController@editProfile',["user_id" => $user_profile->user_id])->withMessage("Profilo modificato con successo.");
     }
 

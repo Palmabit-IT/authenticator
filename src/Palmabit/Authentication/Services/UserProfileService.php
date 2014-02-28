@@ -6,9 +6,10 @@
  */
 use App;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\MessageBag;
+use Palmabit\Authentication\Exceptions\PermissionException;
 use Palmabit\Authentication\Exceptions\UserNotFoundException;
 use Palmabit\Authentication\Validators\UserProfileValidator;
-use Palmabit\Authentication\Validators\UserValidator;
 use Palmabit\Library\Exceptions\InvalidException;
 use Palmabit\Library\Exceptions\PalmabitExceptionsInterface;
 use Palmabit\Library\Form\FormModel;
@@ -49,8 +50,7 @@ class UserProfileService
 
     public function processForm($input)
     {
-        // check permission
-        //@todo
+        $this->checkPermission($input);
 
         $user_profile = $this->createUserProfile($input);
 
@@ -93,12 +93,30 @@ class UserProfileService
      */
     protected function updateUserPassword($input)
     {
-        if (isset($input["new_password"]) && !empty($input["new_password"])) try {
-            $this->r_u->update([
-                               "id" => $input["user_id"], "password" => $input["new_password"]]);
+        if (isset($input["new_password"]) && !empty($input["new_password"]))
+        try {
+            $this->r_u->update(
+                               $input["user_id"],
+                               ["password" => $input["new_password"]]
+                               );
         }
-        catch (ModelNotFoundException $e) {
+        catch (ModelNotFoundException $e)
+        {
             throw new UserNotFoundException;
+        }
+    }
+
+    /**
+     * @param $input
+     * @throws \Palmabit\Authentication\Exceptions\PermissionException
+     */
+    protected function checkPermission($input)
+    {
+        $auth_helper = App::make('authentication_helper');
+        if (! $auth_helper->checkProfileEditPermission($input["user_id"]))
+        {
+            $this->errors = new MessageBag(["model" => "Non hai i permessi di modificare questo profilo"]);
+            throw new PermissionException;
         }
     }
 

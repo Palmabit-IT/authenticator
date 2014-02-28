@@ -16,12 +16,12 @@ class CreateProfileTable extends Migration {
         {
             $table->increments('id');
             $table->integer('user_id')->unsigned();
-            $table->string('code')->nullable();
-            $table->string('first_name')->nullable();
-            $table->string('last_name')->nullable();
-            $table->string('phone')->nullable();
-            $table->string('vat')->nullable();
-            $table->string('cf')->nullable();
+            $table->string('code',50)->nullable();
+            $table->string('first_name',50)->nullable();
+            $table->string('last_name',50)->nullable();
+            $table->string('phone',20)->nullable();
+            $table->string('vat',50)->nullable();
+            $table->string('cf',50)->nullable();
             $table->string('billing_address')->nullable();
             $table->string('billing_address_zip')->nullable();
             $table->string('shipping_address')->nullable();

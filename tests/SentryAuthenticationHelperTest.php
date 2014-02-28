@@ -34,5 +34,37 @@ class SentryAuthenticationHelperTest extends TestCase {
         $success = $helper->hasPermission([]);
         $this->assertTrue($success);
     }
+
+    /**
+     * @test
+     **/
+    public function it_check_current_user_can_edit_his_profile()
+    {
+        $helper = new SentryAuthenticationHelper;
+        $user = new \StdClass;
+        $user->id = 1;
+        $mock_sentry = m::mock('StdClass')->shouldReceive('getUser')->andReturn($user)->getMock();
+        \App::instance('sentry', $mock_sentry);
+
+        $can = $helper->checkProfileEditPermission(1);
+
+        $this->assertTrue($can);
+    }
+
+    /**
+     * @test
+     **/
+    public function it_check_for_permission_to_edit_other_profiles()
+    {
+        $helper = m::mock('Palmabit\Authentication\Helpers\SentryAuthenticationHelper')->makePartial()->shouldReceive('hasPermission')->andReturn(true)->getMock();
+        $user = new \StdClass;
+        $user->id = 1;
+        $mock_sentry = m::mock('StdClass')->shouldReceive('getUser')->andReturn($user)->getMock();
+        \App::instance('sentry', $mock_sentry);
+
+        $can = $helper->checkProfileEditPermission(2);
+
+        $this->assertTrue($can);
+    }
 }
  

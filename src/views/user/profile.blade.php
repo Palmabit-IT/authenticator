@@ -12,27 +12,47 @@ Admin area: modifica profilo utente
     @if( isset($message) )
     <div class="alert alert-success">{{$message}}</div>
     @endif
+    @if( $errors->has('model') )
+        <div class="alert alert-danger">{{$errors->first('model')}}</div>
+    @endif
 
     <h3><i class="glyphicon glyphicon-user"></i> Modifica profilo utente</h3>
     <hr/>
     <h3>Dati generali</h3>
     {{Form::model($user_profile,['route'=>'users.profile.edit', 'method' => 'post'])}}
         {{FormField::code()}}
+        {{FormField::new_password(["label" => "password:"])}}
+        <span class="text-danger">{{$errors->first('password')}}</span>
         {{FormField::first_name(["label" => "nome:"])}}
-        {{FormField::last_name(["lable" => "cognome:"])}}
-        {{FormField::phone()}}
-        {{FormField::vat()}}
-        {{FormField::cf()}}
-        {{FormField::billing_address()}}
-        {{FormField::billing_address_zip()}}
-        {{FormField::billing_state()}}
-        {{FormField::billing_city()}}
-        {{FormField::billing_country()}}
-        {{FormField::shipping_address()}}
-        {{FormField::shipping_address_zip()}}
-        {{FormField::shipping_state()}}
-        {{FormField::shipping_city()}}
-        {{FormField::shipping_country()}}
+        <span class="text-danger">{{$errors->first('first_name')}}</span>
+        {{FormField::last_name(["label" => "cognome:"])}}
+        <span class="text-danger">{{$errors->first('last_name')}}</span>
+        {{FormField::phone(["label" => "telefono:"])}}
+        <span class="text-danger">{{$errors->first('phone')}}</span>
+        {{FormField::vat(["label" => "partita iva"])}}
+        <span class="text-danger">{{$errors->first('vat')}}</span>
+        {{FormField::cf(["label" => "codice fiscale"])}}
+        <span class="text-danger">{{$errors->first('cf')}}</span>
+        {{FormField::billing_state(["label" => "stato fatturazione"])}}
+        <span class="text-danger">{{$errors->first('billing_state')}}</span>
+        {{FormField::billing_city(["label" => "provincia fatturazione"])}}
+        <span class="text-danger">{{$errors->first('billing_city')}}</span>
+        {{FormField::billing_country(["label" => "paese fatturazione"])}}
+        <span class="text-danger">{{$errors->first('billing_country')}}</span>
+        {{FormField::billing_address_zip(["label" => "cap fatturazione"])}}
+        <span class="text-danger">{{$errors->first('billing_address_zip')}}</span>
+        {{FormField::billing_address(["label" => "indirizzo di fatturazione"])}}
+        <span class="text-danger">{{$errors->first('billing_address')}}</span>
+        {{FormField::shipping_state(["label" => "stato spedizione"])}}
+        <span class="text-danger">{{$errors->first('shipping_state')}}</span>
+        {{FormField::shipping_city(["label" => "provincia spedizione"])}}
+        <span class="text-danger">{{$errors->first('shipping_city')}}</span>
+        {{FormField::shipping_country(["label" => "paese spedizione"])}}
+        <span class="text-danger">{{$errors->first('shipping_country')}}</span>
+        {{FormField::shipping_address_zip(["label" => "cap spedizione"])}}
+        <span class="text-danger">{{$errors->first('shipping_address_zip')}}</span>
+        {{FormField::shipping_address(["label" => "indirizzo di spedizione"])}}
+        <span class="text-danger">{{$errors->first('shipping_address')}}</span>
         {{Form::hidden('user_id', $user_profile->user_id)}}
         {{Form::hidden('id', $user_profile->id)}}
         {{Form::submit('Salva',['class' =>'btn btn-primary pull-right margin-bottom-30'])}}
