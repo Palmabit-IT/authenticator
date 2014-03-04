@@ -2,7 +2,7 @@
 /**
  * Class SentryAuthenticationHelper
  *
- * @author jacopo beschi jacopo@jacopobeschi.com
+ * @author jacopo beschi j.beschi@palmabit.com
  */
 use Illuminate\Support\Facades\Config;
 use Palmabit\Authentication\Interfaces\AuthenticationHelperInterface;
@@ -57,7 +57,7 @@ class SentryAuthenticationHelper implements AuthenticationHelperInterface, Permi
     {
         $group_name = Config::get('authentication::permissions.profile_notification_group');
         $user_r = App::make('user_repository');
-        $users = $user_r->findFromGroupName($group_name);
+        $users = $user_r->findFromGroupName($group_name)->lists('email');
 
         return $users;
     }

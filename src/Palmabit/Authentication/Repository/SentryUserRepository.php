@@ -5,16 +5,19 @@ namespace Palmabit\Authentication\Repository;
  *
  * @author jacopo beschi j.beschi@palmabit.com
  */
+use Cartalyst\Sentry\Users\UserExistsException as CartaUserExists;
 use Palmabit\Authentication\Repository\Interfaces\UserRepositoryInterface;
+use Palmabit\Library\Repository\EloquentBaseRepository;
 use Palmabit\Library\Repository\Interfaces\BaseRepositoryInterface;
 use Palmabit\Authentication\Exceptions\UserNotFoundException as NotFoundException;
+use Palmabit\Authentication\Exceptions\UserExistsException as UserExistsException;
 use Cartalyst\Sentry\Users\UserNotFoundException;
 use Palmabit\Authentication\Models\User;
 use Palmabit\Authentication\Models\Group;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Event;
 
-class SentryUserRepository implements BaseRepositoryInterface, UserRepositoryInterface
+class SentryUserRepository extends EloquentBaseRepository implements UserRepositoryInterface
 {
     /**
      * Sentry instance
@@ -27,6 +30,7 @@ class SentryUserRepository implements BaseRepositoryInterface, UserRepositoryInt
     {
         $this->sentry = \App::make('sentry');
         Event::listen('repository.updating', 'Palmabit\Authentication\Services\UserRegisterService@sendActivationEmailToClient');
+        return parent::__construct(new User);
     }
 
     /**
@@ -41,7 +45,15 @@ class SentryUserRepository implements BaseRepositoryInterface, UserRepositoryInt
                 "password" => $input["password"],
                 "activated" => $input["activated"],
         );
-        $user = $this->sentry->createUser($data);
+        try
+        {
+            $user = $this->sentry->createUser($data);
+        }
+        catch(CartaUserExists $e)
+        {
+            throw new UserExistsException;
+        }
+
         return $user;
     }
 
@@ -73,27 +85,6 @@ class SentryUserRepository implements BaseRepositoryInterface, UserRepositoryInt
         $obj = $this->find($id);
         Event::fire('repository.deleting', [$obj]);
         return $obj->delete();
-    }
-
-    /**
-     * Find a model by his id
-     * @param $id
-     * @return mixed
-     * @throws \Palmabit\Authentication\Exceptions\UserNotFoundException
-     * @todo db test
-     */
-    public function find($id)
-    {
-       try
-       {
-            $user = $this->sentry->findUserById($id);
-       }
-       catch(UserNotFoundException $e)
-       {
-            throw new NotFoundException;
-       }
-
-       return $user;
     }
 
     /**

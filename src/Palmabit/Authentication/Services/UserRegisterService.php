@@ -1,6 +1,14 @@
 <?php  namespace Palmabit\Authentication\Services;
 use Illuminate\Support\Facades\App;
-use Config;
+use Config, Redirect, DB;
+use Illuminate\Support\MessageBag;
+use Palmabit\Authentication\Exceptions\UserExistsException;
+use Palmabit\Authentication\Exceptions\UserNotFoundException;
+use Palmabit\Authentication\Validators\UserSignupValidator;
+use Palmabit\Library\Exceptions\NotFoundException;
+use Palmabit\Library\Exceptions\PalmabitExceptionsInterface;
+use Palmabit\Library\Exceptions\ValidationException;
+
 /**
  * Class UserRegisterService
  *
@@ -16,11 +24,20 @@ class UserRegisterService
      * @var \Palmabit\Authentication\Repository\Interfaces\UserProfileRepositoryInterface
      */
     protected $p_r;
+    /**
+     * @var \Palmabit\Authentication\Validators\UserSignupValidator
+     */
+    protected $v;
+    /**
+     * @var \Illuminate\Support\MessageBag
+     */
+    protected $errors;
 
-    public function __construct()
+    public function __construct(UserSignupValidator $v = null)
     {
         $this->u_r = App::make('user_repository');
         $this->p_r = App::make('profile_repository');
+        $this->v = $v ? $v : new UserSignupValidator;
     }
 
     public function register(array $input)
@@ -28,34 +45,36 @@ class UserRegisterService
         // for default user is not active at registration
         $input["activated"] = false;
 
+        $this->validateInput($input);
+
         $user = $this->saveDbData($input);
 
         $mailer = App::make('palmamailer');
-        $this->sendMailToClient($mailer, $user);
-        $this->sendMailToAdmins($mailer);
+        $this->sendMailToClient($mailer, $input);
+        $this->sendMailToAdmins($mailer, $user, $input);
     }
 
     /**
      * @param $mailer
      * @param $user
      */
-    protected function sendMailToClient($mailer, $user)
+    protected function sendMailToClient($mailer, $input)
     {
         // send email to client
-        $mailer->sendTo($user->email, "", "", "authentication::mail.registration-waiting-client");
+        $mailer->sendTo( $input['email'], [ "email" => $input["email"], "password" => $input["password"] ], "Richiesta registrazione su: " . \Config::get('authentication::app_name'), "authentication::mail.registration-waiting-client");
     }
 
     /**
      * @param $mailer
      */
-    protected function sendMailToAdmins($mailer)
+    protected function sendMailToAdmins($mailer, $user, $input)
     {
         // send email to admins
         $mail_helper = App::make('authentication_helper');
         $mails       = $mail_helper->getNotificationRegistrationUsersEmail();
         if (!empty($mails)) foreach ($mails as $mail)
         {
-            $mailer->sendTo($mail, "", "", "authentication::mail.registration-waiting-admin");
+            $mailer->sendTo($mail, [ "email" => $input["email"], "id" => $user->id, "comments" => $input['comments'] ], "Richiesta di registrazione utente", "authentication::mail.registration-waiting-admin");
         }
     }
 
@@ -67,22 +86,59 @@ class UserRegisterService
     {
         $mailer = App::make('palmamailer');
         // if i activate a deactivated user
-        if($input["activated"] && (! $obj->activated) ) $mailer->sendTo($obj->email, "", "Sei stato attivato su ".Config::get('authentication::app_name'), "authentication::mail.registration-activated-client");
+        if(isset($input["activated"]) && $input["activated"] && (! $obj->activated) ) $mailer->sendTo($obj->email, [ "email" => $input["email"] ], "Sei stato attivato su ".Config::get('authentication::app_name'), "authentication::mail.registration-activated-client");
     }
 
     /**
      * @param array $input
-     * @return mixed
+     * @return mixed $user
      */
     protected function saveDbData(array $input)
     {
-        // user
-        $user    = $this->u_r->create($input);
-        // group
-        $this->u_r->addGroup($user->id, $input["group_id"]);
-        // profile
-        $profile = $this->p_r->create(array_merge(["user_id" => $user->id], $input) );
+        DB::connection()->getPdo()->beginTransaction();
+
+        try
+        {
+            // user
+            $user    = $this->u_r->create($input);
+            // group
+            $this->u_r->addGroup($user->id, $input["group_id"]);
+            // profile
+            $profile = $this->p_r->create(array_merge(["user_id" => $user->id], $input) );
+        }
+        catch(UserExistsException $e)
+        {
+            DB::connection()->getPdo()->rollback();
+            $this->errors = new MessageBag(["model" => "L'utente esiste già."]);
+            throw new UserExistsException;
+        }
+        catch(NotFoundException $e)
+        {
+            DB::connection()->getPdo()->rollback();
+            $this->errors = new MessageBag(["model" => "L'utente non è stato trovato."]);
+            throw new NotFoundException;
+        }
+
+        DB::connection()->getPdo()->commit();
 
         return $user;
+    }
+
+    /**
+     * @param array $input
+     * @throws \Palmabit\Library\Exceptions\ValidationException
+     */
+    protected function validateInput(array $input)
+    {
+        if (!$this->v->validate($input))
+        {
+            $this->errors = $this->v->getErrors();
+            throw new ValidationException;
+        }
+    }
+
+    public function getErrors()
+    {
+        return $this->errors;
     }
 } 

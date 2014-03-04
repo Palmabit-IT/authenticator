@@ -43,7 +43,7 @@ class PermissionController extends \BaseController
         {
             $obj = $this->r->find(Input::get('id'));
         }
-        catch(ModelNotFoundException $e)
+        catch(PalmabitExceptionsInterface $e)
         {
             $obj = new Permission;
         }

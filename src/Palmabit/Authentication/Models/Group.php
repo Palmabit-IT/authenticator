@@ -5,7 +5,7 @@
  * @author jacopo beschi jacopo@jacopobeschi.com
  */
 use Cartalyst\Sentry\Groups\Eloquent\Group as SentryGroup;
-use Palmabit\Authentication\Traits\OverrideConnectionTrait;
+use Palmabit\Library\Traits\OverrideConnectionTrait;
 
 class Group extends SentryGroup
 {

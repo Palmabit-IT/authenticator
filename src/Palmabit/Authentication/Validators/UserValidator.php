@@ -1,14 +1,12 @@
 <?php namespace Palmabit\Authentication\Validators;
 
-use Palmabit\Library\Validators\AbstractValidator;
 use Event;
+use Palmabit\Library\Validators\OverrideConnectionValidator;
 
-class UserValidator extends AbstractValidator
+class UserValidator extends OverrideConnectionValidator
 {
     protected static $rules = array(
         "email" => ["required", "email"],
-        "first_name" => "max:255",
-        "last_name" => "max:255",
     );
 
     public function __construct()

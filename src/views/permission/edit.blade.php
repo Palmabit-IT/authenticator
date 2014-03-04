@@ -20,7 +20,7 @@ Admin area: modifica permesso
     <h3><i class="glyphicon glyphicon-lock"></i> Modifica permesso</h3>
 
     {{Form::model($permission, [ 'url' => [URL::action('Palmabit\Authentication\Controllers\PermissionController@editPermission'), $permission->id], 'method' => 'post'] ) }}
-    {{FormField::description(["label" => "Descrizione:"])}}
+    {{FormField::description(["label" => "Descrizione:", "type" => "text"])}}
     <span class="text-danger">{{$errors->first('description')}}</span>
     {{FormField::permission(["label" => "Permesso:"])}}
     <span class="text-danger">{{$errors->first('permission')}}</span>

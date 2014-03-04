@@ -2,10 +2,10 @@
 /**
  * Class BaseModel
  *
- * @author jacopo beschi jacopo@jacopobeschi.com
+ * @author jacopo beschi j.beschi@palmabit.com
  */
 use Illuminate\Database\Eloquent\Model;
-use Palmabit\Authentication\Traits\OverrideConnectionTrait;
+use Palmabit\Library\Traits\OverrideConnectionTrait;
 
 class BaseModel extends Model
 {

@@ -47,4 +47,10 @@ interface AuthenticateInterface
      * @return String
      */
     public function getToken($email);
+
+    /**
+     * Check if the user is logged in and is active
+     * @return boolean
+     */
+    public function check();
 }

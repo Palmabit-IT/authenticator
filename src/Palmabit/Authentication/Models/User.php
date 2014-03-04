@@ -5,7 +5,8 @@
  * @author jacopo beschi jacopo@jacopobeschi.com
  */
 use Cartalyst\Sentry\Users\Eloquent\User as CartaUser;
-use Palmabit\Authentication\Traits\OverrideConnectionTrait;
+use Cartalyst\Sentry\Users\UserExistsException;
+use Palmabit\Library\Traits\OverrideConnectionTrait;
 
 class User extends CartaUser
 {

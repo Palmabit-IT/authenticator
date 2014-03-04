@@ -1,4 +1,8 @@
 <?php
+//////////////////// Registration //////////////////////////
+
+Route::post('/users/signup', ['before' => 'csrf', 'as' => 'users.profile.edit', 'uses' => 'Palmabit\Authentication\Controllers\UserController@postSignupUser']);
+
 //////////////////// Authentication //////////////////////////
 /**
  * User login and logout
@@ -31,7 +35,7 @@ Route::group( ['before' => ['logged', 'can_see']], function()
     Route::any('/admin/users/groups/delete', ["before" => "csrf", 'as' => 'users.groups.delete', 'uses' => 'Palmabit\Authentication\Controllers\UserController@deleteGroup']);
     Route::get('/admin/users/profile/edit', ['as' => 'users.profile.edit', 'uses' => 'Palmabit\Authentication\Controllers\UserController@editProfile']);
     Route::post('/admin/users/profile/edit', ['before' => 'csrf', 'as' => 'users.profile.edit', 'uses' => 'Palmabit\Authentication\Controllers\UserController@postEditProfile']);
-    Route::any('/admin/users/profile/delete', ['before' => 'csrf', 'as' => 'users.profile.delete', 'uses' => 'Palmabit\Authentication\Controllers\UserController@deleteProfile']);
+
 
     // groups
     Route::get('/admin/groups/list', ['as' => 'users.groups.list', 'uses' => 'Palmabit\Authentication\Controllers\GroupController@getList']);

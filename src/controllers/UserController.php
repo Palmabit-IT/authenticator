@@ -8,6 +8,8 @@ use Illuminate\Support\MessageBag;
 use Palmabit\Authentication\Exceptions\ProfileNotFoundException;
 use Palmabit\Authentication\Models\UserProfile;
 use Palmabit\Authentication\Repository\SentryUserRepository as Repo;
+use Palmabit\Authentication\Services\UserRegisterService;
+use Palmabit\Authentication\Validators\UserSignupValidator;
 use Palmabit\Library\Form\FormModel;
 use Palmabit\Authentication\Models\User;
 use Palmabit\Authentication\Exceptions\UserNotFoundException;
@@ -36,14 +38,19 @@ class UserController extends \BaseController
      * @var \Palmabit\Authentication\Validators\UserProfileValidator
      */
     protected $v_p;
+    /**
+     * @var \Palmabit\Authentication\Validators\UserSignupValidator
+     */
+    protected $v_s;
 
-    public function __construct(Repo $r, UserValidator $v, UserProfileValidator $vp)
+    public function __construct(Repo $r, UserValidator $v, UserProfileValidator $vp, UserSignupValidator $vs)
     {
         $this->r = $r;
         $this->v = $v;
         $this->f = new FormModel($this->v, $this->r);
         $this->v_p = $vp;
         $this->r_p = App::make('profile_repository');
+        $this->v_s = $vs;
     }
 
     public function getList()
@@ -137,7 +144,6 @@ class UserController extends \BaseController
 
         try
         {
-            //@todo add check perm
             $user_profile = $this->r_p->getFromUserId($user_id);
         }
         catch(UserNotFoundException $e)
@@ -169,8 +175,23 @@ class UserController extends \BaseController
         return Redirect::action('Palmabit\Authentication\Controllers\UserController@editProfile',["user_id" => $user_profile->user_id])->withMessage("Profilo modificato con successo.");
     }
 
-    public function deleteProfile()
+    public function postSignupUser()
     {
+        $input = Input::all();
+        $service = new UserRegisterService();
+
+        try
+        {
+            $service->register($input);
+        }
+        catch(PalmabitExceptionsInterface $e)
+        {
+            return Redirect::back()->withInput()->withErrors($service->getErrors());
+        }
+
+        return Redirect::back()->withMessage('La richiesta di registrazione è stata effettuata con successo.
+         Un moderatora validerà la correttezza dei dati da te inseriti. Sarai contattato a breve.');
 
     }
+
 } 

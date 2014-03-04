@@ -26,9 +26,7 @@ class AuthenticationServiceProvider extends ServiceProvider {
 	 */
 	public function register()
 	{
-        $this->loadOtherProviders();
 
-        $this->registerAliases();
     }
 
     /**
@@ -39,11 +37,8 @@ class AuthenticationServiceProvider extends ServiceProvider {
         $this->package('palmabit/authentication');
 
         $this->bindMailer();
-
         $this->bindAuthenticator();
-
         $this->bindAuthHelper();
-
         $this->bindRepositories();
 
         // include filters
@@ -59,8 +54,10 @@ class AuthenticationServiceProvider extends ServiceProvider {
         $this->overwriteWayFormConfig();
 
         $this->setupConnection();
-
         $this->overrideValidationConnection();
+
+        $this->loadOtherProviders();
+        $this->registerAliases();
     }
 
 	/**

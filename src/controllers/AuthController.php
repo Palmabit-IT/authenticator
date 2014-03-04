@@ -58,9 +58,10 @@ class AuthController extends BaseController {
      */
     public function getLogout()
     {
+        $redirect_to_root = Input::get('cient_side');
         $this->auth->logout();
 
-        return Redirect::to('/user/login');
+        return $redirect_to_root ? Redirect::to('/') : Redirect::to('/user/login');
     }
 
     /**
@@ -109,7 +110,7 @@ class AuthController extends BaseController {
         try
         {
             $this->reminder->reset($email, $token, $password);
-            return Redirect::action("Palmabit\\Authentication\\Controllers\\AuthController@getChangePassword")->with(array("message"=> "Password modificata con successo!"));
+            return Redirect::home()->with(array("message"=> "Password modificata con successo!"));
         }
         catch(Pbi $e)
         {

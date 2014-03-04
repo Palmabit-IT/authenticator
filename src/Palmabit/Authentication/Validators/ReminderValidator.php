@@ -1,8 +1,8 @@
 <?php namespace Palmabit\Authentication\Validators;
 
-use Palmabit\Library\Validators\AbstractValidator;
+use Palmabit\Library\Validators\OverrideConnectionValidator;
 
-class ReminderValidator extends AbstractValidator
+class ReminderValidator extends OverrideConnectionValidator
 {
 
     protected static $rules = array(

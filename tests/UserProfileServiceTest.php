@@ -76,7 +76,7 @@ class UserProfileServiceTest extends TestCase {
         $service = new UserProfileServiceNoPermStub(new VoidValidator(), $mock_form_profile_success);
         $service->processForm(["new_password" => '', "user_id" => '']);
     }
-    
+
     /**
      * @test
      **/

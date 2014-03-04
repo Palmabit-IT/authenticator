@@ -113,11 +113,20 @@ class SentryAuthenticator implements AuthenticateInterface{
 
     /**
      * {@inheritdoc}
+     * @throws \Palmabit\Authentication\Exceptions\UserNotFoundException
      */
     public function getToken($email)
     {
         $user = $this->getUser($email);
 
         return $user->getResetPasswordCode();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function check()
+    {
+        return $this->sentry->check();
     }
 }

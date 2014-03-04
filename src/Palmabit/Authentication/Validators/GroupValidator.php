@@ -1,9 +1,9 @@
 <?php namespace Palmabit\Authentication\Validators;
 
-use Palmabit\Library\Validators\AbstractValidator;
 use Event;
+use Palmabit\Library\Validators\OverrideConnectionValidator;
 
-class GroupValidator extends AbstractValidator
+class GroupValidator extends OverrideConnectionValidator
 {
     protected static $rules = array(
         "name" => ["required"],

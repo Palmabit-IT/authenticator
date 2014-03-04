@@ -10,7 +10,8 @@
 
 Route::filter('logged', function()
 {
-    if (! Sentry::check()) return Redirect::to('/user/login');
+    $auth = App::make('authenticator');
+    if (! $auth->check()) return Redirect::to('/user/login');
 });
 
 /*
