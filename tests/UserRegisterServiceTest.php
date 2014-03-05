@@ -7,6 +7,7 @@ use App;
 use Mockery as m;
 use Palmabit\Library\Exceptions\NotFoundException;
 use Palmabit\Library\Exceptions\PalmabitExceptionsInterface;
+use Illuminate\Database\QueryException;
 
 /**
  * Test UserRegisterServiceTest

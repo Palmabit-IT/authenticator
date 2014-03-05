@@ -22,6 +22,7 @@ class CreateUserProfileTable extends Migration {
             $table->string('phone',20)->nullable();
             $table->string('vat',50)->nullable();
             $table->string('cf',50)->nullable();
+            $table->string('profile_type',25)->nullable();
             $table->string('billing_address')->nullable();
             $table->string('billing_address_zip')->nullable();
             $table->string('shipping_address')->nullable();

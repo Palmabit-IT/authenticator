@@ -26,7 +26,8 @@ class UserProfile extends BaseModel
         'billing_country',
         'shipping_state',
         'shipping_city',
-        'shipping_country'
+        'shipping_country',
+        'profile_type'
     ];
 
     protected $guarded = ["id"];
