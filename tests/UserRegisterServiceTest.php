@@ -93,7 +93,7 @@ class UserRegisterServiceTest extends DbTestCase {
     }
     
     /**
-     * @test
+     * @deprecated test
      **/
     public function it_associate_a_given_group()
     {
@@ -284,7 +284,7 @@ class UserRegisterServiceTest extends DbTestCase {
     }
 
     /**
-     * @test
+     * @deprecated test
      * @expectedException \Palmabit\Library\Exceptions\NotFoundException
      **/
     public function it_throws_not_found_exception_if_cannot_find_the_user()

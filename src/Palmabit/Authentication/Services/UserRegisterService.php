@@ -95,32 +95,35 @@ class UserRegisterService
      */
     protected function saveDbData(array $input)
     {
-        DB::connection()->getPdo()->beginTransaction();
-
+        if(App::environment() != 'testing')
+        {
+            // temporary disable reference integrity check
+            DB::connection('authentication')->getPdo()->exec('SET FOREIGN_KEY_CHECKS=0;');
+            DB::connection('authentication')->getPdo()->beginTransaction();
+        }
         try
         {
             // user
             $user    = $this->u_r->create($input);
-            // group
-            $this->u_r->addGroup($user->id, $input["group_id"]);
             // profile
-            $profile = $this->p_r->create(array_merge(["user_id" => $user->id], $input) );
+            $this->p_r->create(array_merge(["user_id" => $user->id], $input) );
         }
         catch(UserExistsException $e)
         {
-            DB::connection()->getPdo()->rollback();
+            if(App::environment() != 'testing')
+            {
+                DB::connection()->getPdo()->rollback();
+            }
             $this->errors = new MessageBag(["model" => "L'utente esiste già."]);
             throw new UserExistsException;
         }
-        catch(NotFoundException $e)
+
+        if(App::environment() != 'testing')
         {
-            DB::connection()->getPdo()->rollback();
-            $this->errors = new MessageBag(["model" => "L'utente non è stato trovato."]);
-            throw new NotFoundException;
+            DB::connection('authentication')->getPdo()->commit();
+            // reactivate integrity check
+            DB::connection('authentication')->getPdo()->exec('SET FOREIGN_KEY_CHECKS=1;');
         }
-
-        DB::connection()->getPdo()->commit();
-
         return $user;
     }
 
