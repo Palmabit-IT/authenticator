@@ -7,6 +7,7 @@
  * @package Auth
  * @author jacopo beschi j.beschi@palmabit.com
  */
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\MessageBag;
 use Palmabit\Authentication\Exceptions\UserNotFoundException;
 use Palmabit\Authentication\Interfaces\AuthenticateInterface;
@@ -128,5 +129,37 @@ class SentryAuthenticator implements AuthenticateInterface{
     public function check()
     {
         return $this->sentry->check();
+    }
+
+    /**
+     * Obtain the current user groups
+     *
+     * @param $name
+     * @return array
+     */
+    public function getGroups()
+    {
+        $user = $this->getLoggedUser();
+        return $user ? $user->getGroups() : [];
+    }
+
+    /**
+     * Check if the current user has the given group
+     *
+     * @param $name
+     * @return mixed
+     */
+    public function hasGroup($name)
+    {
+        $group = App::make('group_repository')->findByName($name);
+        $user = $this->getLoggedUser();
+
+        if(! $user ) return false;
+        return $user->inGroup($group);
+    }
+
+    public function getLoggedUser()
+    {
+        return $this->sentry->getUser();
     }
 }

@@ -42,6 +42,12 @@ interface AuthenticateInterface
     public function getUser($email);
 
     /**
+     * Obtain the currently logged in user is exists
+     * @return mixed
+     */
+    public function getLoggedUser();
+
+    /**
      * Ritorna il token associato alla mail
      * @param $email
      * @return String
@@ -53,4 +59,18 @@ interface AuthenticateInterface
      * @return boolean
      */
     public function check();
+
+    /**
+     * Obtain the current user groups
+     * @param $name
+     * @return mixed
+     */
+    public function getGroups();
+
+    /**
+     * Check if the current user has the given group
+     * @param $name
+     * @return mixed
+     */
+    public function hasGroup($name);
 }

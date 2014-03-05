@@ -4,14 +4,15 @@
  *
  * @author jacopo beschi jacopo@jacopobeschi.com
  */
+use Palmabit\Authentication\Repository\Interfaces\UserGroupRepositoryInterface;
 use Palmabit\Library\Repository\Interfaces\BaseRepositoryInterface;
 use Palmabit\Authentication\Models\Group;
 use Cartalyst\Sentry\Groups\GroupNotFoundException;
-use Palmabit\Authentication\Exceptions\UserNotFoundException as NotFoundException;
+use Palmabit\Authentication\Exceptions\GroupNotFoundException as NotFoundException;
 use App;
 use Event;
 
-class SentryGroupRepository implements BaseRepositoryInterface
+class SentryGroupRepository implements BaseRepositoryInterface, UserGroupRepositoryInterface
 {
     /**
      * Sentry instance
@@ -41,6 +42,7 @@ class SentryGroupRepository implements BaseRepositoryInterface
      * @param       id
      * @param array $data
      * @return mixed
+     * @throw \Palmabit\Authentication\Exceptions\GroupNotFoundException
      */
     public function update($id, array $data)
     {
@@ -55,6 +57,7 @@ class SentryGroupRepository implements BaseRepositoryInterface
      *
      * @param $id
      * @return mixed
+     * @throw \Palmabit\Authentication\Exceptions\GroupNotFoundException
      */
     public function delete($id)
     {
@@ -68,7 +71,7 @@ class SentryGroupRepository implements BaseRepositoryInterface
      *
      * @param $id
      * @return mixed
-     * @throws \Palmabit\Authentication\Exceptions\UserNotFoundException
+     * @throw \Palmabit\Authentication\Exceptions\GroupNotFoundException
      */
     public function find($id)
     {
@@ -94,4 +97,21 @@ class SentryGroupRepository implements BaseRepositoryInterface
         return Group::all();
     }
 
+    /**
+     * @param $name
+     * @throw \Palmabit\Authentication\Exceptions\GroupNotFoundException
+     */
+    public function findByName($name)
+    {
+        try
+        {
+            $group = $this->sentry->findGroupByName($name);
+        }
+        catch(GroupNotFoundException $e)
+        {
+            throw new  NotFoundException;
+        }
+
+        return $group;
+    }
 }

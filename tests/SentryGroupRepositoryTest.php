@@ -5,7 +5,9 @@
  *
  * @author jacopo beschi jacopo@jacopobeschi.com
  */
+use App;
 use Palmabit\Authentication\Repository\SentryGroupRepository;
+use Mockery as m;
 
 class SentryGroupRepositoryTest extends DbTestCase {
 
@@ -14,6 +16,11 @@ class SentryGroupRepositoryTest extends DbTestCase {
         parent::setUp();
 
         $this->r = new SentryGroupRepository;
+    }
+
+    public function tearDown()
+    {
+        m::close();
     }
 
     /**
@@ -52,7 +59,7 @@ class SentryGroupRepositoryTest extends DbTestCase {
 
     /**
      * @test
-     * @expectedException \Palmabit\Authentication\Exceptions\UserNotFoundException
+     * @expectedException \Palmabit\Authentication\Exceptions\GroupNotFoundException
      **/
     public function it_find_throws_exception()
     {
@@ -114,6 +121,24 @@ class SentryGroupRepositoryTest extends DbTestCase {
 
         $group_find = $this->r->find($group->id);
         $this->assertEquals($newname["name"], $group_find->name);
+    }
+    
+    /**
+     * @test
+     **/
+    public function it_find_group_by_name()
+    {
+        $expected_group = $this->r->create([
+                                           "name"        => "name",
+                                           "description" => "name"
+                                           ]);
+        $mock_sentry = m::mock('StdClass')->shouldReceive('findGroupByName')->once()->andReturn($expected_group)->getMock();
+        App::instance('sentry', $mock_sentry);
+        $name = "name";
+        $repo = new SentryGroupRepository();
+        $group = $repo->findByName($name);
+
+        $this->assertEquals($expected_group->name, $group->name);
     }
 
 }

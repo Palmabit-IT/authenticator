@@ -13,5 +13,4 @@ interface AuthenticationHelperInterface
      * @return boolean
      */
     public function hasPermission(array $permissions);
-
-} 
+}
