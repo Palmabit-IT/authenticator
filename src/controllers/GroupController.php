@@ -51,7 +51,7 @@ class GroupController extends \BaseController
         {
             $obj = $this->r->find(Input::get('id'));
         }
-        catch(UserNotFoundException $e)
+        catch(GroupNotFoundException $e)
         {
             $obj = new Group;
         }
