@@ -27,6 +27,24 @@ Admin area: modifica profilo utente
         <span class="text-danger">{{$errors->first('first_name')}}</span>
         {{FormField::last_name(["label" => "cognome:"])}}
         <span class="text-danger">{{$errors->first('last_name')}}</span>
+        <div class="form-group">
+            {{Form::label('profile_type', 'Tipo di profilo:', ["class" => "control-label"])}}<br/>
+            {{Form::select('profile_type', [
+            "" => "",
+            "Special Effects Company" => "Special Effects Company",
+            "Manufacturer" => "Manufacturer",
+            "NightClub" => "NightClub",
+            "Production Company" => "Production Company",
+            "Full service" => "Full service",
+            "Retail Store" => "Retail Store",
+            "Theater" => "Theater",
+            "Theme Parks" => "Theme Parks",
+            "Trade Show" => "Trade Show",
+            "Film Company" => "Film Company",
+            "End user" => "End user",
+            ], $user_profile->profile_type, ["class"=>"form-control"])}}
+            <span class="text-danger">{{$errors->first('profile_type')}}</span>
+        </div>
         {{FormField::phone(["label" => "telefono:"])}}
         <span class="text-danger">{{$errors->first('phone')}}</span>
         {{FormField::vat(["label" => "partita iva"])}}
