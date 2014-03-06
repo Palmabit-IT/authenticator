@@ -2,5 +2,6 @@
 
 return [
     "edit_profile" => ["_profile", "_admin"],
-    "profile_notification_group" => "admin"
+    "profile_notification_group" => "admin",
+    "admin_area" => ['_admin']
 ];

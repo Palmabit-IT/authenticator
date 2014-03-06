@@ -11,6 +11,7 @@ class UserProfileValidator extends OverrideConnectionValidator
         "last_name" => "max:50",
         "phone" => "max:20",
         "vat" => "max:50",
-        "profile_type" => "max:25"
+        "profile_type" => "max:25",
+        "company" => 'max:255'
     );
-} 
+}

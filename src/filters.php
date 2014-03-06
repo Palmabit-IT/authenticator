@@ -30,5 +30,5 @@ Route::filter('can_see', function()
     $auth_helper = App::make('authentication_helper');
     $perm = $helper->getPermFromCurrentRoute();
 
-    if( $perm && (! ($auth_helper->hasPermission( $perm ))) ) App::abort('401');
+    if( $perm && (! ($auth_helper->hasPermission( $perm ))) ) return Redirect::to('/');
 });

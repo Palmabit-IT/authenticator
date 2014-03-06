@@ -33,6 +33,7 @@ class CreateUserProfileTable extends Migration {
             $table->string('shipping_state')->nullable();
             $table->string('shipping_city')->nullable();
             $table->string('shipping_country')->nullable();
+            $table->string('company')->nullable();
             $table->timestamps();
             // foreign keys
             $table->foreign('user_id')

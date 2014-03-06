@@ -186,12 +186,12 @@ class UserController extends \BaseController
         }
         catch(PalmabitExceptionsInterface $e)
         {
-            return Redirect::back()->withInput()->withErrors($service->getErrors());
+            return Redirect::back()->withInput()->withErrors($service->getErrors())->with(array('errorSignup' => $service->getErrors()));
         }
 
         return Redirect::back()->withMessage('La richiesta di registrazione è stata effettuata con successo.
-         Un moderatora validerà la correttezza dei dati da te inseriti. Sarai contattato a breve.');
+         Un moderatora validerà la correttezza dei dati da te inseriti. Sarai contattato a breve')->with(array('messageSignup' => L::t('Your requeste will be process in few hours. As soon as possible you receive a confirmation email')));
 
     }
 
-} 
+}

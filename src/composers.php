@@ -47,3 +47,16 @@ View::composer(['authentication::user.edit','authentication::group.edit'], funct
     $values_group = $fh->getSelectValuesGroups();
     $view->with('group_values', $values_group);
 });
+
+
+View::composer('*', function ($view) {
+
+    $perm = Config::get('authentication::permissions.admin_area');
+    $auth_helper = App::make('authentication_helper');
+    if( ! ($auth_helper->hasPermission($perm)) ) {
+        $admin_area = false;
+    } else {
+        $admin_area = true;
+    }
+    $view->with('admin_area', $admin_area);
+});
