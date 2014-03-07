@@ -24,7 +24,8 @@ body {
 p.pcopy {
   margin: 0;
   padding: 0;
-  font-size: 11px;
+  line-height: 13px;
+  font-size: 13px;
 }
 p.phelp {
   margin-top: 5px;
@@ -36,7 +37,7 @@ p.phelp {
 /* Not required for template or sticky footer method. */
 
 .container {
-  width: auto;
+/*  width: auto;*/
   /*max-width: 680px;*/
   padding: 0 15px;
 }
