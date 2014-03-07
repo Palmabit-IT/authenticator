@@ -44,3 +44,10 @@
     background-color: red;
     float: left !important;
 }
+
+.form-group {
+    margin-bottom: 5px;
+}
+.form-control {
+    height: 30px;
+}

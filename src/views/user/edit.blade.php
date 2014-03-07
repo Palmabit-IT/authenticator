@@ -39,6 +39,7 @@ Admin area: modifica utenti
         <h3>Gruppi</h3>
         @include('authentication::user.groups')
     </div>
+</div>
 @stop
 
 @section('footer_scripts')
