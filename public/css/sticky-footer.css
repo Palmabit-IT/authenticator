@@ -30,7 +30,8 @@ p.pcopy {
 p.phelp {
   margin-top: 5px;
   padding: 0;
-  font-size: 11px;
+  font-size: 13px;
+  line-height: 13px;
 }
 /* Custom page CSS
 -------------------------------------------------- */
