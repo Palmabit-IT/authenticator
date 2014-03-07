@@ -14,6 +14,12 @@ Route::filter('logged', function()
     if (! $auth->check()) return Redirect::to('/user/login');
 });
 
+Route::filter('logged_401', function()
+{
+    $auth = App::make('authenticator');
+    if (! $auth->check()) return App::abort(401);
+});
+
 /*
 |--------------------------------------------------------------------------
 | Permission Filter
