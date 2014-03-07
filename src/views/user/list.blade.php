@@ -24,7 +24,7 @@
         @foreach($users as $user)
             <li class="list-group-item">
                 <span class="badge {{$user->activated ? 'badge-green' : 'badge-red'}}">&nbsp;</span>&nbsp;&nbsp;
-                {{$user->email}} - {{ucfirst($user->first_name)}} {{ucfirst($user->last_name)}}
+                {{$user->email}} - {{($user->user_profile()->count()) ? ucfirst($user->user_profile()->first()->first_name): ''}} {{($user->user_profile()->count()) ? ucfirst($user->user_profile()->first()->last_name): ''}}
                 @if(! $user->blocked)
                 <div class="pull-right">
                     <a href="{{URL::action('Palmabit\Authentication\Controllers\UserController@editProfile', ['user_id' => $user->id])}}">
