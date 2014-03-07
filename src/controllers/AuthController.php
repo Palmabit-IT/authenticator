@@ -8,6 +8,7 @@ use Redirect;
 use Palmabit\Library\Exceptions\PalmabitExceptionsInterface as Pbi;
 use Palmabit\Authentication\Classes\SentryAuthenticator;
 use Palmabit\Authentication\Classes\ReminderService;
+use L;
 
 class AuthController extends BaseController {
 
@@ -84,12 +85,12 @@ class AuthController extends BaseController {
         try
         {
             $this->reminder->send($email);
-            return Redirect::action("Palmabit\\Authentication\\Controllers\\AuthController@getReminder")->with(array("message"=> "Abbiamo inviato un mail per il recupero password. Per piaciere controlla la tua mail box."));
+            return Redirect::to("/")->with(array("messageReminder"=> L::t('Check your mail inbox, we sent you an email to recover your password.')));
         }
         catch(Pbi $e)
         {
             $errors = $this->reminder->getErrors();
-            return Redirect::action("Palmabit\\Authentication\\Controllers\\AuthController@getReminder")->withErrors($errors);
+            return Redirect::to("/")->with(array('errorsReminder'=>$errors));
         }
     }
 
@@ -110,7 +111,7 @@ class AuthController extends BaseController {
         try
         {
             $this->reminder->reset($email, $token, $password);
-            return Redirect::home()->with(array("message"=> "Password modificata con successo!"));
+            return Redirect::home()->with(array("message"=> L::t('Password changed') ));
         }
         catch(Pbi $e)
         {

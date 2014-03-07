@@ -1,8 +1,8 @@
-<?php  namespace Palmabit\Authentication\Controllers; 
+<?php  namespace Palmabit\Authentication\Controllers;
 /**
  * Class GroupController
  *
- * @author jacopo beschi jacopo@jacopobeschi.com
+ * @author jacopo beschi j.beschi@palmabit.com
  */
 use Illuminate\Support\MessageBag;
 use Palmabit\Authentication\Presenters\GroupPresenter;
@@ -10,9 +10,9 @@ use Palmabit\Authentication\Repository\SentryGroupRepository as Repo;
 use Palmabit\Library\Form\FormModel;
 use Palmabit\Authentication\Helpers\FormHelper;
 use Palmabit\Authentication\Models\Group;
-use Palmabit\Authentication\Exceptions\UserNotFoundException;
 use Palmabit\Authentication\Validators\GroupValidator;
 use Palmabit\Library\Exceptions\PalmabitExceptionsInterface;
+use Palmabit\Authentication\Exceptions\GroupNotFoundException;
 use View, Input, Redirect;
 
 class GroupController extends \BaseController

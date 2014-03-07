@@ -1,4 +1,4 @@
-<?php  namespace Palmabit\Authentication\Models; 
+<?php  namespace Palmabit\Authentication\Models;
 /**
  * Class UserProfile
  *
@@ -26,7 +26,9 @@ class UserProfile extends BaseModel
         'billing_country',
         'shipping_state',
         'shipping_city',
-        'shipping_country'
+        'shipping_country',
+        'profile_type',
+        'company'
     ];
 
     protected $guarded = ["id"];
@@ -35,4 +37,4 @@ class UserProfile extends BaseModel
     {
         return $this->belongsTo('Palmabit\Authentication\Models\User', "user_id");
     }
-} 
+}
