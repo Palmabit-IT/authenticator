@@ -35,3 +35,12 @@
 {
     margin-left: 5px;
 }
+
+.badge-green {
+    background-color: green;
+    float: left !important;
+}
+.badge-red {
+    background-color: red;
+    float: left !important;
+}

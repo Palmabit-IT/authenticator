@@ -18,19 +18,25 @@
     <div class="alert alert-danger">{{$error}}</div>
     @endforeach
     @endif
-    <h3>Lista utenti</h3>
+    <h3>Utenti</h3>
     @if(! $users->isEmpty() )
         <ul class="list-group">
         @foreach($users as $user)
             <li class="list-group-item">
-                <span class="
-glyphicon glyphicon-comment"></span> {{$user->email}} <span class="glyphicon glyphicon-user
-"></span> {{ucfirst($user->first_name)}} {{ucfirst($user->last_name)}}
-                <span class="glyphicon glyphicon-lock margin-left-5">Attivo:{{$user->activated ? 'Sì' : 'No'}}</span>
+                <span class="badge {{$user->activated ? 'badge-green' : 'badge-red'}}">&nbsp;</span>&nbsp;&nbsp;
+                {{$user->email}} - {{ucfirst($user->first_name)}} {{ucfirst($user->last_name)}}
                 @if(! $user->blocked)
-                <a href="{{URL::action('Palmabit\Authentication\Controllers\UserController@deleteUser',['id' => $user->id, '_token' => csrf_token()])}}" ><span class="glyphicon glyphicon-trash pull-right margin-left-5 delete">cancella </span></a>
-                <a href="{{URL::action('Palmabit\Authentication\Controllers\UserController@editUser', ['id' => $user->id])}}"><span class="glyphicon glyphicon-edit pull-right">modifica </span></a>
-                <a href="{{URL::action('Palmabit\Authentication\Controllers\UserController@editProfile', ['user_id' => $user->id])}}"><span class="glyphicon glyphicon-user pull-right">profilo </span></a>
+                <div class="pull-right">
+                    <a href="{{URL::action('Palmabit\Authentication\Controllers\UserController@editProfile', ['user_id' => $user->id])}}">
+                        <span class="glyphicon glyphicon-user">profilo</span>
+                    </a>&nbsp;
+                    <a href="{{URL::action('Palmabit\Authentication\Controllers\UserController@editUser', ['id' => $user->id])}}">
+                        <span class="glyphicon glyphicon-edit">modifica</span>
+                    </a>&nbsp;
+                    <a href="{{URL::action('Palmabit\Authentication\Controllers\UserController@deleteUser',['id' => $user->id, '_token' => csrf_token()])}}" >
+                        <span class="glyphicon glyphicon-trash margin-left-5 delete">cancella</span>
+                    </a>&nbsp;
+                </div>
                 @endif
                 <span class="clearfix"></span>
             </li>

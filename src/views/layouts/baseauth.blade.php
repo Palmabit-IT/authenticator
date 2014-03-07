@@ -11,6 +11,7 @@
 
     {{ HTML::style('packages/palmabit/authentication/css/bootstrap.min.css') }}
     {{ HTML::style('packages/palmabit/authentication/css/style.css') }}
+    {{ HTML::style('packages/palmabit/authentication/css/signin.css') }}
 
     @yield('head_css')
     {{-- End head css --}}
