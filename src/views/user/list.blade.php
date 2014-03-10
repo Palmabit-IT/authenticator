@@ -45,7 +45,7 @@ Admin area: lista utenti
     @else
     <h5>Non ci sono utenti presenti nel sistema.</h5>
     @endif
-    <a href="{{URL::action('Palmabit\Authentication\Controllers\UserController@editUser')}}" class="btn btn-primary pull-right">Aggiungi</a>
+    <a href="{{URL::action('Palmabit\Authentication\Controllers\UserController@editUser')}}" class="btn btn-primary pull-right"><i class="glyphicon glyphicon-plus"></i> Aggiungi nuovo</a>
 </div>
 @stop
 

@@ -21,12 +21,12 @@ View::composer('authentication::layouts.*', function ($view){
  */
 View::composer(['authentication::user.*', 'authentication::group.*', 'authentication::permission.*'], function ($view){
     $view->with('sidebar_items', [
-                                    "Lista utenti" => URL::route('users.list'),
-                                    "Aggiungi utente" => URL::route('users.edit'),
-                                    "Lista gruppi" => URL::route('users.groups.list'),
-                                    "Aggiungi gruppo" => URL::route('users.groups.edit'),
-                                    "Lista permessi" => URL::route('users.permission.list'),
-                                    "Aggiungi permesso" => URL::route('users.permission.edit'),
+                                    "Lista utenti" => array( URL::route('users.list'), "<i class='glyphicon glyphicon-th-list'></i>"),
+                                    "Aggiungi utente" => array( URL::route('users.edit'), "<i class='glyphicon glyphicon-plus'></i>"),
+                                    "Lista gruppi" => array( URL::route('users.groups.list'), "<i class='glyphicon glyphicon-th-list'></i>"),
+                                    "Aggiungi gruppo" => array( URL::route('users.groups.edit'), "<i class='glyphicon glyphicon-plus'></i>"),
+                                    "Lista permessi" => array( URL::route('users.permission.list'), "<i class='glyphicon glyphicon-th-list'></i>"),
+                                    "Aggiungi permesso" => array( URL::route('users.permission.edit'), "<i class='glyphicon glyphicon-plus'></i>"),
                                  ]);
 });
 

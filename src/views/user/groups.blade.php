@@ -12,6 +12,11 @@
 </ul>
 @else
 <h5>Non ci sono gruppi associati all' utente.</h5>
+@if(! $user->exists)
+    <div class="alert alert-danger">
+      <h5>Per associare un gruppo bisogna prima creare l'utente.</h5>
+    </div>
+@endif
 @endif
 
 {{-- form to associate groups --}}
@@ -24,8 +29,5 @@
 </div>
 <div class="form-group">
     {{Form::submit('Aggiungi', ["class" => "btn btn-primary", ($user->exists ) ? "" : "disabled"])}}
-    @if(! $user->exists)
-    <h5 style="color:gray">Per associare permessi bisogna prima creare il gruppo.</h5>
-    @endif
 </div>
 {{Form::close()}}
