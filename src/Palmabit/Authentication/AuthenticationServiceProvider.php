@@ -24,7 +24,11 @@ class AuthenticationServiceProvider extends ServiceProvider {
 	 * @override
 	 * @return void
 	 */
-	public function register() {}
+	public function register()
+    {
+        $this->loadOtherProviders();
+        $this->registerAliases();
+    }
 
     /**
      * @override
@@ -52,9 +56,6 @@ class AuthenticationServiceProvider extends ServiceProvider {
 
         $this->setupConnection();
         $this->overrideValidationConnection();
-
-        $this->loadOtherProviders();
-        $this->registerAliases();
     }
 
 	/**
