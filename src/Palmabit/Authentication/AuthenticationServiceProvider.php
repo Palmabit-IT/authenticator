@@ -24,8 +24,8 @@ class AuthenticationServiceProvider extends ServiceProvider {
 	 * @override
 	 * @return void
 	 */
-	public function register() {
-
+	public function register()
+    {
         $this->loadOtherProviders();
         $this->registerAliases();
     }
