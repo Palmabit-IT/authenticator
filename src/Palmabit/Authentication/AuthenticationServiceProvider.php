@@ -17,14 +17,18 @@ class AuthenticationServiceProvider extends ServiceProvider {
 	 *
 	 * @var bool
 	 */
-	protected $defer = false;
+	protected $defer = true;
 
 	/**
 	 * Register the service provider.
 	 * @override
 	 * @return void
 	 */
-	public function register() {}
+	public function register() {
+
+        $this->loadOtherProviders();
+        $this->registerAliases();
+    }
 
     /**
      * @override
@@ -47,14 +51,11 @@ class AuthenticationServiceProvider extends ServiceProvider {
         // include event subscribers
         require __DIR__ . "/../../subscribers.php";
 
-        $this->overwriteSentryConfig();
-        $this->overwriteWayFormConfig();
-
         $this->setupConnection();
         $this->overrideValidationConnection();
 
-        $this->loadOtherProviders();
-        $this->registerAliases();
+        $this->overwriteSentryConfig();
+        $this->overwriteWayFormConfig();
     }
 
 	/**
