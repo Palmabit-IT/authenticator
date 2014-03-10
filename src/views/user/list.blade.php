@@ -1,7 +1,7 @@
 @extends('authentication::layouts.base-2cols')
 
 @section('title')
-    Admin area: lista utenti
+Admin area: lista utenti
 @stop
 
 @section('content')
@@ -20,7 +20,7 @@
     @endif
     <h3>Utenti</h3>
     @if(! $users->isEmpty() )
-        <ul class="list-group">
+    <ul class="list-group">
         @foreach($users as $user)
             <li class="list-group-item">
                 <span class="badge {{$user->activated ? 'badge-green' : 'badge-red'}}">&nbsp;</span>&nbsp;&nbsp;
@@ -42,17 +42,18 @@
             </li>
             @endforeach
         </ul>
+
     @else
-        <h5>Non ci sono utenti presenti nel sistema.</h5>
+    <h5>Non ci sono utenti presenti nel sistema.</h5>
     @endif
-    <a href="{{URL::action('Palmabit\Authentication\Controllers\UserController@editUser')}}" class="btn btn-primary pull-right">Aggiungi</a>
+    <a href="{{URL::action('Palmabit\Authentication\Controllers\UserController@editUser')}}" class="btn btn-primary pull-right"><i class="glyphicon glyphicon-plus"></i> Aggiungi nuovo</a>
 </div>
 @stop
 
 @section('footer_scripts')
-    <script>
-        $(".delete").click(function(){
-            return confirm("Sei sicuro di volere eliminare l'elemento selezionato?");
-        });
-    </script>
+<script>
+    $(".delete").click(function(){
+        return confirm("Sei sicuro di volere eliminare l'elemento selezionato?");
+    });
+</script>
 @stop

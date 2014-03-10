@@ -8,9 +8,9 @@
     <meta name="keywords" content="">
     <meta name="author" content="">
 
-
     {{ HTML::style('packages/palmabit/authentication/css/bootstrap.min.css') }}
     {{ HTML::style('packages/palmabit/authentication/css/style.css') }}
+    {{ HTML::style('packages/palmabit/authentication/css/sticky-footer.css') }}
 
     @yield('head_css')
     {{-- End head css --}}
@@ -31,6 +31,17 @@
             @yield('container')
         </div>
 
+
+        <div id="footer">
+          <hr>
+          <div class="container">
+            <p class="phelp">
+                <small>Report a problem <a href="mailto:hello@palmabit.com">hello@palmabit.com</a><br>
+                &copy; 2014 • Palmabit • <a href="http://www.palmabit.com">palmabit.com</a></small>
+            </p>
+          </div>
+        </div>
+
         {{-- Start footer scripts --}}
         @yield('before_footer_scripts')
 
@@ -39,5 +50,6 @@
 
         @yield('footer_scripts')
         {{-- End footer scripts --}}
+
     </body>
 </html>
