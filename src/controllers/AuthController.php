@@ -10,7 +10,7 @@ use Palmabit\Authentication\Classes\SentryAuthenticator;
 use Palmabit\Authentication\Classes\ReminderService;
 use L;
 
-class AuthController extends BaseController {
+class geAuthController extends BaseController {
 
     protected $auth;
     protected $reminder;
@@ -59,10 +59,9 @@ class AuthController extends BaseController {
      */
     public function getLogout()
     {
-        $redirect_to_root = Input::get('cient_side');
         $this->auth->logout();
 
-        return $redirect_to_root ? Redirect::to('/') : Redirect::to('/user/login');
+        return Redirect::to('/');
     }
 
     /**
