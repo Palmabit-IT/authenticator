@@ -42,7 +42,7 @@ Admin area: lista utenti
             </li>
             @endforeach
         </ul>
-
+    {{$users->links()}}
     @else
     <h5>Non ci sono utenti presenti nel sistema.</h5>
     @endif
