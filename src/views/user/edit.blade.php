@@ -21,9 +21,9 @@ Admin area: modifica utenti
         <span class="text-danger">{{$errors->first('email')}}</span>
         {{FormField::password(["autocomplete" => "off", "label" => isset($user->id) ? "modifica password" : "password"])}}
         <span class="text-danger">{{$errors->first('password')}}</span>
-        {{--    {{FormField::last_name( ["label" => "Nome"] ) }}
+        {{--    {{FormField::last_name( ["label" => "Nome", "autocomplete" => "off"] ) }}
         <span class="text-danger">{{$errors->first('last_name')}}</span>
-        {{FormField::first_name( ["label" => "Cognome"] ) }}
+        {{FormField::first_name( ["label" => "Cognome", "autocomplete" => "off"] ) }}
         <span class="text-danger">{{$errors->first('first_name')}}</span> --}}
         <div class="form-group">
             {{Form::label("activated","Utente attivo")}}

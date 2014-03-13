@@ -10,7 +10,7 @@ use Palmabit\Authentication\Classes\SentryAuthenticator;
 use Palmabit\Authentication\Classes\ReminderService;
 use L;
 
-class geAuthController extends BaseController {
+class AuthController extends BaseController {
 
     protected $auth;
     protected $reminder;
