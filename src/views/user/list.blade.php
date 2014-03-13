@@ -42,7 +42,9 @@ Admin area: lista utenti
             </li>
             @endforeach
         </ul>
+    {{-- pagination links --}}
     {{$users->links()}}
+
     @else
     <h5>Non ci sono utenti presenti nel sistema.</h5>
     @endif
