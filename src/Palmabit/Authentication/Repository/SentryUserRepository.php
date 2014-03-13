@@ -94,7 +94,8 @@ class SentryUserRepository extends EloquentBaseRepository implements UserReposit
      */
     public function all()
     {
-        return User::all();
+        $per_page_admin = 5;
+        return User::get()->paginate($per_page_admin);
     }
 
     /**
