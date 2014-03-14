@@ -19,6 +19,7 @@ use Palmabit\Library\Exceptions\PalmabitExceptionsInterface;
 use View, Input, Redirect, App;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Palmabit\Authentication\Services\UserProfileService;
+use L;
 
 class UserController extends \BaseController
 {
