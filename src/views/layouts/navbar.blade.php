@@ -12,6 +12,7 @@
                 @endif
             </ul>
             <div class="navbar-form navbar-right">
+                <a href="{{URL::to('/')}}" style="margin-right:10px; color:#eee;" target="_blank">SFX shop</a>
                 <a href="{{URL::to('/user/logout')}}" class="btn btn-warning">Logout</a>
             </div>
         </div><!--/.nav-collapse -->
