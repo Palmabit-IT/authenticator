@@ -16,8 +16,8 @@ use Palmabit\Authentication\Exceptions\UserNotFoundException;
 use Palmabit\Authentication\Validators\UserValidator;
 use Palmabit\Authentication\Validators\UserProfileValidator;
 use Palmabit\Library\Exceptions\PalmabitExceptionsInterface;
-use View, Input, Redirect, App, L;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
+use View, Input, Redirect, App;
+use Illuminate\Database\Eloquegnt\ModelNotFoundException;
 use Palmabit\Authentication\Services\UserProfileService;
 use L;
 
