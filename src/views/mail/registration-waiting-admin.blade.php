@@ -6,14 +6,14 @@
 <body>
 <h2>Richiesta di registrazione su {{Config::get('authentication::app_name')}}</h2>
 <div>
-    <strong>L'utente: {{$body['email']}}</strong>
+    <strong>{{L::t('The user')}}: {{$body['email']}}</strong>
     <br/>
-    Ha effettuato una richiesta di registrazione al sito. Verifica il profilo e procedi con l'eventuale attivazione.
+    {{L::t('has made an application for registration to the site. Check the profile and proceed with the activation')}}.
     <br/>
     @if(! empty($body['comments']) )
-        Commenti : {{$body['comments']}}<br/>
+        {{L::t('Comments')}} : {{$body['comments']}}<br/>
     @endif
-    <a href="{{URL::action('Palmabit\Authentication\Controllers\UserController@editUser', [ 'id' => $body['id'] ] )}}" target="_blank">Vai all'utente</a>
+    <a href="{{URL::action('Palmabit\Authentication\Controllers\UserController@editUser', [ 'id' => $body['id'] ] )}}" target="_blank">{{L::t('View user')}}</a>
 </div>
 </body>
 </html>
