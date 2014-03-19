@@ -12,8 +12,8 @@
     ],
     "repositories": [
         {
-            "type": "composer",
-            "url": "http://95.110.212.212/package_web"
+            "type": "vcs",
+            "url": "https://intrip@bitbucket.org/palmabit/library.git"
         },
         {
             "type": "vcs",
