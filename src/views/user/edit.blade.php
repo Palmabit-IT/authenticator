@@ -31,7 +31,7 @@ Admin area: modifica utenti
         </div>
         <div class="form-group">
             {{Form::label("new_user","Nuovo utente")}}
-            {{Form::select('new_user', ["1" => "Sì", "0" => "No"], (isset($user->activated) && $user->activated) ? $user->activated : "0", ["class"=> "form-control"] )}}
+            {{Form::select('new_user', ["1" => "Sì", "0" => "No"], (isset($user->new_user) && $user->new_user) ? $user->new_user : "0", ["class"=> "form-control"] )}}
         </div>
         {{Form::hidden('id')}}
         {{Form::hidden('form_name','user')}}

@@ -26,7 +26,7 @@ class User extends CartaUser
      */
     public function validate()
     {
-        if ( ! $login = $this->{static::$loginAttribute})
+        if ( ! $login = $this->{static::$loginAttribute} )
         {
             throw new LoginRequiredException("A login is required for a user, none given.");
         }
