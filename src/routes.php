@@ -13,7 +13,6 @@ Route::post('/user/login', ["before" => "csrf", "uses" => "Palmabit\\Authenticat
 /**
  * Password recovery
  */
-Route::get('/user/change-password', 'Palmabit\Authentication\Controllers\AuthController@getChangePassword');
 Route::get('/user/recupero-password-conferma', function(){
     return View::make('authentication::auth.confirmation');
 });
