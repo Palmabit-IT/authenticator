@@ -46,7 +46,9 @@ class UserRegisterServiceTest extends DbTestCase {
         $input = [
             "email" => "test@test.com",
             "password" => "password@test.com",
-            "group_id" => 1
+            "group_id" => 1,
+            "first_name" => "first_name",
+            "last_name" => "last_name",
         ];
         $mock_mailer = m::mock('StdClass')->shouldReceive('sendTo')
             ->andReturn(true)
@@ -63,34 +65,6 @@ class UserRegisterServiceTest extends DbTestCase {
 
         $user = $this->u_r->find(1);
         $this->assertNotEmpty($user);
-    }
-
-    /**
-     * @test
-     **/
-    public function it_create_a_profile()
-    {
-        $input = [
-            "email" => "test@test.com",
-            "password" => "password@test.com",
-            "group_id" => 1
-        ];
-        $mock_mailer = m::mock('StdClass')->shouldReceive('sendTo')
-            ->andReturn(true)
-            ->getMock();
-        App::instance('palmamailer', $mock_mailer);
-        $mock_auth_helper = m::mock('StdClass')->shouldReceive('getNotificationRegistrationUsersEmail')->once()->andReturn([])->getMock();
-        \App::instance('authentication_helper', $mock_auth_helper);
-        $this->u_g->create(["name"=> "name"]);
-        $mock_validator = $this->getValidatorSuccess();
-
-        $service = new UserRegisterService($mock_validator);
-
-        $service->register($input);
-
-        $user = $this->u_r->find(1);
-        $profile = App::make('profile_repository')->getFromUserId($user->id);
-        $this->assertNotEmpty($profile);
     }
     
     /**
@@ -135,7 +109,9 @@ class UserRegisterServiceTest extends DbTestCase {
         $input = [
             "email" => "test@test.com",
             "password" => "password@test.com",
-            "group_id" => 1
+            "group_id" => 1,
+            "first_name" => "first_name",
+            "last_name" => "last_name",
         ];
         $mock_mailer = m::mock('StdClass')->shouldReceive('sendTo')->once()
             ->with('test@test.com', m::any(), m::any(), m::any())
@@ -161,7 +137,9 @@ class UserRegisterServiceTest extends DbTestCase {
             "email" => "test@test.com",
             "password" => "password@test.com",
             "group_id" => 1,
-            "comments" => ''
+            "comments" => '',
+            "first_name" => "first_name",
+            "last_name" => "last_name",
         ];
         $mock_mailer = m::mock('StdClass')->shouldReceive('sendTo')->once()
             ->andReturn(true)
@@ -206,7 +184,9 @@ class UserRegisterServiceTest extends DbTestCase {
         $input = [
             "email" => "test@test.com",
             "password" => "password@test.com",
-            "group_id" => 1
+            "group_id" => 1,
+            "first_name" => "",
+            "last_name" => "",
         ];
         $mock_mailer = m::mock('StdClass')->shouldReceive('sendTo')
             ->andReturn(true)

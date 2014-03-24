@@ -106,7 +106,7 @@ class UserRegisterService
             // user
             $user    = $this->u_r->create($input);
             // profile
-            $this->p_r->create(array_merge(["user_id" => $user->id], $input) );
+//            $this->p_r->create(array_merge(["user_id" => $user->id], $input) );
         }
         catch(UserExistsException $e)
         {

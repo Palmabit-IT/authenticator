@@ -16,7 +16,9 @@ class SentryUserRepositoryTest extends DbTestCase {
         $input = [
             "email" => "admin@admin.com",
             "password" => "password",
-            "activated" => 1
+            "activated" => 1,
+            "first_name" => "first_name",
+            "last_name" => "last_name",
         ];
         $repo->create($input);
         $group_repo = App::make('group_repository');
