@@ -110,7 +110,7 @@ class AuthController extends BaseController {
         try
         {
             $this->reminder->reset($email, $token, $password);
-            return View::make("authentication::password-change-confirmation");
+            return View::make("authentication::auth.password-change-confirmation");
         }
         catch(Pbi $e)
         {
