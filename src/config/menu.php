@@ -5,18 +5,18 @@ return [
             "name" => "Utenti",
             "route" => "users",
             "link" => URL::route('users.list'),
-            "permissions" => ["_admin"]
+            "permissions" => [""]
         ],
         [
             "name" => "Prodotti",
             "route" => "products",
             "link" => URL::route('products.lists'),
-            "permissions" => ["_admin"]
+            "permissions" => [""]
         ],
         [
             "name" => "Categorie",
             "route" => "category",
             "link" => URL::route('category.lists'),
-            "permissions" => ["_admin"]
+            "permissions" => [""]
         ]
 ];
