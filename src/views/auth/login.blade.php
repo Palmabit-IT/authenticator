@@ -1,21 +1,45 @@
-@extends('authentication::layouts.baseauth')
-@section('container')
-    {{Form::open(array('url' => URL::action("Palmabit\Authentication\Controllers\AuthController@postLogin"), 'method' => 'post', 'class' => 'form-signin') )}}
-            <h2 class="form-signin-heading">Area riservata</h2>
-            @if($errors && ! $errors->isEmpty() )
-                    @foreach($errors->all() as $error)
-                        <div class="alert alert-danger">{{$error}}</div>
-                    @endforeach
-            @endif
+@extends('layouts.nobar')
+@section('content')
 
-            {{FormField::email(array('label' => '', 'placeholder' => 'email'))}}
-            {{FormField::password(array('label' => '', 'placeholder' => 'password'))}}
-            {{Form::label('checkbox','Ricordami')}}
-            {{Form::checkbox('checkbox',null, null)}}
-            {{Form::submit('Login', array("class"=>"btn btn-lg btn-primary btn-block"))}}
-            <div class="signin-btn">
-                {{link_to_action('Palmabit\Authentication\Controllers\AuthController@getReminder','Dimenticato la password?') }}<br>
-                <a href="/">Torna al sito</a>
-            <div>
-    {{Form::close()}}
+  <div class="container">
+      <div class="row">
+          <div class="col-md-4 col-md-offset-4">
+              <div class="login-panel panel panel-default">
+                  <div class="panel-heading">
+                      <h3 class="panel-title">Login</h3>
+                  </div>
+                  <div class="panel-body">
+                    @if($errors && ! $errors->isEmpty() )
+                            @foreach($errors->all() as $error)
+                                <div class="alert alert-danger">{{$error}}</div>
+                            @endforeach
+                    @endif
+                    {{Form::open(array('url' => URL::action("Palmabit\Authentication\Controllers\AuthController@postLogin"), 'method' => 'post', 'class' => 'form-signin') )}}
+                        <fieldset>
+                              <div class="form-group">
+                                  <input class="form-control" placeholder="E-mail" name="email" type="email" autofocus>
+                              </div>
+                              <div class="form-group">
+                                  <input class="form-control" placeholder="Password" name="password" type="password" value="">
+                              </div>
+                              <div class="checkbox">
+                                  <label>
+                                      <input name="remember" type="checkbox" value="Ricordami">Ricordami
+                                  </label>
+                              </div>
+                              <!-- Change this to a button or input when using this as a form -->
+                            {{Form::submit('Login', array("class"=>"btn btn-lg btn-success btn-block"))}}
+                        </fieldset>
+                    {{Form::close()}}
+                  </div>
+              </div>
+              <p>
+                {{link_to_action('Palmabit\Authentication\Controllers\AuthController@getReminder','Password dimenticata?') }}<br>
+                <a href="/user/signup" alt="Non sei ancora registrato?">Non sei ancora registrato?</a><br><br>
+                <a href="http://www.fism.net" alt="Torna al sito FISM">Torna al sito FISM</a>
+              </p>
+          </div>
+      </div>
+  </div>
+
 @stop

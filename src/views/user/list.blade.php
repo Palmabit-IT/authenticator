@@ -27,13 +27,8 @@ Admin area: lista utenti
                 {{$user->email}} - {{$user->first_name}} - {{$user->last_name}}
                 @if(! $user->blocked)
                 <div class="pull-right">
-                    </a>&nbsp;
-                    <a href="{{URL::action('Palmabit\Authentication\Controllers\UserController@editUser', ['id' => $user->id])}}">
-                        <span class="glyphicon glyphicon-edit">modifica</span>
-                    </a>&nbsp;
-                    <a href="{{URL::action('Palmabit\Authentication\Controllers\UserController@deleteUser',['id' => $user->id, '_token' => csrf_token()])}}" >
-                        <span class="glyphicon glyphicon-trash margin-left-5 delete">cancella</span>
-                    </a>&nbsp;
+                    <a href="{{URL::action('Palmabit\Authentication\Controllers\UserController@editUser', ['id' => $user->id])}}"><i class="glyphicon glyphicon-edit"></i> modifica</a>&nbsp;
+                    <a href="{{URL::action('Palmabit\Authentication\Controllers\UserController@deleteUser',['id' => $user->id, '_token' => csrf_token()])}}" ><i class="glyphicon glyphicon-trash margin-left-5 delete"></i> cancella</a>&nbsp;
                 </div>
                 @endif
                 <span class="clearfix"></span>

@@ -31,7 +31,7 @@
                     </div>
                 </div>
                 <p>
-                    <a href="http://www.fism.net" alt="Torna al sito">Torna al sito</a>
+                    <a href="http://www.fism.net" alt="Torna al sito FISM">Torna al sito FISM</a>
                 </p>
           </div>
       </div>
