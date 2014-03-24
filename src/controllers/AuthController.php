@@ -89,7 +89,7 @@ class AuthController extends BaseController {
         catch(Pbi $e)
         {
             $errors = $this->reminder->getErrors();
-            return Redirect::to("/user/recupero-password")->with(array('errorsReminder'=>$errors));
+            return Redirect::to("/user/recupero-password")->with(array('errors'=>$errors));
         }
     }
 
