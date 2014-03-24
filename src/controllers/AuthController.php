@@ -84,12 +84,12 @@ class AuthController extends BaseController {
         try
         {
             $this->reminder->send($email);
-            return Redirect::to("/")->with(array("messageReminder"=> L::t('Check your mail inbox, we sent you an email to recover your password.')));
+            return Redirect::to("/user/recupero-password-conferma");
         }
         catch(Pbi $e)
         {
             $errors = $this->reminder->getErrors();
-            return Redirect::to("/")->with(array('errorsReminder'=>$errors));
+            return Redirect::to("/user/recupero-password")->with(array('errors'=>$errors));
         }
     }
 
@@ -110,7 +110,7 @@ class AuthController extends BaseController {
         try
         {
             $this->reminder->reset($email, $token, $password);
-            return Redirect::home()->with(array("message"=> L::t('Password changed') ));
+            return View::make("authentication::password-change-confirmation");
         }
         catch(Pbi $e)
         {
