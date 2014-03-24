@@ -23,7 +23,7 @@ View::composer(['authentication::user.*', 'authentication::group.*', 'authentica
     $view->with('sidebar_items', [
                                     "Lista utenti" =>  URL::route('users.list'),
                                     "Aggiungi utente" =>  URL::route('users.edit'),
-                                    "Lista gruppi" => URL::route('users.groups.list',
+                                    "Lista gruppi" => URL::route('users.groups.list'),
                                     "Aggiungi gruppo" => URL::route('users.groups.edit'),
                                     "Lista permessi" => URL::route('users.permission.list'),
                                     "Aggiungi permesso" => URL::route('users.permission.edit')
