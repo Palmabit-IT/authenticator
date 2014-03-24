@@ -110,7 +110,7 @@ class AuthController extends BaseController {
         try
         {
             $this->reminder->reset($email, $token, $password);
-            return Redirect::home()->with(array("message"=> L::t('Password changed') ));
+            return View::make("authentication::password-change-confirmation");
         }
         catch(Pbi $e)
         {
