@@ -43,7 +43,7 @@ class AuthController extends BaseController {
                                              ), $remember);
         if($success)
         {
-            return Redirect::to('/user/recupero-password-conferma');
+            return Redirect::to('/admin/users/list');
         }
         else
         {
@@ -84,12 +84,12 @@ class AuthController extends BaseController {
         try
         {
             $this->reminder->send($email);
-            return Redirect::to("/")->with(array("messageReminder"=> L::t('Check your mail inbox, we sent you an email to recover your password.')));
+            return Redirect::to("/user/recupero-password-conferma");
         }
         catch(Pbi $e)
         {
             $errors = $this->reminder->getErrors();
-            return Redirect::to("/")->with(array('errorsReminder'=>$errors));
+            return Redirect::to("/user/change-password")->with(array('errorsReminder'=>$errors));
         }
     }
 
@@ -98,7 +98,7 @@ class AuthController extends BaseController {
         $email = Input::get('email');
         $token = Input::get('token');
 
-        return View::make("pages.user.forgotpassword", array("email" => $email, "token" => $token) );
+        return View::make("authentication::auth.changepassword", array("email" => $email, "token" => $token) );
     }
 
     public function postChangePassword()
@@ -110,7 +110,7 @@ class AuthController extends BaseController {
         try
         {
             $this->reminder->reset($email, $token, $password);
-            return Redirect::to()->with(array("message"=> L::t('Password changed') ));
+            return Redirect::home()->with(array("message"=> L::t('Password changed') ));
         }
         catch(Pbi $e)
         {

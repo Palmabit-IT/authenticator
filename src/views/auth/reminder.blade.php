@@ -20,7 +20,7 @@
                             <input class="form-control" placeholder="E-mail" name="email" type="email" autofocus>
                         </div>
                         <!-- Change this to a button or input when using this as a form -->
-                        <a href="#" class="btn btn-lg btn-success btn-block">Recupera</a>
+                        {{Form::submit('Recupera', ['class' => 'btn btn-lg btn-success btn-block'])}}
                     </fieldset>
                     {{Form::close()}}
                 </div>
