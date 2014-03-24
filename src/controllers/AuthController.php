@@ -1,10 +1,6 @@
 <?php namespace Palmabit\Authentication\Controllers;
 
-use BaseController;
-use View;
-use Sentry;
-use Input;
-use Redirect;
+use BaseController, View, Sentry, Input, Redirect;
 use Palmabit\Library\Exceptions\PalmabitExceptionsInterface as Pbi;
 use Palmabit\Authentication\Classes\SentryAuthenticator;
 use Palmabit\Authentication\Classes\ReminderService;

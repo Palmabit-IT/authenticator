@@ -26,8 +26,12 @@ Admin area: modifica utenti
         {{FormField::first_name( ["label" => "Cognome", "autocomplete" => "off"] ) }}
         <span class="text-danger">{{$errors->first('first_name')}}</span>
         <div class="form-group">
-            {{Form::label("activated","Utente attivo")}}
+            {{Form::label("activated","Utente in regola")}}
             {{Form::select('activated', ["1" => "Sì", "0" => "No"], (isset($user->activated) && $user->activated) ? $user->activated : "0", ["class"=> "form-control"] )}}
+        </div>
+        <div class="form-group">
+            {{Form::label("new_user","Nuovo utente")}}
+            {{Form::select('new_user', ["1" => "Sì", "0" => "No"], (isset($user->activated) && $user->activated) ? $user->activated : "0", ["class"=> "form-control"] )}}
         </div>
         {{Form::hidden('id')}}
         {{Form::hidden('form_name','user')}}
