@@ -18,6 +18,8 @@ class CreateUsersTable extends Migration {
             $table->string('email');
             $table->string('password');
             $table->text('permissions')->nullable();
+            $table->text('first_name');
+            $table->text('last_name');
             $table->boolean('activated')->default(0);
             $table->string('activation_code')->nullable();
             $table->timestamp('activated_at')->nullable();

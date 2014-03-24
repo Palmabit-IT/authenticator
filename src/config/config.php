@@ -1,5 +1,5 @@
 <?php
 
 return [
-    "app_name" => "SFX shop - pannello di controllo",
+    "app_name" => "FISM FAQ - pannello di controllo",
 ];
