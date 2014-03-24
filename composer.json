@@ -5,15 +5,15 @@
     "license" : "proprietary",
     "authors": [
         {
-            "name": "jacopo",
-            "email": "j.beschi@palmabit.com",
-            "homepage": "http://www.jacopobeschi.com"
+            "name": "Palmabit",
+            "email": "hello@palmabit.com",
+            "homepage": "http://www.palmabit.com"
         }
     ],
     "repositories": [
         {
             "type": "vcs",
-            "url": "https://intrip@bitbucket.org/palmabit/library.git"
+            "url": "https://palmabitdev:op423sfdl4@bitbucket.org/palmabit/library.git"
         },
         {
             "type": "vcs",
