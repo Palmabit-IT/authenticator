@@ -44,6 +44,8 @@ class SentryUserRepository extends EloquentBaseRepository implements UserReposit
                 "email" => $input["email"],
                 "password" => $input["password"],
                 "activated" => $input["activated"],
+                "first_name" => $input["first_name"],
+                "last_name" => $input["last_name"]
         );
         try
         {

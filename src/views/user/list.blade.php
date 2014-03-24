@@ -24,11 +24,9 @@ Admin area: lista utenti
         @foreach($users as $user)
             <li class="list-group-item">
                 <span class="badge {{$user->activated ? 'badge-green' : 'badge-red'}}">&nbsp;</span>&nbsp;&nbsp;
-                {{$user->email}} - {{($user->user_profile()->count()) ? ucfirst($user->user_profile()->first()->first_name): ''}} {{($user->user_profile()->count()) ? ucfirst($user->user_profile()->first()->last_name): ''}}
+                {{$user->email}} - {{$user->first_name}} - {{$user->last_name}}
                 @if(! $user->blocked)
                 <div class="pull-right">
-                    <a href="{{URL::action('Palmabit\Authentication\Controllers\UserController@editProfile', ['user_id' => $user->id])}}">
-                        <span class="glyphicon glyphicon-user">profilo</span>
                     </a>&nbsp;
                     <a href="{{URL::action('Palmabit\Authentication\Controllers\UserController@editUser', ['id' => $user->id])}}">
                         <span class="glyphicon glyphicon-edit">modifica</span>
