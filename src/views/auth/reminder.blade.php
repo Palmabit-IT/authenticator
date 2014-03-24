@@ -1,17 +1,37 @@
-@extends('authentication::layouts.baseauth')
-@section('container')
-    <h1>Recupero password</h1>
-    <?php $message = Session::get('message'); ?>
-    @if( isset($message) )
-        <div class="alert alert-success">{{$message}}</div>
-    @endif
-    @if($errors && ! $errors->isEmpty() )
-        @foreach($errors->all() as $error)
-            <div class="alert alert-danger">{{$error}}</div>
-        @endforeach
-    @endif
-    {{Form::open(array('url' => URL::action("Palmabit\Authentication\Controllers\AuthController@postReminder"), 'method' => 'post') )}}
-    {{FormField::email(array('label' => "email") )}}
-    {{Form::submit('Invia', array("class"=>"btn btn-large btn-primary"))}}
-    {{Form::close()}}
+@extends('layouts.nobar')
+@section('content')
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4">
+            <div class="login-panel panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Recupera password</h3>
+                </div>
+                @if($errors && ! $errors->isEmpty() )
+                @foreach($errors->all() as $error)
+                <div class="alert alert-danger">{{$error}}</div>
+                @endforeach
+                @endif
+                <div class="panel-body">
+                    {{Form::open(array('url' => URL::action("Palmabit\Authentication\Controllers\AuthController@postReminder"), 'method' => 'post') )}}
+                    <fieldset>
+                        <div class="form-group">
+                            <input class="form-control" placeholder="E-mail" name="email" type="email" autofocus>
+                        </div>
+                        <!-- Change this to a button or input when using this as a form -->
+                        <a href="#" class="btn btn-lg btn-success btn-block">Recupera</a>
+                    </fieldset>
+                    {{Form::close()}}
+                </div>
+            </div>
+            <p>
+                <a href="{{URL::to('/user/login')}}" alt="Sei qui per errore?">Sei qui per errore?</a><br>
+                <a href="{{URL::to('/user/signup')}}" alt="Non sei ancora registrato?">Non sei ancora registrato?</a><br><br>
+                <a href="{{URL::to('/')}}" alt="Torna al sito">Torna al sito</a>
+            </p>
+        </div>
+    </div>
+</div>
+
 @stop

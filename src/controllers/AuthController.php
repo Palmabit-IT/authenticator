@@ -43,7 +43,7 @@ class AuthController extends BaseController {
                                              ), $remember);
         if($success)
         {
-            return Redirect::to('/admin/users/list');
+            return Redirect::to('/user/recupero-password-conferma');
         }
         else
         {
@@ -98,7 +98,7 @@ class AuthController extends BaseController {
         $email = Input::get('email');
         $token = Input::get('token');
 
-        return View::make("authentication::auth.changepassword", array("email" => $email, "token" => $token) );
+        return View::make("pages.user.forgotpassword", array("email" => $email, "token" => $token) );
     }
 
     public function postChangePassword()
@@ -110,7 +110,7 @@ class AuthController extends BaseController {
         try
         {
             $this->reminder->reset($email, $token, $password);
-            return Redirect::home()->with(array("message"=> L::t('Password changed') ));
+            return Redirect::to()->with(array("message"=> L::t('Password changed') ));
         }
         catch(Pbi $e)
         {
