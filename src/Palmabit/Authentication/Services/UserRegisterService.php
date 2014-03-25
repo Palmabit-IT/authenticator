@@ -115,7 +115,7 @@ class UserRegisterService
         {
             // try to update the user
             $user = $this->u_r->findByLogin($input["email"]);
-            if($user->imported) $user = $this->u_r->update($user->id, ["password" => $input["password"]]);
+            if($user->imported) $user = $this->u_r->update($user->id, ["password" => $input["password"], "imported" => false]);
         }
         catch(UserNotFoundException $e)
         {

@@ -100,6 +100,7 @@ class UserRegisterServiceTest extends DbTestCase {
         $user = $this->u_r->find(1);
         // changed the password
         $this->assertNotEquals($user->password, $user_before->password);
+        $this->assertEquals(0, $user->imported);
     }
 
     /**
