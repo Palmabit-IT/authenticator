@@ -204,6 +204,37 @@ class SentryUserRepository extends EloquentBaseRepository implements UserReposit
         return $group->users;
     }
 
+    /**
+     * Obtain a list of user filterd by status (active) or type (new) or gruop
+     *
+     * @param String $filter
+     * @throws \Palmabit\Authentication\Exceptions\UserNotFoundException
+     * @return mixed
+     */
+    public function findFromAttrName($status)
+    {
+
+        switch ($status) {
+            case 'admin':
+                $group = $this->findFromGroupName($status);
+                if(!$group) throw new UserNotFoundException;
+                $users = $group->users;
+                break;
+            case 'new':
+                $users = $this->findByNewUser($status);
+                break;
+            case 'noninregola':
+                $users = $this->findByActive($status);
+                break;
+            case 'inregola':
+                $users = $this->findByNonActive($status);
+                break;
+            default:
+                $this->all();
+        }
+
+        return $users;
+    }
 
     /**
      * @param $login_name
@@ -222,4 +253,32 @@ class SentryUserRepository extends EloquentBaseRepository implements UserReposit
 
         return $user;
     }
+
+    /**
+     * @param $active
+     */
+    public function findByActive($active)
+    {
+        $user = $this->model->where('active',1)->paginate(20);
+        return $user;
+    }
+
+    /**
+     * @param $active
+     */
+    public function findByNonActive($active)
+    {
+        $user = $this->model->where('active',0)->paginate(20);
+        return $user;
+    }
+
+    /**
+     * @param $status
+     */
+    public function findByNewUser($status)
+    {
+        $user = $this->model->where('new_user',1)->paginate(20);
+        return $user;
+    }
+
 }
