@@ -105,6 +105,66 @@ class UserRegisterServiceTest extends DbTestCase {
     /**
      * @test
      **/
+    public function it_dont_change_pass_and_dont_update_user_if_not_imported_and_exists()
+    {
+        $new_password = "_";
+        $before_password = "__";
+        $input = [
+            "email" => "test@test.com",
+            "password" => $before_password,
+            "first_name" => "first_name",
+            "last_name" => "last_name",
+            "activated" => 1,
+            "new_user" => 0,
+            "imported" => null
+        ];
+        $user_before = $this->u_r->create($input);
+        $input["password"] = $new_password;
+        $mock_mailer = m::mock('StdClass')->shouldReceive('sendTo')
+            ->andReturn(true)
+            ->getMock();
+        App::instance('palmamailer', $mock_mailer);
+        $mock_auth_helper = m::mock('StdClass')->shouldReceive('getNotificationRegistrationUsersEmail')->once()->andReturn([])->getMock();
+        \App::instance('authentication_helper', $mock_auth_helper);
+        $mock_validator = $this->getValidatorSuccess();
+
+        $service = new UserRegisterService($mock_validator);
+
+        $service->register($input);
+        $user = $this->u_r->find(1);
+        // changed the password
+        $this->assertEquals($user->password, $user_before->password);
+    }
+
+    /**
+     * @test
+     * @expectedException \Palmabit\Library\Exceptions\ValidationException
+     **/
+    public function it_throw_validation_exception_if_user_exists_is_not_imported_and_is_active()
+    {
+        $new_password = "_";
+        $before_password = "__";
+        $input = [
+            "email" => "test@test.com",
+            "password" => $before_password,
+            "first_name" => "first_name",
+            "last_name" => "last_name",
+            "activated" => 1,
+            "new_user" => 0,
+            "imported" => null,
+            "form_name" => "signup"
+        ];
+        $user_before = $this->u_r->create($input);
+        $input["password"] = $new_password;
+
+        $service = new UserRegisterService();
+
+        $service->register($input);
+    }
+
+    /**
+     * @test
+     **/
     public function it_sends_email_to_user_if_new()
     {
         $input = [
