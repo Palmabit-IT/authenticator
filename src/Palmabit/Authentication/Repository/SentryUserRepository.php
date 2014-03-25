@@ -258,7 +258,7 @@ class SentryUserRepository extends EloquentBaseRepository implements UserReposit
      */
     public function findByActive($active)
     {
-        $user = $this->model->where('active',1)->paginate(20);
+        $user = $this->model->where('activated',1)->paginate(20);
         return $user;
     }
 
@@ -267,7 +267,7 @@ class SentryUserRepository extends EloquentBaseRepository implements UserReposit
      */
     public function findByNonActive($active)
     {
-        $user = $this->model->where('active',0)->paginate(20);
+        $user = $this->model->where('activated',0)->paginate(20);
         return $user;
     }
 
