@@ -11,7 +11,7 @@
 Route::filter('logged', function()
 {
     $auth = App::make('authenticator');
-    if (! $auth->check()) return Redirect::to('landingnew');
+    if (! $auth->check()) return Redirect::to('user/login');
 });
 
 Route::filter('logged_401', function()
