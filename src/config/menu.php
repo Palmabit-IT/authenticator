@@ -8,9 +8,9 @@ return [
             "permissions" => []
         ],
         [
-            "name" => "Prodotti",
-            "route" => "products",
-            "link" => URL::route('products.lists'),
+            "name" => "Faq",
+            "route" => "faq",
+            "link" => URL::route('faq.lists'),
             "permissions" => []
         ],
         [
