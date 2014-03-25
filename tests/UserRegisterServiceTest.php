@@ -5,6 +5,7 @@ use Palmabit\Authentication\Exceptions\UserExistsException;
 use Palmabit\Authentication\Services\UserRegisterService;
 use App;
 use Mockery as m;
+use Palmabit\Authentication\Exceptions\UserNotFoundException;
 use Palmabit\Library\Exceptions\NotFoundException;
 use Palmabit\Library\Exceptions\PalmabitExceptionsInterface;
 use Illuminate\Database\QueryException;
@@ -41,12 +42,11 @@ class UserRegisterServiceTest extends DbTestCase {
     /**
      * @test
      **/
-    public function it_register_a_user()
+    public function it_register_a_user_if_not_exists()
     {
         $input = [
             "email" => "test@test.com",
             "password" => "password@test.com",
-            "group_id" => 1,
             "first_name" => "first_name",
             "last_name" => "last_name",
         ];
@@ -59,40 +59,96 @@ class UserRegisterServiceTest extends DbTestCase {
         $mock_validator = $this->getValidatorSuccess();
 
         $service = new UserRegisterService($mock_validator);
-        $this->u_g->create(["name"=> "name"]);
 
         $service->register($input);
 
         $user = $this->u_r->find(1);
         $this->assertNotEmpty($user);
+        $this->assertEquals(true,$user->new_user);
+        $this->assertFalse($user->activated);
     }
-    
+
     /**
-     * @deprecated test
+     * @test
      **/
-    public function it_associate_a_given_group()
+    public function it_update_user_password_if_user_already_exists()
     {
+        $new_password = "_";
+        $old_password = "__";
         $input = [
             "email" => "test@test.com",
-            "password" => "password@test.com",
-            "group_id" => 1
+            "password" => $old_password,
+            "first_name" => "first_name",
+            "last_name" => "last_name",
+            "activated" => 1,
+            "new_user" => 0,
         ];
+        $user_before = $this->u_r->create($input);
+        $input["password"] = $new_password;
         $mock_mailer = m::mock('StdClass')->shouldReceive('sendTo')
             ->andReturn(true)
             ->getMock();
         App::instance('palmamailer', $mock_mailer);
         $mock_auth_helper = m::mock('StdClass')->shouldReceive('getNotificationRegistrationUsersEmail')->once()->andReturn([])->getMock();
-        $mock_user = new \StdClass;
-        $mock_user->id = 1;
-        $mock_user->email = "";
         \App::instance('authentication_helper', $mock_auth_helper);
-        $mock_user_repo = m::mock('\Palmabit\Authentication\Repository\SentryUserRepository')
-            ->shouldReceive('create')->once()->andReturn($mock_user)
-            ->shouldReceive('addGroup')->once()
+        $mock_validator = $this->getValidatorSuccess();
+
+        $service = new UserRegisterService($mock_validator);
+
+        $service->register($input);
+        $user = $this->u_r->find(1);
+        // changed the password
+        $this->assertNotEquals($user->password, $user_before->password);
+    }
+
+    /**
+     * @test
+     **/
+    public function it_sends_email_to_user_if_new()
+    {
+        $input = [
+            "email" => "test@test.com",
+            "password" => "password@test.com",
+            "first_name" => "first_name",
+            "last_name" => "last_name",
+        ];
+        $mock_mailer = m::mock('StdClass')->shouldReceive('sendTo')->once()
+            ->with('test@test.com', m::any(), m::any(), "authentication::mail.registration-client-new")
+            ->andReturn(true)
             ->getMock();
-        \App::instance('user_repository', $mock_user_repo);
-        $mock_user_profile = m::mock('StdClass')->shouldReceive('create')->once()->andReturn(true)->getMock();
-        \App::instance('profile_repository', $mock_user_profile);
+        App::instance('palmamailer', $mock_mailer);
+        $mock_auth_helper = m::mock('StdClass')->shouldReceive('getNotificationRegistrationUsersEmail')->once()->andReturn([])->getMock();
+        \App::instance('authentication_helper', $mock_auth_helper);
+        $this->u_g->create(["name"=> "name"]);
+        $mock_validator = $this->getValidatorSuccess();
+
+        $service = new UserRegisterService($mock_validator);
+
+        $service->register($input);
+    }
+
+    /**
+     * @test
+     * @group 1
+     **/
+    public function it_sends_email_to_user_if_old_but_not_active()
+    {
+        $input = [
+            "email" => "test@test.com",
+            "password" => "password@test.com",
+            "first_name" => "first_name",
+            "last_name" => "last_name",
+            "activated" => 0,
+            "new_user" => 0
+        ];
+        $user_before = $this->u_r->create($input);
+        $mock_mailer = m::mock('StdClass')->shouldReceive('sendTo')->once()
+            ->with('test@test.com', m::any(), m::any(), "authentication::mail.registration-client-exists")
+            ->andReturn(true)
+            ->getMock();
+        App::instance('palmamailer', $mock_mailer);
+        $mock_auth_helper = m::mock('StdClass')->shouldReceive('getNotificationRegistrationUsersEmail')->once()->andReturn([])->getMock();
+        \App::instance('authentication_helper', $mock_auth_helper);
         $this->u_g->create(["name"=> "name"]);
         $mock_validator = $this->getValidatorSuccess();
 
@@ -104,23 +160,26 @@ class UserRegisterServiceTest extends DbTestCase {
     /**
      * @test
      **/
-    public function it_sends_email_to_user()
+    public function it_sends_email_to_user_if_old_and_active()
     {
         $input = [
             "email" => "test@test.com",
             "password" => "password@test.com",
-            "group_id" => 1,
             "first_name" => "first_name",
             "last_name" => "last_name",
+            "activated" => 1,
+            "new_user" => 0
         ];
+        $user_before = $this->u_r->create($input);
         $mock_mailer = m::mock('StdClass')->shouldReceive('sendTo')->once()
-            ->with('test@test.com', m::any(), m::any(), m::any())
+            ->with('test@test.com', m::any(), m::any(), "authentication::mail.registration-activated-client")
             ->andReturn(true)
+            ->shouldReceive('sendTo')
+            ->once()
             ->getMock();
         App::instance('palmamailer', $mock_mailer);
         $mock_auth_helper = m::mock('StdClass')->shouldReceive('getNotificationRegistrationUsersEmail')->once()->andReturn([])->getMock();
         \App::instance('authentication_helper', $mock_auth_helper);
-        $this->u_g->create(["name"=> "name"]);
         $mock_validator = $this->getValidatorSuccess();
 
         $service = new UserRegisterService($mock_validator);
@@ -166,12 +225,12 @@ class UserRegisterServiceTest extends DbTestCase {
         $service = new UserRegisterService;
         $user_unactive = new \StdClass;
         $user_unactive->email = "user@user.com";
-        $user_unactive->activated = 0;
+        $user_unactive->activated = 1;
 
         $mock_mailer = m::mock('StdClass')->shouldReceive('sendTo')->once()->with("user@user.com", m::any(), m::any(), m::any())->andReturn(true)->getMock();
         App::instance('palmamailer', $mock_mailer);
 
-        $service->sendActivationEmailToClient($user_unactive, ["activated" => 1, "email" => '']);
+        $service->sendActivationEmailToClient($user_unactive);
     }
     
     /**
@@ -257,29 +316,16 @@ class UserRegisterServiceTest extends DbTestCase {
     public function it_throws_user_exists_exception_if_user_exists()
     {
         $mock_validator = $this->getValidatorSuccess();
-        $mock_repo = m::mock('StdClass')->shouldReceive('create')->andThrow(new UserExistsException)->getMock();
-        App::instance('user_repository', $mock_repo);
-        $service = new UserRegisterService($mock_validator);
-
-        $service->register([]);
-    }
-
-    /**
-     * @deprecated test
-     * @expectedException \Palmabit\Library\Exceptions\NotFoundException
-     **/
-    public function it_throws_not_found_exception_if_cannot_find_the_user()
-    {
-        $mock_validator = $this->getValidatorSuccess();
-        $user_stub = new \StdClass;
-        $user_stub->id = 1;
-        $mock_repo = m::mock('StdClass')->shouldReceive('create')->andReturn($user_stub)
-            ->shouldReceive('addGroup')->andThrow(new NotFoundException)
+        $mock_repo = m::mock('StdClass')->shouldReceive('findByLogin')
+            ->once()
+            ->andThrow(new UserNotFoundException)
+            ->shouldReceive('create')
+            ->andThrow(new UserExistsException)
             ->getMock();
         App::instance('user_repository', $mock_repo);
         $service = new UserRegisterService($mock_validator);
 
-        $service->register(["group_id" => 1]);
+        $service->register(["email" => ""]);
     }
     
     /**

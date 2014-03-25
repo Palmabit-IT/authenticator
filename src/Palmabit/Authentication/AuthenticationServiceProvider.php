@@ -4,6 +4,7 @@ use Illuminate\Support\ServiceProvider;
 use Palmabit\Authentication\Repository\EloquentUserProfileRepository;
 use Palmabit\Authentication\Repository\SentryGroupRepository;
 use Palmabit\Authentication\Repository\SentryUserRepository;
+use Palmabit\Authentication\Services\UserRegisterService;
 use Palmabit\Library\Email\SwiftMailer;
 use Palmabit\Authentication\Classes\SentryAuthenticator;
 use Palmabit\Authentication\Helpers\SentryAuthenticationHelper;
@@ -41,6 +42,7 @@ class AuthenticationServiceProvider extends ServiceProvider {
         $this->bindAuthenticator();
         $this->bindAuthHelper();
         $this->bindRepositories();
+        $this->bindServices();
 
         // include filters
         require __DIR__ . "/../../filters.php";
@@ -144,6 +146,13 @@ class AuthenticationServiceProvider extends ServiceProvider {
     protected function overrideValidationConnection()
     {
         $this->app['validation.presence']->setConnection('authentication');
+    }
+
+    protected function bindServices()
+    {
+        $this->app->bind('register_service', function () {
+            return new UserRegisterService();
+        });
     }
 
 }
