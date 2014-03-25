@@ -29,6 +29,7 @@ class SentryUserRepository extends EloquentBaseRepository implements UserReposit
     public function __construct($factory = null)
     {
         $this->sentry = \App::make('sentry');
+        Event::listen('repository.updating', 'Palmabit\Authentication\Services\UserRegisterService@sendActivationEmailToClient');
         return parent::__construct(new User);
     }
 
@@ -46,8 +47,7 @@ class SentryUserRepository extends EloquentBaseRepository implements UserReposit
                 "activated" => $input["activated"],
                 "new_user" => $input["new_user"],
                 "first_name" => $input["first_name"],
-                "last_name" => $input["last_name"],
-                "imported" => isset($input["imported"]) ? 1 : 0
+                "last_name" => $input["last_name"]
         );
         try
         {
@@ -73,8 +73,6 @@ class SentryUserRepository extends EloquentBaseRepository implements UserReposit
     public function update($id, array $data)
     {
         $this->ClearEmptyPassword($data);
-        // disable editing of imported flag
-        if(isset($data["imported"])) unset($data["imported"]);
         $obj = $this->find($id);
         Event::fire('repository.updating', [$obj, $data]);
         $obj->update($data);
@@ -219,15 +217,21 @@ class SentryUserRepository extends EloquentBaseRepository implements UserReposit
                 $group = $this->findFromGroupName($status);
                 if(!$group) throw new UserNotFoundException;
                 $users = $group->users;
+                break;
             case 'new':
                 $users = $this->findByNewUser($status);
+                break;
             case 'noninregola':
                 $users = $this->findByActive($status);
+                break;
             case 'inregola':
                 $users = $this->findByNonActive($status);
+                break;
             default:
                 $users = $this->all();
+                break;
         }
+
         return $users;
     }
 
