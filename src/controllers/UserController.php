@@ -46,10 +46,8 @@ class UserController extends \BaseController
 
     public function getList()
     {
+        $filter =  Input::get('q');
         $users = $this->r->all();
-        $filter =  Input::get('filter');
-        dd($filter);
-
         return View::make('authentication::user.list')->with(["users" => $users]);
     }
 

@@ -27,7 +27,7 @@ Admin area: lista utenti
             <div class="col-md-6">
                  <form action="{{URL::action('Palmabit\Authentication\Controllers\UserController@getList')}}" class="form-inline" role="form" >
                     <div class="form-group col-md-8">
-                        <select class="form-control col-md-12" style="width:100%" name="filter">
+                        <select class="form-control col-md-12" style="width:100%" name="q">
                           <option value="all">Tutti</option>
                           <option value="new">Nuovi</option>
                           <option value="noninregola">Non in regola</option>
