@@ -115,7 +115,7 @@ class UserRegisterService
         {
             // try to update the user
             $user = $this->u_r->findByLogin($input["email"]);
-            if($user->imported) $user = $this->u_r->update($user->id, ["password" => $input["password"]]);
+            if($user->imported) $user = $this->u_r->update($user->id, ["password" => $input["password"], "imported" => false]);
         }
         catch(UserNotFoundException $e)
         {
@@ -152,7 +152,14 @@ class UserRegisterService
      */
     protected function validateInput(array $input)
     {
-        if (!$this->v->validate($input))
+        try
+        {
+            if (!$this->v->validate($input))
+            {
+                $this->errors = $this->v->getErrors();
+                throw new ValidationException;
+            }
+        }catch(ValidationException $e)
         {
             $this->errors = $this->v->getErrors();
             throw new ValidationException;

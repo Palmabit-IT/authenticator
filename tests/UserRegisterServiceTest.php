@@ -100,6 +100,7 @@ class UserRegisterServiceTest extends DbTestCase {
         $user = $this->u_r->find(1);
         // changed the password
         $this->assertNotEquals($user->password, $user_before->password);
+        $this->assertEquals(0, $user->imported);
     }
 
     /**
@@ -140,7 +141,7 @@ class UserRegisterServiceTest extends DbTestCase {
      * @test
      * @expectedException \Palmabit\Library\Exceptions\ValidationException
      **/
-    public function it_throw_validation_exception_if_user_exists_is_not_imported_and_is_active()
+    public function it_throw_validation_exception_if_user_exists_is_not_imported_and_is_active_and_set_errors()
     {
         $new_password = "_";
         $before_password = "__";
@@ -160,6 +161,7 @@ class UserRegisterServiceTest extends DbTestCase {
         $service = new UserRegisterService();
 
         $service->register($input);
+        $this->assertNotEmpty($service->getErrors());
     }
 
     /**
