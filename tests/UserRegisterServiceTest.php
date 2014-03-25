@@ -71,17 +71,18 @@ class UserRegisterServiceTest extends DbTestCase {
     /**
      * @test
      **/
-    public function it_update_user_password_if_user_already_exists()
+    public function it_update_user_password_if_user_already_exists_and_change_pass_if_is_imported()
     {
         $new_password = "_";
-        $old_password = "__";
+        $before_password = "__";
         $input = [
             "email" => "test@test.com",
-            "password" => $old_password,
+            "password" => $before_password,
             "first_name" => "first_name",
             "last_name" => "last_name",
             "activated" => 1,
             "new_user" => 0,
+            "imported" => 1
         ];
         $user_before = $this->u_r->create($input);
         $input["password"] = $new_password;
@@ -129,7 +130,6 @@ class UserRegisterServiceTest extends DbTestCase {
 
     /**
      * @test
-     * @group 1
      **/
     public function it_sends_email_to_user_if_old_but_not_active()
     {
@@ -170,12 +170,11 @@ class UserRegisterServiceTest extends DbTestCase {
             "activated" => 1,
             "new_user" => 0
         ];
-        $user_before = $this->u_r->create($input);
+        $this->u_r->create($input);
         $mock_mailer = m::mock('StdClass')->shouldReceive('sendTo')->once()
             ->with('test@test.com', m::any(), m::any(), "authentication::mail.registration-activated-client")
             ->andReturn(true)
             ->shouldReceive('sendTo')
-            ->once()
             ->getMock();
         App::instance('palmamailer', $mock_mailer);
         $mock_auth_helper = m::mock('StdClass')->shouldReceive('getNotificationRegistrationUsersEmail')->once()->andReturn([])->getMock();

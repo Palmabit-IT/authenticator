@@ -51,10 +51,13 @@ class UserRegisterService
 
         $mailer = App::make('palmamailer');
         $this->sendMailToClient($mailer, $user, $input);
+        $this->sendActivationEmailToClient($user, $input);
         $this->sendMailToAdmins($mailer, $user, $input);
+
     }
 
     /**
+     * Send registration mail to client: new and already existing
      * @param $mailer
      * @param $user
      */
@@ -112,7 +115,7 @@ class UserRegisterService
         {
             // try to update the user
             $user = $this->u_r->findByLogin($input["email"]);
-            $user = $this->u_r->update($user->id, ["password" => $input["password"]]);
+            if($user->imported) $user = $this->u_r->update($user->id, ["password" => $input["password"]]);
         }
         catch(UserNotFoundException $e)
         {
