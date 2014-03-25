@@ -36,21 +36,21 @@ class UserRegisterService
     public function __construct(UserSignupValidator $v = null)
     {
         $this->u_r = App::make('user_repository');
-        $this->p_r = App::make('profile_repository');
         $this->v = $v ? $v : new UserSignupValidator;
     }
 
     public function register(array $input)
     {
-        // for default user is not active at registration
+        // for default user is not active and new user at registration
         $input["activated"] = false;
+        $input["new_user"] = true;
 
         $this->validateInput($input);
 
         $user = $this->saveDbData($input);
 
         $mailer = App::make('palmamailer');
-        $this->sendMailToClient($mailer, $input);
+        $this->sendMailToClient($mailer, $user, $input);
         $this->sendMailToAdmins($mailer, $user, $input);
     }
 
@@ -58,35 +58,41 @@ class UserRegisterService
      * @param $mailer
      * @param $user
      */
-    protected function sendMailToClient($mailer, $input)
+    protected function sendMailToClient($mailer, $user, array $input)
     {
+        if( $user->activated) return;
+
+        $view = $user->new_user ? "authentication::mail.registration-client-new" : "authentication::mail.registration-client-exists";
+
         // send email to client
-        $mailer->sendTo( $input['email'], [ "email" => $input["email"], "password" => $input["password"] ], "Richiesta registrazione su: " . \Config::get('authentication::app_name'), "authentication::mail.registration-waiting-client");
+        $mailer->sendTo( $input['email'], [ "email" => $input["email"], "password" => $input["password"] ], "Richiesta registrazione su: " . \Config::get('authentication::app_name'), $view);
     }
 
     /**
      * @param $mailer
      */
-    protected function sendMailToAdmins($mailer, $user, $input)
+    protected function sendMailToAdmins($mailer, $user, array $input)
     {
         // send email to admins
         $mail_helper = App::make('authentication_helper');
         $mails       = $mail_helper->getNotificationRegistrationUsersEmail();
         if (!empty($mails)) foreach ($mails as $mail)
         {
-            $mailer->sendTo($mail, [ "email" => $input["email"], "id" => $user->id, "comments" => $input['comments'] ], "Richiesta di registrazione utente", "authentication::mail.registration-waiting-admin");
+            $mailer->sendTo($mail, [ "email" => $input["email"], "id" => $user->id, "comments" => $input['comments'] ], "Richiesta di registrazione utente", "authentication::mail.registration-request-admin.blade");
         }
     }
 
     /**
      * Send activation email to the client if it's getting activated
-     * @param $obj
+     * @param $user
      */
-    public function sendActivationEmailToClient($obj, array $input)
+    public function sendActivationEmailToClient($user, array $input = null)
     {
+        if( ! $user->activated) return;
+
         $mailer = App::make('palmamailer');
         // if i activate a deactivated user
-        if(isset($input["activated"]) && $input["activated"] && (! $obj->activated) ) $mailer->sendTo($obj->email, [ "email" => $input["email"] ], "Sei stato attivato su ".Config::get('authentication::app_name'), "authentication::mail.registration-activated-client");
+        $mailer->sendTo($user->email, [ "email" => $user->email ], "Sei stato attivato su ".Config::get('authentication::app_name'), "authentication::mail.registration-activated-client");
     }
 
     /**
@@ -101,12 +107,22 @@ class UserRegisterService
             DB::connection('authentication')->getPdo()->exec('SET FOREIGN_KEY_CHECKS=0;');
             DB::connection('authentication')->getPdo()->beginTransaction();
         }
+
         try
         {
-            // user
-            $user    = $this->u_r->create($input);
-            // profile
-//            $this->p_r->create(array_merge(["user_id" => $user->id], $input) );
+            // try to update the user
+            $user = $this->u_r->findByLogin($input["email"]);
+            $user = $this->u_r->update($user->id, ["password" => $input["password"]]);
+        }
+        catch(UserNotFoundException $e)
+        {
+            $user = false;
+        }
+
+        try
+        {
+            // fallback into creating a new user
+            if(! $user) $user = $this->u_r->create($input);
         }
         catch(UserExistsException $e)
         {

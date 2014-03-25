@@ -36,6 +36,7 @@ class SentryUserRepository extends EloquentBaseRepository implements UserReposit
     /**
      * Create a new object
      * @return mixed
+     * @override
      * @todo db test
      */
     public function create(array $input)
@@ -66,6 +67,7 @@ class SentryUserRepository extends EloquentBaseRepository implements UserReposit
      * @param array $data
      * @throws \Palmabit\Authentication\Exceptions\UserNotFoundException
      * @return mixed
+     * @override
      * @todo db test
      */
     public function update($id, array $data)
@@ -81,6 +83,7 @@ class SentryUserRepository extends EloquentBaseRepository implements UserReposit
      * Deletes a new object
      * @param $id
      * @return mixed
+     * @override
      * @todo db test
      */
     public function delete($id)
@@ -93,6 +96,7 @@ class SentryUserRepository extends EloquentBaseRepository implements UserReposit
     /**
      * Obtains all models
      * @return mixed
+     * @override
      * @todo db test
      */
     public function all()
@@ -196,5 +200,24 @@ class SentryUserRepository extends EloquentBaseRepository implements UserReposit
         if(! $group) throw new UserNotFoundException;
 
         return $group->users;
+    }
+
+
+    /**
+     * @param $login_name
+     * @throws \Jacopo\Authentication\Exceptions\UserNotFoundException
+     */
+    public function findByLogin($login_name)
+    {
+        try
+        {
+            $user = $this->sentry->findUserByLogin($login_name);
+        }
+        catch(UserNotFoundException $e)
+        {
+            throw new NotFoundException;
+        }
+
+        return $user;
     }
 }
