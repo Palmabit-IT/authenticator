@@ -217,20 +217,15 @@ class SentryUserRepository extends EloquentBaseRepository implements UserReposit
                 $group = $this->findFromGroupName($status);
                 if(!$group) throw new UserNotFoundException;
                 $users = $group->users;
-                break;
             case 'new':
                 $users = $this->findByNewUser($status);
-                break;
             case 'noninregola':
                 $users = $this->findByActive($status);
-                break;
             case 'inregola':
                 $users = $this->findByNonActive($status);
-                break;
             default:
-                $this->all();
+                $users = $this->all();
         }
-
         return $users;
     }
 
