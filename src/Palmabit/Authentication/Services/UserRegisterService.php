@@ -152,7 +152,14 @@ class UserRegisterService
      */
     protected function validateInput(array $input)
     {
-        if (!$this->v->validate($input))
+        try
+        {
+            if (!$this->v->validate($input))
+            {
+                $this->errors = $this->v->getErrors();
+                throw new ValidationException;
+            }
+        }catch(ValidationException $e)
         {
             $this->errors = $this->v->getErrors();
             throw new ValidationException;

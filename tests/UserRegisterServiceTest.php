@@ -140,7 +140,7 @@ class UserRegisterServiceTest extends DbTestCase {
      * @test
      * @expectedException \Palmabit\Library\Exceptions\ValidationException
      **/
-    public function it_throw_validation_exception_if_user_exists_is_not_imported_and_is_active()
+    public function it_throw_validation_exception_if_user_exists_is_not_imported_and_is_active_and_set_errors()
     {
         $new_password = "_";
         $before_password = "__";
@@ -160,6 +160,7 @@ class UserRegisterServiceTest extends DbTestCase {
         $service = new UserRegisterService();
 
         $service->register($input);
+        $this->assertNotEmpty($service->getErrors());
     }
 
     /**
