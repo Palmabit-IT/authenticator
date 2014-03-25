@@ -43,12 +43,12 @@ class AuthController extends BaseController {
         }
         catch(UserNotActivatedException $e)
         {
-            return Redirect::to('landing');
+            return Redirect::to('/landing');
         }
 
         if($success)
         {
-            return Redirect::to('/admin/users/list');
+            return Redirect::to('/');
         }
         else
         {
