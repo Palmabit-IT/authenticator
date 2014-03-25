@@ -28,6 +28,7 @@ class CreateUsersTable extends Migration {
             $table->string('persist_code')->nullable();
             $table->string('reset_password_code')->nullable();
             $table->boolean("blocked")->default(0);
+            $table->boolean("imported")->default(0);
             $table->timestamps();
             // setup index
             $table->unique('email');

@@ -10,7 +10,7 @@
     <br/>
     has made an application for registration to the site. Check the profile and proceed with the activation
     <br/>
-    <a href="{{URL::action('Palmabit\Authentication\Controllers\UserController@editUser', [ 'id' => $body['id'] ] )}}" target="_blank">vedi</a>
+    <a href="#" target="_blank">vedi</a>
 </div>
 </body>
 </html>

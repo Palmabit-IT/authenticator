@@ -12,7 +12,7 @@ class User extends CartaUser
 {
     use OverrideConnectionTrait;
 
-    protected $fillable = ["email", "password", "permissions", "activated", "activation_code", "activated_at", "last_login", "new_user", "blocked", "first_name", "last_name"];
+    protected $fillable = ["email", "password", "permissions", "activated", "activation_code", "activated_at", "last_login", "new_user", "blocked", "first_name", "last_name", "imported"];
 
     protected $guarded = ["id"];
 
