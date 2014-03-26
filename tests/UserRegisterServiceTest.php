@@ -366,6 +366,8 @@ class UserRegisterServiceTest extends DbTestCase {
         $user_unactive = new \StdClass;
         $user_unactive->email = "user@user.com";
         $user_unactive->activated = 1;
+        $mock_mailer = m::mock('StdClass');
+        App::instance('palmamailer', $mock_mailer);
 
         $service->sendActivationEmailToClient($user_unactive, ["activated" => 1]);
     }
