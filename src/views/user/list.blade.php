@@ -61,7 +61,7 @@ Admin area: lista utenti
             {{-- pagination links --}}
             {{$users->links()}}
             @else
-                <h5>Non ci sono utenti presenti nel sistema.</h5>
+                <h5>Non &egrave; stato trovato alcun utente nel sistema.</h5>
             @endif
             <a href="{{URL::action('Palmabit\Authentication\Controllers\UserController@editUser')}}" class="btn btn-primary pull-right"><i class="glyphicon glyphicon-plus"></i> Aggiungi nuovo</a>
         </div>
