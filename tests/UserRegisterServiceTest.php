@@ -230,7 +230,8 @@ class UserRegisterServiceTest extends DbTestCase {
             "first_name" => "first_name",
             "last_name" => "last_name",
             "activated" => 1,
-            "new_user" => 0
+            "new_user" => 0,
+            "imported" => 1
         ];
         $this->u_r->create($input);
         $mock_mailer = m::mock('StdClass')->shouldReceive('sendTo')->once()
@@ -284,14 +285,14 @@ class UserRegisterServiceTest extends DbTestCase {
     public function it_sends_activation_email_to_the_client_on_activation()
     {
         $service = new UserRegisterService;
-        $user_unactive = new \StdClass;
-        $user_unactive->email = "user@user.com";
-        $user_unactive->activated = 1;
+        $user_active = new \StdClass;
+        $user_active->email = "user@user.com";
+        $user_active->activated = 1;
 
         $mock_mailer = m::mock('StdClass')->shouldReceive('sendTo')->once()->with("user@user.com", m::any(), m::any(), m::any())->andReturn(true)->getMock();
         App::instance('palmamailer', $mock_mailer);
 
-        $service->sendActivationEmailToClient($user_unactive);
+        $service->sendActivationEmailToClient($user_active, [], true);
     }
     
     /**
@@ -363,13 +364,13 @@ class UserRegisterServiceTest extends DbTestCase {
     public function it_doesnt_send_email_on_activation_if_client_is_aready_active()
     {
         $service = new UserRegisterService;
-        $user_unactive = new \StdClass;
-        $user_unactive->email = "user@user.com";
-        $user_unactive->activated = 1;
+        $user_active = new \StdClass;
+        $user_active->email = "user@user.com";
+        $user_active->activated = 1;
         $mock_mailer = m::mock('StdClass');
         App::instance('palmamailer', $mock_mailer);
 
-        $service->sendActivationEmailToClient($user_unactive, ["activated" => 1]);
+        $service->sendActivationEmailToClient($user_active, ["activated" => 0], true);
     }
 
     /**

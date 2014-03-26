@@ -91,7 +91,8 @@ class UserRegisterService
      */
     public function sendActivationEmailToClient($user, array $input = null)
     {
-        if( ! $user->activated || ( isset($input["activated"]) && $input["activated"] == 1 && $user->activated) ) return;
+        // stop email if i deactivate a user or if i send email from service of a new user not active
+        if( ( isset($input["activated"]) && $user->activated) || ( ! $user->activated && isset($input["activated"]) && $input["activated"] == 0)) return;
 
         $mailer = App::make('palmamailer');
         // if i activate a deactivated user
