@@ -1,10 +1,11 @@
-<?php
+<?php namespace Palmabit\Authentication\Tests;
 use Mockery as m;
+use App;
 use Palmabit\Authentication\Classes\SentryAuthenticator;
     use Palmabit\Authentication\Models\Group;
     use Palmabit\Authentication\Tests\TestCase;
 
-class SentryAuthenticatorTest extends TestCase {
+class SentryAuthenticatorTest extends DbTestCase {
 
     public function tearDown()
     {
@@ -86,4 +87,20 @@ class SentryAuthenticatorTest extends TestCase {
         $this->assertTrue($success);
     }
 
+    /**
+     * @test
+     **/
+    public function it_get_user_by_id()
+    {
+        $user_stub = new \StdClass;
+        $user_stub->name = 1;
+        $mock_sentry = m::mock('StdClass')->shouldReceive('findUserById')
+            ->once()
+            ->andReturn($user_stub)
+            ->getMock();
+        App::instance('sentry', $mock_sentry);
+        $user = App::make('authenticator')->getUserById(1);
+
+        $this->assertEquals($user, $user_stub);
+    }
 }

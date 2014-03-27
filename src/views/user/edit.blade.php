@@ -41,7 +41,6 @@ Admin area: modifica utenti
         {{Form::close()}}
     </div>
     <div class="col-md-6">
-        <h3>Gruppi</h3>
         @include('authentication::user.groups')
     </div>
 </div>

@@ -102,6 +102,8 @@ class UserController extends \BaseController
         $user_id = Input::get('id');
         $group_id = Input::get('group_id');
 
+        if( ! App::make('authenticator')->getLoggedUser()->hasAccess("_super_admin") ) return;
+
         try
         {
             $this->r->addGroup($user_id, $group_id);
