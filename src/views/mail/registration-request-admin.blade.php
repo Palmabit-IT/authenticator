@@ -8,7 +8,7 @@
 	<div>
 	    <p>
 	    	L'utente: {{$body['email']}} si &egrave; registrato al portale.<br>
-	    	Verifica il suo profilo nel pannello di controllo qui:  <a href="{{URL::action('Palmabit\Authentication\Controllers\UserController@editUser', array('id' => $body['id']) }}" target="_blank">Vedi profilo</a>
+	    	Verifica il suo profilo nel pannello di controllo qui:  <a href="{{URL::action('Palmabit\Authentication\Controllers\UserController@editUser', array('id' => $body['id'])) }}" target="_blank">Vedi profilo</a>
 	    </p>
 
 		<br>
