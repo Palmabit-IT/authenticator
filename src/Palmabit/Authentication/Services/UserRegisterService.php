@@ -82,7 +82,7 @@ class UserRegisterService
         $mails       = $mail_helper->getNotificationRegistrationUsersEmail();
         if (!empty($mails)) foreach ($mails as $mail)
         {
-            $mailer->sendTo($mail, [ "email" => $user->email ], "Richiesta di registrazione utente", "authentication::mail.registration-request-admin");
+            $mailer->sendTo($mail, [ "email" => $user->email, "id" => $user->id ], "Richiesta di registrazione utente", "authentication::mail.registration-request-admin");
         }
     }
 
