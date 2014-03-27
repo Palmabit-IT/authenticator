@@ -4,15 +4,18 @@
     <meta charset="utf-8">
 </head>
 <body>
-<h2>Application for{{Config::get('authentication::app_name')}}</h2>
+<h2>Registrazione su {{Config::get('authentication::app_name')}}</h2>
 <div>
-    <strong>The request for registration has been submitted successfully. A moderator will validate the data you have entered</strong>
-    <br/>
-    <strong>Summary data</strong>
-    <ul>
-        <li>Username: {{$body['email']}}</li>
-        <li>Password: {{$body['password']}}</li>
-    </ul>
+    <p>
+    	La richiesta di registrazione &egrave; avvenuta con successo. Non puoi ancora accedere alle FAQs fino al momento del rinnovo associato
+    </p>
+    <p>
+    	Riepilogo dei tuoi dati:
+	    <ul>
+	        <li>Username: {{$body['email']}}</li>
+	        <li>Password: {{$body['password']}}</li>
+	    </ul>
+	</p>
 </div>
 </body>
 </html>
