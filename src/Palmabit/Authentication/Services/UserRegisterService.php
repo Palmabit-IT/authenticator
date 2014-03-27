@@ -51,7 +51,8 @@ class UserRegisterService
 
         $mailer = App::make('palmamailer');
         $this->sendMailToClient($mailer, $user, $input);
-        $this->sendActivationEmailToClient($user, $input);
+        $from_service = true;
+        $this->sendActivationEmailToClient($user, $input, $from_service);
         $this->sendMailToAdmins($mailer, $user, $input);
 
     }
@@ -89,14 +90,20 @@ class UserRegisterService
      * Send activation email to the client if it's getting activated
      * @param $user
      */
-    public function sendActivationEmailToClient($user, array $input = null)
+    public function sendActivationEmailToClient($user, array $input = null, $from_service = false)
     {
-        // stop email if i deactivate a user or if i send email from service of a new user not active
-        if( ( isset($input["activated"]) && $user->activated) || ( ! $user->activated && isset($input["activated"]) && $input["activated"] == 0)) return;
-
-        $mailer = App::make('palmamailer');
-        // if i activate a deactivated user
-        $mailer->sendTo($user->email, [ "email" => $user->email ], "Sei stato attivato su ".Config::get('authentication::app_name'), "authentication::mail.registration-activated-client");
+        if(
+            // if comes from service i need to check if the user is active
+        ($from_service && $user->activated)
+        ||
+           // if comes from admin menu i need to check if the user is getting activated
+        (! $from_service && ! $user->activated && $input["activated"])
+        )
+        {
+            $mailer = App::make('palmamailer');
+            // if i activate a deactivated user
+            $mailer->sendTo($user->email, [ "email" => $user->email ], "Sei stato attivato su ".Config::get('authentication::app_name'), "authentication::mail.registration-activated-client");
+        }
     }
 
     /**
