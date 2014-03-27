@@ -4,15 +4,21 @@
     <meta charset="utf-8">
 </head>
 <body>
-<h2>Application for{{Config::get('authentication::app_name')}}</h2>
+<h2>Registrazione su {{Config::get('authentication::app_name')}}</h2>
 <div>
-    <strong>The request for registration has been submitted successfully. A moderator will validate the data you have entered</strong>
-    <br/>
-    <strong>Summary data: </strong>
+	<p>
+		Grazie per esserti registrato, per accedere a tutte le FAQs devi essere un associato.<br>
+		In questa email trovi tutte le informazioni necessarie.
+	</p>
+	<p>
     <ul>
-        <li>Username: {{$body['email']}}</li>
-        <li>Password: {{$body['password']}}</li>
+        <li></li>
+        <li></li>
     </ul>
+	</p>
+
+	<br>
+    <a href="{{URL::to('/')}}" target="_blank">Vai al sito</a>
 </div>
 </body>
 </html>
