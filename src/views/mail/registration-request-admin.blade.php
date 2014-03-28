@@ -14,7 +14,7 @@
 	FISM
 
 	<br>
-	<a href="{{URL::to('/')}}" target="_blank">Torna alle FAQ</a>
+	<a href="{{URL::to('/')}}" target="_blank">Vai alle FAQ</a>
 	</div>
 </body>
 </html>
