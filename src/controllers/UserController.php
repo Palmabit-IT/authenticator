@@ -149,4 +149,14 @@ class UserController extends \BaseController
 
     }
 
+    public function import()
+    {
+        return View::make('authentication::user.import');
+    }
+
+    public function postImport()
+    {
+        
+    }
+
 }
