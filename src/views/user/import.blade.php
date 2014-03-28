@@ -14,7 +14,7 @@ Admin area: importazione utenti
             <div class="alert alert-success">{{$message}}</div>
         @endif
 
-        <h3><i class="glyphicon glyphicon-file"></i> Importazione utente</h3>
+        <h3><i class="glyphicon glyphicon-file"></i> Importazione utente *:</h3>
         <div class="col-md-6">
             {{Form::open([ 'action' => 'Palmabit\Authentication\Controllers\UserController@postImport', 'method' => 'post', 'files' => true])}}
                 <div class="form-group">
