@@ -40,6 +40,7 @@ Route::group( ['before' => ['logged', 'can_see']], function()
     Route::get('/admin/users/profile/edit', ['as' => 'users.profile.edit', 'uses' => 'Palmabit\Authentication\Controllers\UserController@editProfile']);
     Route::post('/admin/users/profile/edit', ['before' => 'csrf', 'as' => 'users.profile.edit', 'uses' => 'Palmabit\Authentication\Controllers\UserController@postEditProfile']);
     Route::get('/admin/users/import', ['as' => 'users.import', 'uses' => 'Palmabit\Authentication\Controllers\UserController@import']);
+    Route::get('/admin/users/import', ['as' => 'users.import', 'uses' => 'Palmabit\Authentication\Controllers\UserController@postImport']);
 
 
     // groups
