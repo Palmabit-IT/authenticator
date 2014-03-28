@@ -16,6 +16,10 @@
 	        <li>Password: {{$body['password']}}</li>
 	    </ul>
 	</p>
+    FISM
+
+    <br>
+    <a href="{{URL::to('/')}}" target="_blank">Torna alle FAQ</a>
 </div>
 </body>
 </html>
