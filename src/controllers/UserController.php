@@ -1,4 +1,4 @@
-<?php  namespace Palmabit\Authentication\Controllers; 
+<?php  namespace Palmabit\Authentication\Controllers;
 /**
  * Class UserController
  *
@@ -9,6 +9,7 @@ use Palmabit\Authentication\Exceptions\ProfileNotFoundException;
 use Palmabit\Authentication\Models\UserProfile;
 use Palmabit\Authentication\Repository\SentryUserRepository as Repo;
 use Palmabit\Authentication\Services\UserRegisterService;
+use Palmabit\Authentication\Validators\UserImportValidator;
 use Palmabit\Authentication\Validators\UserSignupValidator;
 use Palmabit\Library\Form\FormModel;
 use Palmabit\Authentication\Models\User;
@@ -17,9 +18,11 @@ use Palmabit\Authentication\Validators\UserValidator;
 use Palmabit\Authentication\Validators\UserProfileValidator;
 use Palmabit\Library\Exceptions\PalmabitExceptionsInterface;
 use View, Input, Redirect, App;
-use Illuminate\Database\Eloquegnt\ModelNotFoundException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Palmabit\Authentication\Services\UserProfileService;
 use L;
+use Palmabit\Authentication\Services\UserImport\UserImportService;
+
 
 class UserController extends \BaseController
 {
@@ -154,9 +157,28 @@ class UserController extends \BaseController
         return View::make('authentication::user.import');
     }
 
+    /**
+     * @return mixed
+     * @todo refactor, sposta input file in service e poi fixa test
+     * @todo fix validation in service invece che nel controller e adda custom mime rule
+     */
     public function postImport()
     {
-        
+        $service = new UserImportService();
+
+        $validator = new UserImportValidator();
+        if( ! $validator->validate(Input::all())) return Redirect::action('Palmabit\Authentication\Controllers\UserController@import')->withErrors($validator->getErrors());
+        if( Input::file('file')->getClientOriginalExtension() != 'csv') return Redirect::action('Palmabit\Authentication\Controllers\UserController@import')->withErrors( new MessageBag(["file"=> "Solo file csv."]));
+        try
+        {
+            $service->importCsv(['file' => Input::file('file')]);
+        }
+        catch(\Exception $e)
+        {
+            return Redirect::action('Palmabit\Authentication\Controllers\UserController@import')->withErrors();
+        }
+
+        return Redirect::action('Palmabit\Authentication\Controllers\UserController@import')->withMessage('Importazione effettuata con successo.');
     }
 
 }

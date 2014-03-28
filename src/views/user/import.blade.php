@@ -14,11 +14,15 @@ Admin area: importazione utenti
             <div class="alert alert-success">{{$message}}</div>
         @endif
 
-        <h3><i class="glyphicon glyphicon-user"></i> Importazione utente</h3>
+        <h3><i class="glyphicon glyphicon-file"></i> Importazione utente</h3>
         <div class="col-md-6">
-            {{Form::open([ 'action' => 'Palmabit\Authentication\Controllers\UserController@postImport', 'method' => 'post'])}}
-            {{Form::file('file')}}
-            {{Form::submit('Importa', array("class"=>"btn btn-primary"))}}
+            {{Form::open([ 'action' => 'Palmabit\Authentication\Controllers\UserController@postImport', 'method' => 'post', 'files' => true])}}
+                <div class="form-group">
+                    {{Form::file('file')}}
+                    <span class="text text-danger">{{$errors->first('file')}}</span>
+                </div>
+                <br/>
+                {{Form::submit('Importa', array("class"=>"btn btn-primary"))}}
             {{Form::close()}}
             <br>
         </div>
