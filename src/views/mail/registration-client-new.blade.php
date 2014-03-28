@@ -8,7 +8,7 @@
 <div>
 	<p>
 		Grazie per esserti registrato, per accedere a tutte le FAQs devi essere un associato.<br>
-		In questa email trovi tutte le informazioni necessarie.
+		In questa email trovi tutte le informazioni necessarie per entrare a far parte di FISM.
 	</p>
 	<p>
     <ul>
@@ -16,9 +16,10 @@
         <li></li>
     </ul>
 	</p>
+	FISM
 
 	<br>
-    <a href="{{URL::to('/')}}" target="_blank">Vai al sito</a>
+	<a href="{{URL::to('/')}}" target="_blank">Vai alle FAQ</a>
 </div>
 </body>
 </html>

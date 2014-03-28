@@ -11,8 +11,10 @@
 	    	Verifica il suo profilo nel pannello di controllo qui:  <a href="{{URL::action('Palmabit\Authentication\Controllers\UserController@editUser', array('id' => $body['id'])) }}" target="_blank">Vedi profilo</a>
 	    </p>
 
-		<br>
-	    <a href="{{URL::to('/')}}" target="_blank">Vai al sito</a>
+	FISM
+
+	<br>
+	<a href="{{URL::to('/')}}" target="_blank">Vai alle FAQ</a>
 	</div>
 </body>
 </html>

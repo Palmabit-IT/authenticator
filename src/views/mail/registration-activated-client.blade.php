@@ -10,8 +10,10 @@
 		    Gentile {{ $body['email'] }} Il tuo profilo &egrave; ora attivo. Adesso puoi autenticarti al portale via username e password da te scelti.
 		</p>
 
-		<br>
-	    <a href="{{URL::to('/')}}" target="_blank">Vai al sito</a>
+	FISM
+
+	<br>
+	<a href="{{URL::to('/')}}" target="_blank">Vai alle FAQ</a>
 	</div>
 </body>
 </html>
