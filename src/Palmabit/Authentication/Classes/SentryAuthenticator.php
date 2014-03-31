@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\MessageBag;
 use Palmabit\Authentication\Exceptions\UserNotFoundException;
 use Palmabit\Authentication\Interfaces\AuthenticateInterface;
+use Cartalyst\Sentry\Users\UserNotFoundException as CartaNotFoundException;
+use Palmabit\Library\Exceptions\NotFoundException;
 
 class SentryAuthenticator implements AuthenticateInterface{
 
@@ -166,9 +168,17 @@ class SentryAuthenticator implements AuthenticateInterface{
     /**
      * @param $id
      * @return mixed
+     * @throws
      */
     public function getUserById($id)
     {
-        return $this->sentry->findUserById($id);
+        try
+        {
+            return $this->sentry->findUserById($id);
+        }
+        catch(CartaNotFoundException $e)
+        {
+            throw new NotFoundException;
+        }
     }
 }
