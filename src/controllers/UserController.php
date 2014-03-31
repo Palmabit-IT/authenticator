@@ -56,7 +56,7 @@ class UserController extends \BaseController
 
     public function getList()
     {
-        $users = $this->r->all();
+        $users = $this->r->all(Input::all());
 
         return View::make('authentication::user.list')->with(["users" => $users]);
     }
