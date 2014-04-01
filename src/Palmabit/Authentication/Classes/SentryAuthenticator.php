@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\MessageBag;
 use Palmabit\Authentication\Exceptions\UserNotFoundException;
 use Palmabit\Authentication\Interfaces\AuthenticateInterface;
+use Palmabit\Authentication\Models\User;
 
 class SentryAuthenticator implements AuthenticateInterface{
 
@@ -161,5 +162,10 @@ class SentryAuthenticator implements AuthenticateInterface{
     public function getLoggedUser()
     {
         return $this->sentry->getUser();
+    }
+
+    public function findById($id)
+    {
+        return User::find($id);
     }
 }

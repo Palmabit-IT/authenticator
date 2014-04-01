@@ -1,10 +1,11 @@
-<?php
+<?php namespace Palmabit\Authentication\Tests;
 use Mockery as m;
 use Palmabit\Authentication\Classes\SentryAuthenticator;
     use Palmabit\Authentication\Models\Group;
+    use Palmabit\Authentication\Repository\SentryUserRepository;
     use Palmabit\Authentication\Tests\TestCase;
 
-class SentryAuthenticatorTest extends TestCase {
+class SentryAuthenticatorTest extends DbTestCase {
 
     public function tearDown()
     {
@@ -86,4 +87,21 @@ class SentryAuthenticatorTest extends TestCase {
         $this->assertTrue($success);
     }
 
+    /**
+     * @test
+     * @group a
+     **/
+    public function it_find_user_by_id()
+    {
+        $repo = new SentryUserRepository();
+        $user_saved = $repo->create([
+                      "email" => "mail@mail.com",
+                      "password" => "password",
+                      "activated" => 1
+                       ]);
+
+        $user_found = $repo->find(1);
+
+        $this->assertEquals($user_found->email, $user_saved->email);
+    }
 }

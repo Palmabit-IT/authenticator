@@ -73,4 +73,11 @@ interface AuthenticateInterface
      * @return mixed
      */
     public function hasGroup($name);
+
+    /**
+     * Finds a user given an id
+     * @param $id
+     * @return mixed
+     */
+    public function findById($id);
 }
