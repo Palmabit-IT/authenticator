@@ -63,7 +63,7 @@ class User extends CartaUser
      */
     public function getCopyPasswordAttribute()
     {
-        return $this->getAttribute('email');
+        return $this->getAttribute('password');
     }
 
     /**
@@ -81,6 +81,6 @@ class User extends CartaUser
      */
     public function setCopyPasswordAttribute($value)
     {
-        return $this->setAttribute('email', $value);
+        return $this->setAttribute('password', $value);
     }
 } 
