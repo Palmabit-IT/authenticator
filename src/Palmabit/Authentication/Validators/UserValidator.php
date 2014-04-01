@@ -21,7 +21,7 @@ class UserValidator extends OverrideConnectionValidator
 
             if(empty($input["id"]))
             {
-                static::$rules["copyPassword"][] = "required";
+                static::$rules["password"][] = "required";
             }
         });
     }

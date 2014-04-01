@@ -18,8 +18,11 @@ Admin area: modifica utenti
         <h3>Dati generali</h3>
         {{Form::model($user, [ 'url' => [URL::action('Palmabit\Authentication\Controllers\UserController@postEditUser'), $user->id], 'method' => 'post'] ) }}
         {{FormField::copyEmail(["autocomplete" => "off", "label" => "email"])}}
-        <span class="text-danger">{{$errors->first('email')}}</span>
-        {{FormField::copyPassword(["autocomplete" => "off", "label" => isset($user->id) ? "modifica password: " : "password: "])}}
+        <span class="text-danger">{{$errors->first('copyEmail')}}</span>
+        <div class="form-group">
+        {{Form::label('password','password: ')}}
+        {{Form::text('password','',["autocomplete" => "off", "class" => "form-control"])}}
+        </div>
         <span class="text-danger">{{$errors->first('password')}}</span>
         {{--    {{FormField::last_name( ["label" => "Nome", "autocomplete" => "off"] ) }}
         <span class="text-danger">{{$errors->first('last_name')}}</span>
@@ -41,12 +44,6 @@ Admin area: modifica utenti
         @include('authentication::user.groups')
     </div>
 </div>
-{{-- change autocomplete form color --}}
-<style>
-    input:-webkit-autofill {
-        -webkit-box-shadow: 0 0 0px 1000px #fff inset;
-    }
-</style>
 @stop
 
 @section('footer_scripts')
