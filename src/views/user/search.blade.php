@@ -13,8 +13,8 @@
             {{Form::label('activated', 'Attivo: ')}}
             {{Form::select('activated', ['' => '', 1 => 'Sì', 0 => 'No'], Input::get('activated',''), ["class" => "form-control"])}}
         </div>
-        {{Form::submit('Cerca', ["class" => "btn btn-primary pull-right
-        "])}}
+        {{Form::reset('Pulisci', ["class" => "btn btn-default"])}}
+        {{Form::submit('Cerca', ["class" => "btn btn-primary"])}}
         {{Form::close()}}
     </div>
 </div>

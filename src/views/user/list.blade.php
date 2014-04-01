@@ -26,7 +26,7 @@ Admin area: lista utenti
                 @foreach($users as $user)
                     <li class="list-group-item">
                         <span class="badge {{$user->activated ? 'badge-green' : 'badge-red'}}">&nbsp;</span>&nbsp;&nbsp;
-                        {{$user->email}} - {{($user->user_profile()->count()) ? ucfirst($user->user_profile()->first()->first_name): ''}} {{($user->user_profile()->count()) ? ucfirst($user->user_profile()->first()->last_name): ''}}
+                        {{$user->email}} - {{($user->first_name) ? ucfirst($user->first_name): ''}} {{($user->last_name) ? ucfirst($user->last_name): ''}}
                         @if(! $user->blocked)
                         <div class="pull-right">
                             <a href="{{URL::action('Palmabit\Authentication\Controllers\UserController@editProfile', ['user_id' => $user->id])}}">
@@ -48,7 +48,7 @@ Admin area: lista utenti
             {{$users->links()}}
 
             @else
-            <h5>Non ci sono utenti presenti nel sistema.</h5>
+            <h5>Non ho trovato risultati.</h5>
             @endif
             <a href="{{URL::action('Palmabit\Authentication\Controllers\UserController@editUser')}}" class="btn btn-primary pull-right"><i class="glyphicon glyphicon-plus"></i> Aggiungi nuovo</a>
         </div>

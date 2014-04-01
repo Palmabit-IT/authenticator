@@ -12,7 +12,7 @@ class User extends CartaUser
 {
     use OverrideConnectionTrait;
 
-    protected $fillable = ["email", "password", "permissions", "activated", "activation_code", "activated_at", "last_login", "blocked"];
+    protected $fillable = ["email", "copyEmail", "copuPassword", "password", "permissions", "activated", "activation_code", "activated_at", "last_login", "blocked"];
 
     protected $guarded = ["id"];
 
@@ -48,4 +48,39 @@ class User extends CartaUser
         return $this->hasMany('Palmabit\Authentication\Models\UserProfile');
     }
 
+    /**
+     * Override for form field
+     * @return mixed
+     */
+    public function getCopyEmailAttribute()
+    {
+        return $this->getAttribute('email');
+    }
+
+    /**
+     * Override for form field
+     * @return mixed
+     */
+    public function getCopyPasswordAttribute()
+    {
+        return $this->getAttribute('email');
+    }
+
+    /**
+     * Override for form field
+     * @param $value
+     */
+    public function setCopyEmailAttribute($value)
+    {
+        return $this->setAttribute('email', $value);
+    }
+
+    /**
+     * Override for form field
+     * @param $value
+     */
+    public function setCopyPasswordAttribute($value)
+    {
+        return $this->setAttribute('email', $value);
+    }
 } 
