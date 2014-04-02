@@ -8,7 +8,7 @@ Admin area: lista utenti
 
 <div class="row">
     <div class="col-md-12">
-        <div class="col-md-8">
+        <div class="col-md-9">
             {{-- print messages --}}
             <?php $message = Session::get('message'); ?>
             @if( isset($message) )
@@ -52,7 +52,7 @@ Admin area: lista utenti
             @endif
             <a href="{{URL::action('Palmabit\Authentication\Controllers\UserController@editUser')}}" class="btn btn-primary pull-right"><i class="glyphicon glyphicon-plus"></i> Aggiungi nuovo</a>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-3">
             @include('authentication::user.search')
         </div>
     </div>
