@@ -105,6 +105,27 @@ class UserRegisterService
     }
 
     /**
+     * @param       $user
+     * @param array $input
+     * @param       $from_service
+     * @return bool
+     */
+    private function checkIfAdminMenuAndGettingActivated($user, array $input, $from_service)
+    {
+        return !$from_service && !$user->activated && isset($input["activated"]) && $input["activated"];
+    }
+
+    /**
+     * @param $user
+     * @param $from_service
+     * @return bool
+     */
+    private function isComingFromServiceAndUserIsActive($user, $from_service)
+    {
+        return $from_service && $user->activated;
+    }
+
+    /**
      * @param array $input
      * @return mixed $user
      */
@@ -175,26 +196,5 @@ class UserRegisterService
     public function getErrors()
     {
         return $this->errors;
-    }
-
-    /**
-     * @param       $user
-     * @param array $input
-     * @param       $from_service
-     * @return bool
-     */
-    private function checkIfAdminMenuAndGettingActivated($user, array $input, $from_service)
-    {
-        return !$from_service && !$user->activated && isset($input["activated"]) && $input["activated"];
-    }
-
-    /**
-     * @param $user
-     * @param $from_service
-     * @return bool
-     */
-    private function isComingFromServiceAndUserIsActive($user, $from_service)
-    {
-        return $from_service && $user->activated;
     }
 } 
