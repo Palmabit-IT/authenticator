@@ -93,11 +93,9 @@ class UserRegisterService
     public function sendActivationEmailToClient($user, array $input = null, $from_service = false)
     {
         if(
-            // if comes from service i need to check if the user is active
-        ($from_service && $user->activated)
-        ||
-           // if comes from admin menu i need to check if the user is getting activated
-        (! $from_service && ! $user->activated && $input["activated"])
+            $this->isComingFromServiceAndUserIsActive($user, $from_service)
+            ||
+            $this->checkIfAdminMenuAndGettingActivated($user, $input, $from_service)
         )
         {
             $mailer = App::make('palmamailer');
@@ -177,5 +175,26 @@ class UserRegisterService
     public function getErrors()
     {
         return $this->errors;
+    }
+
+    /**
+     * @param       $user
+     * @param array $input
+     * @param       $from_service
+     * @return bool
+     */
+    private function checkIfAdminMenuAndGettingActivated($user, array $input, $from_service)
+    {
+        return !$from_service && !$user->activated && isset($input["activated"]) && $input["activated"];
+    }
+
+    /**
+     * @param $user
+     * @param $from_service
+     * @return bool
+     */
+    private function isComingFromServiceAndUserIsActive($user, $from_service)
+    {
+        return $from_service && $user->activated;
     }
 } 

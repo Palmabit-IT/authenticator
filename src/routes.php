@@ -1,7 +1,4 @@
 <?php
-Route::get('/newmail', function(){
-    return View::make('authentication::mail.registration-client-new');
-});
 //////////////////// Registration //////////////////////////
 
 Route::post('/users/signup', ['before' => 'csrf', 'as' => 'users.profile.edit', 'uses' => 'Palmabit\Authentication\Controllers\UserController@postSignupUser']);

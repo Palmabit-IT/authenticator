@@ -4,22 +4,15 @@
     <meta charset="utf-8">
 </head>
 <body>
-<h2>Registrazione su {{Config::get('authentication::app_name')}}</h2>
+<h2>Registrazione su FISM FAQ</h2>
 <div>
-    <p>
-    	La richiesta di registrazione &egrave; avvenuta con successo. Non puoi ancora accedere alle FAQs fino al momento del rinnovo associato
+    <p>Buongiorno,<br/>
+        L’indirizzo email con il quale è stata inviata richiesta di registrazione all’area Domande/Risposte corrisponde ad un utente associato FISM che non ha effettuato rinnovo della quota per l’anno corrente.<br/>
+        I contenuti sono disponibili per i soli associati che abbiamo provveduto al rinnovo; è possibile contattare la propria sede FISM Provinciale di riferimento per effettuare il saldo della quota.
     </p>
     <p>
-    	Riepilogo dei tuoi dati:
-	    <ul>
-	        <li>Username: {{$body['email']}}</li>
-	        <li>Password: {{$body['password']}}</li>
-	    </ul>
-	</p>
-    FISM
-
-    <br>
-    <a href="{{URL::to('/')}}" target="_blank">Vai alle FAQ</a>
+        Cordiali Saluti
+    </p>
 </div>
 </body>
 </html>
