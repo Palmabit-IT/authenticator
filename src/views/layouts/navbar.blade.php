@@ -11,10 +11,17 @@
                     @endforeach
                 @endif
             </ul>
-            <div class="navbar-form navbar-right">
-                <a href="{{URL::to('/')}}" style="margin-right:10px; color:#eee;" target="_blank">SFX shop</a>
-                <a href="{{URL::to('/user/logout')}}" class="btn btn-warning">Logout</a>
-            </div>
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                    <a href="#" data-toggle="dropdown" class="dropdown-toggle"><i class="glyphicon glyphicon-user"></i>{{App::make('authenticator')->getLoggedUser()->email}}<b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="{{URL::to('/user/logout')}}" class="glyphicon glyphicon-log-out">Logout</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <p class="navbar-text navbar-right">
+                <a href="{{URL::to('/')}}" style="margin-right:10px; color:#eee;" target="_blank">Vai a SFX shop</a>
+            </p>
         </div><!--/.nav-collapse -->
     </div>
 </div>
