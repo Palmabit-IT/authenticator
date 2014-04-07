@@ -1,5 +1,6 @@
 <?php namespace Palmabit\Authentication\Tests;
 use Mockery as m;
+use App;
 use Palmabit\Authentication\Classes\SentryAuthenticator;
     use Palmabit\Authentication\Models\Group;
     use Palmabit\Authentication\Repository\SentryUserRepository;
