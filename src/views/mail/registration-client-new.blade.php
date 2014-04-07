@@ -6,20 +6,16 @@
 <body>
 <h2>Registrazione su {{Config::get('authentication::app_name')}}</h2>
 <div>
+    <p>Buongiorno,</p>
 	<p>
-		Grazie per esserti registrato, per accedere a tutte le FAQs devi essere un associato.<br>
-		In questa email trovi tutte le informazioni necessarie per entrare a far parte di FISM.
+        Per poter usufruire dei contenuti dell’Area Domande/Risposte di FISM è necessario prima procedere con l’associazione.
+        Per ulteriori informazioni in merito all’affiliazione è possibile contattarci a questo numero di telefono:06 6987 0511 oppure via mail all’indirizzo: fismnazionale@tin.it
 	</p>
 	<p>
-    <ul>
-        <li></li>
-        <li></li>
-    </ul>
-	</p>
-	FISM
+        Cordiali Saluti
+    </p>
 
-	<br>
-	<a href="{{URL::to('/')}}" target="_blank">Vai alle FAQ</a>
+    <a href="{{URL::to('/')}}" target="_blank">Vai alle FAQ</a>
 </div>
 </body>
 </html>

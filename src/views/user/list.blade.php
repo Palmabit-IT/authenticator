@@ -46,7 +46,13 @@ Admin area: lista utenti
                 <ul class="list-group">
                     @foreach($users as $user)
                         <li class="list-group-item">
-                            <span class="badge {{$user->activated ? 'badge-green' : 'badge-red'}}">&nbsp;</span>&nbsp;&nbsp;
+                            @if($user->activated && ! $user->new_user)
+                                <span class="badge badge-green">&nbsp;</span>&nbsp;&nbsp;
+                            @elseif($user->activated && $user->new_user)
+                                <span class="badge badge-orange">&nbsp;</span>&nbsp;&nbsp;
+                            @else
+                                <span class="badge badge-red">&nbsp;</span>&nbsp;&nbsp;
+                            @endif
                             {{$user->email}} - {{$user->first_name}} - {{$user->last_name}}
                             @if(! $user->blocked)
                             <div class="pull-right">

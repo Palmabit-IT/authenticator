@@ -213,7 +213,8 @@ class SentryUserRepository extends EloquentBaseRepository implements UserReposit
     public function findFromAttrName($status)
     {
 
-        switch ($status) {
+        switch ($status)
+        {
             case 'new':
                 $users = $this->findByNewUser($status);
                 break;

@@ -44,7 +44,10 @@
     background-color: red;
     float: left !important;
 }
-
+.badge-orange {
+    background-color: orange;
+    float: left !important;
+}
 .form-group {
     margin-bottom: 5px;
 }
