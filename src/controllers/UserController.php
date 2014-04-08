@@ -190,7 +190,7 @@ class UserController extends \BaseController
             return Redirect::back()->withInput()->withErrors($service->getErrors())->with(array('errorSignup' => $service->getErrors()));
         }
 
-        return Redirect::back()->withMessage(L::t('Your request will be process in few hours. As soon as possible you receive a confirmation email'));
+        return Redirect::to(URLT::action("UserController@signupSuccess"));
 
     }
 
