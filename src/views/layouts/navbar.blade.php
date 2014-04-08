@@ -13,7 +13,10 @@
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown">
-                    <a href="#" data-toggle="dropdown" class="dropdown-toggle"><i class="glyphicon glyphicon-user"></i>{{App::make('authenticator')->getLoggedUser()->email}}<b class="caret"></b></a>
+                    <a href="#" data-toggle="dropdown" class="dropdown-toggle">
+                        <i class="glyphicon glyphicon-user"></i>
+                        {{(isset($logged_user->email)) ? $logged_user->email : ''}}<b class="caret"></b>
+                    </a>
                     <ul class="dropdown-menu">
                         <li><a href="{{URL::to('/user/logout')}}" class="glyphicon glyphicon-log-out">Logout</a></li>
                     </ul>
