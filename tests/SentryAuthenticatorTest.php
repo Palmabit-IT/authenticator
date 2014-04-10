@@ -95,7 +95,7 @@ class SentryAuthenticatorTest extends DbTestCase {
     {
         $expected_profile = "profile";
         $get_mock = m::mock('StdClass')
-            ->shouldReceive('get')
+            ->shouldReceive('first')
             ->once()
             ->andReturn($expected_profile)
             ->getMock();
