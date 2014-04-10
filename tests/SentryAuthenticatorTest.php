@@ -90,6 +90,37 @@ class SentryAuthenticatorTest extends DbTestCase {
 
     /**
      * @test
+     **/
+    public function it_gets_logged_user_profile()
+    {
+        $expected_profile = "profile";
+        $get_mock = m::mock('StdClass')
+            ->shouldReceive('get')
+            ->once()
+            ->andReturn($expected_profile)
+            ->getMock();
+        $mock_user_profile = m::mock('StdClass')
+            ->shouldReceive('user_profile')
+            ->once()
+            ->andReturn($get_mock)
+            ->getMock();
+
+        $mock_sentry = m::mock('StdClass')
+            ->shouldReceive('getUser')
+            ->once()
+            ->andReturn($mock_user_profile)
+            ->getMock();
+        App::instance('sentry', $mock_sentry);
+
+        $authenticator = new SentryAuthenticator();
+        $user_profile = $authenticator->getLoggedUserProfile();
+
+        $this->assertEquals($expected_profile, $user_profile);
+    }
+
+
+    /**
+     * @test
      * @group a
      **/
     public function it_find_user_by_id()

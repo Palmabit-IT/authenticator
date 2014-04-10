@@ -167,7 +167,7 @@ class SentryAuthenticator implements AuthenticateInterface{
     public function getLoggedUserProfile()
     {
         $user = $this->getLoggedUser();
-        return $user->user_profile;
+        return $user->user_profile()->get();
     }
 
     public function findById($id)
