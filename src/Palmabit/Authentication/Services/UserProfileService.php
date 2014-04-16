@@ -94,7 +94,8 @@ class UserProfileService
     protected function updateUserPassword($input)
     {
         if (isset($input["new_password"]) && !empty($input["new_password"]))
-        try {
+        try
+        {
             $this->r_u->update(
                                $input["user_id"],
                                ["password" => $input["new_password"]]

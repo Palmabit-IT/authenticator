@@ -175,7 +175,7 @@ class UserController extends \BaseController
         }
         catch(\Exception $e)
         {
-            return Redirect::action('Palmabit\Authentication\Controllers\UserController@import')->withErrors();
+            return Redirect::action('Palmabit\Authentication\Controllers\UserController@import')->withErrors(["file" => $e->getMessage()]);
         }
 
         return Redirect::action('Palmabit\Authentication\Controllers\UserController@import')->withMessage('Importazione effettuata con successo.');
