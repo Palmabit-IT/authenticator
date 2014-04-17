@@ -6,7 +6,7 @@ Admin area: lista utenti
 
 @section('content')
 
-<div class="row">
+<div class="row" style="margin-bottom:20px;">
     <div class="col-md-12">
         <div class="col-md-9">
             {{-- print messages --}}
@@ -22,35 +22,38 @@ Admin area: lista utenti
             @endif
             <h3>Utenti</h3>
             @if(! $users->isEmpty() )
-            <ul class="list-group">
+            <table class="table table-striped">
+                <tr>
+                    <th>Stato</th>
+                    <th>Email</th>
+                    <th></th>
+                </tr>
                 @foreach($users as $user)
-                    <li class="list-group-item">
-                        <span class="badge {{$user->activated ? 'badge-green' : 'badge-red'}}">&nbsp;</span>&nbsp;&nbsp;
-                        {{$user->email}} - {{($user->first_name) ? ucfirst($user->first_name): ''}} {{($user->last_name) ? ucfirst($user->last_name): ''}}
-                        @if(! $user->blocked)
-                        <div class="pull-right">
-                            <a href="{{URL::action('Palmabit\Authentication\Controllers\UserController@editProfile', ['user_id' => $user->id])}}">
-                                <span class="glyphicon glyphicon-user">profilo</span>
-                            </a>&nbsp;
-                            <a href="{{URL::action('Palmabit\Authentication\Controllers\UserController@editUser', ['id' => $user->id])}}">
-                                <span class="glyphicon glyphicon-edit">modifica</span>
-                            </a>&nbsp;
-                            <a href="{{URL::action('Palmabit\Authentication\Controllers\UserController@deleteUser',['id' => $user->id, '_token' => csrf_token()])}}" >
-                                <span class="glyphicon glyphicon-trash margin-left-5 delete">cancella</span>
-                            </a>&nbsp;
-                        </div>
-                        @endif
-                        <span class="clearfix"></span>
-                    </li>
-                    @endforeach
-                </ul>
+                    <tr>
+                       <td>
+                            <span class="badge {{$user->activated ? 'badge-green' : 'badge-red'}}">&nbsp;</span>
+                        </td>
+                        <td>
+                            {{$user->email}} - {{($user->first_name) ? ucfirst($user->first_name): ''}} {{($user->last_name) ? ucfirst($user->last_name): ''}}
+                        </td>
+                        <td>
+                            @if(! $user->blocked)
+                                <a href="{{URL::action('Palmabit\Authentication\Controllers\UserController@editProfile', ['user_id' => $user->id])}}"><i class="glyphicon glyphicon-user"></i></a>
+                                <a href="{{URL::action('Palmabit\Authentication\Controllers\UserController@editUser', ['id' => $user->id])}}"><i class="glyphicon glyphicon-edit"></i></a>
+                                <a href="{{URL::action('Palmabit\Authentication\Controllers\UserController@deleteUser',['id' => $user->id, '_token' => csrf_token()])}}" ><i class="glyphicon glyphicon-trash margin-left-5 delete"></i></a>
+                            @endif
+                        </td>
+                    </tr>
+                @endforeach
+            </table>
+
             {{-- pagination links --}}
             {{$users->links()}}
 
             @else
             <h5>Non ho trovato risultati.</h5>
             @endif
-            <a href="{{URL::action('Palmabit\Authentication\Controllers\UserController@editUser')}}" class="btn btn-primary pull-right"><i class="glyphicon glyphicon-plus"></i> Aggiungi nuovo</a>
+            <a href="{{URL::action('Palmabit\Authentication\Controllers\UserController@editUser')}}" class="btn btn-primary"><i class="glyphicon glyphicon-plus"></i> Aggiungi nuovo</a>
         </div>
         <div class="col-md-3">
             @include('authentication::user.search')
