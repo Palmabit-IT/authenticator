@@ -6,13 +6,14 @@
 <body>
 <h2>Registrazione su FISM FAQ</h2>
 <div>
-    <p>Buongiorno,<br/>
-        Per poter usufruire dei contenuti dell’Area Domande/Risposte di FISM è necessario prima procedere con l’associazione.<br/>
-        Per ulteriori informazioni in merito all’affiliazione è possibile contattarci a questo numero di telefono: 06 6987 0511 oppure via mail all’indirizzo: <a href="mailto:fismnazionale@tin.it">fismnazionale@tin.it</a>
+  <p>Buongiorno,<br/>
+      Non é possibile acquisire la sua richiesta di registrazione in quanto la scuola non risulta essere federata alla f.i.s.m.
+      Per potersi federare e quindi accedere a tutti i servizi messi a disposizione é necessario rivolgersi alla propria fism provinciale.
+      Può trovare tutti i riferimenti territoriali sul sito <a href="http://www.fism.net" target="_blank">www.fism.net</a> cliccando su “Fism in italia”.
 	</p>
 	<p>
-        Cordiali Saluti
-    </p>
+     Cordiali Saluti
+  </p>
 </div>
 </body>
 </html>
