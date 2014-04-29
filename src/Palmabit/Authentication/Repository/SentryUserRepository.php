@@ -15,7 +15,7 @@ use Cartalyst\Sentry\Users\UserNotFoundException;
 use Palmabit\Authentication\Models\User;
 use Palmabit\Authentication\Models\Group;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Event;
+use Event, App, DB;
 
 class SentryUserRepository extends EloquentBaseRepository implements UserRepositoryInterface
 {
@@ -26,8 +26,15 @@ class SentryUserRepository extends EloquentBaseRepository implements UserReposit
      */
     protected $sentry;
 
-    public function __construct($factory = null)
+    /**
+     * Config reader
+     * @var null
+     */
+    protected $config;
+
+    public function __construct($config = null)
     {
+        $this->config = $config ? $config : App::make('config');
         $this->sentry = \App::make('sentry');
         Event::listen('repository.updating', 'Palmabit\Authentication\Services\UserRegisterService@sendActivationEmailToClient');
         return parent::__construct(new User);
@@ -42,13 +49,9 @@ class SentryUserRepository extends EloquentBaseRepository implements UserReposit
     public function create(array $input)
     {
         $data = array(
-                "email" => $input["email"],
+                "email" => isset($input["email"]) ? $input["email"] : $input["copyEmail"],
                 "password" => $input["password"],
                 "activated" => $input["activated"],
-                "new_user" => $input["new_user"],
-                "first_name" => $input["first_name"],
-                "last_name" => $input["last_name"],
-                "imported" => isset($input["imported"]) ? 1 : 0
         );
         try
         {
@@ -92,18 +95,6 @@ class SentryUserRepository extends EloquentBaseRepository implements UserReposit
         $obj = $this->find($id);
         Event::fire('repository.deleting', [$obj]);
         return $obj->delete();
-    }
-
-    /**
-     * Obtains all models
-     * @return mixed
-     * @override
-     * @todo db test
-     */
-    public function all()
-    {
-        $per_page_admin = 45;
-        return User::paginate($per_page_admin);
     }
 
     /**
@@ -204,6 +195,7 @@ class SentryUserRepository extends EloquentBaseRepository implements UserReposit
     }
 
     /**
+<<<<<<< HEAD
      * Obtain a list of user filterd by status (active) or type (new) or gruop
      *
      * @param String $filter
@@ -277,4 +269,72 @@ class SentryUserRepository extends EloquentBaseRepository implements UserReposit
         return $user;
     }
 
+     /**
+     * @override
+     * @param array $input_filter
+     * @return mixed|void
+     */
+    public function all(array $input_filter = null)
+    {
+        $results_per_page = $this->config->get('authentication::users_per_page');
+        $user_table_name = 'users';
+        $profile_table_name = 'user_profile';
+        // merge tables
+        $q = DB::table($user_table_name)
+            ->leftJoin($profile_table_name,$user_table_name.'.id', '=', $profile_table_name.'.user_id');
+        // filter data
+        $q = $this->applyFilters($input_filter, $q, $user_table_name, $profile_table_name);
+
+        $q = $this->createAllSelect($q, $user_table_name, $profile_table_name);
+
+        return $q->paginate($results_per_page);
+    }
+
+    /**
+     * @param array $input_filter
+     * @param       $q
+     * @param       $user_table
+     * @param       $profile_table
+     * @return mixed
+     */
+    protected function applyFilters(array $input_filter = null, $q, $user_table, $profile_table)
+    {
+        if($input_filter) foreach ($input_filter as $column => $value) {
+            if( $value !== '') switch ($column) {
+                case 'activated':
+                    $q = $q->where($user_table . '.activated', '=', $value);
+                    break;
+                case 'email':
+                    $q = $q->where($user_table . '.email', 'LIKE', "%{$value}%");
+                    break;
+                case 'first_name':
+                    $q = $q->where($profile_table . '.first_name', 'LIKE', "%{$value}%");
+                    break;
+                case 'last_name':
+                    $q = $q->where($profile_table . '.last_name', 'LIKE', "%{$value}%");
+                    break;
+                case 'billing_address_zip':
+                    $q = $q->where($profile_table . '.billing_address_zip', '=', $value);
+                    break;
+                case 'code':
+                    $q = $q->where($profile_table . '.code', '=', $value);
+                    break;
+            }
+        }
+
+        return $q;
+    }
+
+    /**
+     * @param $q
+     * @param $user_table_name
+     * @param $profile_table_name
+     * @return mixed
+     */
+    protected function createAllSelect($q, $user_table_name, $profile_table_name)
+    {
+        $q = $q->select($user_table_name . '.*', $profile_table_name . '.first_name', $profile_table_name . '.last_name', $profile_table_name . '.billing_address_zip', $profile_table_name . '.code');
+
+        return $q;
+    }
 }

@@ -13,6 +13,7 @@ use Palmabit\Authentication\Exceptions\UserNotFoundException;
 use Palmabit\Authentication\Interfaces\AuthenticateInterface;
 use Cartalyst\Sentry\Users\UserNotFoundException as CartaNotFoundException;
 use Palmabit\Library\Exceptions\NotFoundException;
+use Palmabit\Authentication\Models\User;
 
 class SentryAuthenticator implements AuthenticateInterface{
 
@@ -180,5 +181,16 @@ class SentryAuthenticator implements AuthenticateInterface{
         {
             throw new NotFoundException;
         }
+    }
+
+    public function getLoggedUserProfile()
+    {
+        $user = $this->getLoggedUser();
+        return $user->user_profile()->first();
+    }
+
+    public function findById($id)
+    {
+        return User::find($id);
     }
 }

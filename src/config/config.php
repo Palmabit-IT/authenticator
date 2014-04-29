@@ -1,5 +1,6 @@
 <?php
 
 return [
-    "app_name" => "FISM FAQ - pannello di controllo",
+    "app_name" => "App name",
+    'users_per_page' => 25
 ];

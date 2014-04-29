@@ -6,7 +6,7 @@ use Palmabit\Library\Validators\OverrideConnectionValidator;
 class UserValidator extends OverrideConnectionValidator
 {
     protected static $rules = array(
-        "email" => ["required", "email"],
+        "copyEmail" => ["required", "email"],
     );
 
     public function __construct()
@@ -17,7 +17,7 @@ class UserValidator extends OverrideConnectionValidator
             if(!isset($input['form_name']) || $input['form_name']!='user')
                 return true;
 
-            static::$rules["email"][] = "unique:users,email,{$input['id']}";
+            static::$rules["copyEmail"][] = "unique:users,email,{$input['id']}";
 
             if(empty($input["id"]))
             {
