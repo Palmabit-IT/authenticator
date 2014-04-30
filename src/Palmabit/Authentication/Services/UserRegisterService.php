@@ -43,17 +43,16 @@ class UserRegisterService
     {
         // for default user is not active and new user at registration
         $input["activated"] = false;
-        $input["new_user"] = true;
 
         $this->validateInput($input);
 
         $user = $this->saveDbData($input);
 
-        $mailer = App::make('palmamailer');
-        $this->sendMailToClient($mailer, $user, $input);
-        $from_service = true;
-        $this->sendActivationEmailToClient($user, $input, $from_service);
-        $this->sendMailToAdmins($mailer, $user, $input);
+//        $mailer = App::make('palmamailer');
+//        $this->sendMailToClient($mailer, $user, $input);
+//        $from_service = true;
+//        $this->sendActivationEmailToClient($user, $input, $from_service);
+//        $this->sendMailToAdmins($mailer, $user, $input);
 
     }
 

@@ -33,8 +33,6 @@ class UserDbImportSaver extends User
      */
     public function save(array $options = [])
     {
-        $this->setAttribute('imported',1);
-
         $authenticator = App::make('authenticator');
         // if the user not already exists
         try

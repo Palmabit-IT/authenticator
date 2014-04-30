@@ -54,6 +54,7 @@ class SentryUserRepositoryTest extends DbTestCase {
 
         $user = $repo->findByLogin("admin@admin.com");
         $this->assertEquals("admin@admin.com", $user->email);
+    }
 
     /**
      * @test
