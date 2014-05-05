@@ -22,7 +22,7 @@
     "require": {
         "php": ">=5.4.0",
         "illuminate/support": "4.1.*",
-        "palmabit/library" : "dev-develop",
+        "palmabit/library" : "0.1.1",
         "cartalyst/sentry": "2.1.*",
         "way/form": "dev-master"
     },
@@ -40,7 +40,9 @@
             "Palmabit\\Authentication\\Tests\\" : "tests/"
         },
         "classmap": [
-            "src/controllers"
+            "src/controllers",
+            "src/commands",
+            "src/seeds"
         ]
     },
     "minimum-stability": "stable"

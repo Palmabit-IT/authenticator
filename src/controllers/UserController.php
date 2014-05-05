@@ -48,15 +48,9 @@ class UserController extends \BaseController
 
     public function getList()
     {
-<<<<<<< HEAD
-        $filter =  Input::get('q');
-        $users = $this->r->findFromAttrName($filter);
-        return View::make('authentication::user.list')->with(["users" => $users, "q"=>$filter]);
-=======
         $users = $this->r->all(Input::all());
 
         return View::make('authentication::user.list')->with(["users" => $users]);
->>>>>>> 5a5b81dbff43b2d8ab828e4f73a34191a7fdf8e0
     }
 
     public function editUser()
@@ -183,12 +177,7 @@ class UserController extends \BaseController
             return Redirect::action('Palmabit\Authentication\Controllers\UserController@import')->withErrors(["file" => $e->getMessage()]);
         }
 
-<<<<<<< HEAD
         return Redirect::action('Palmabit\Authentication\Controllers\UserController@import')->withMessage('Importazione effettuata con successo.');
-=======
-        return Redirect::to(URLT::action("UserController@signupSuccess"));
-
->>>>>>> 5a5b81dbff43b2d8ab828e4f73a34191a7fdf8e0
     }
 
 }

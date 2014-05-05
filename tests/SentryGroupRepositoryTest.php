@@ -130,7 +130,6 @@ class SentryGroupRepositoryTest extends DbTestCase {
     {
         $expected_group = $this->r->create([
                                            "name"        => "name",
-                                           "description" => "name"
                                            ]);
         $mock_sentry = m::mock('StdClass')->shouldReceive('findGroupByName')->once()->andReturn($expected_group)->getMock();
         App::instance('sentry', $mock_sentry);
