@@ -9,7 +9,7 @@
                       <h3 class="panel-title">Registrazione</h3>
                   </div>
                   <div class="panel-body">
-                      {{Form::open(["action" => "UserController@postSignup"])}}
+                      {{Form::open(["action" => "Palmabit\Authentication\Controllers\UserController@postSignupUser", "method" => "POST"])}}
                           <fieldset>
                               <div class="form-group">
                                   <input class="form-control" placeholder="E-mail" name="email" type="email" autofocus autocomplete="off">

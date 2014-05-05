@@ -24,10 +24,10 @@ View::composer(['authentication::user.*', 'authentication::group.*', 'authentica
                                     "Lista utenti" =>  URL::route('users.list'),
                                     "Aggiungi utente" =>  URL::route('users.edit'),
                                     "Importa utente" => URL::route('users.import'),
-                                    // "Lista gruppi" => URL::route('users.groups.list'),
-                                    // "Aggiungi gruppo" => URL::route('users.groups.edit'),
-                                    // "Lista permessi" => URL::route('users.permission.list'),
-                                    // "Aggiungi permesso" => URL::route('users.permission.edit')
+                                     "Lista gruppi" => URL::route('users.groups.list'),
+                                     "Aggiungi gruppo" => URL::route('users.groups.edit'),
+                                     "Lista permessi" => URL::route('users.permission.list'),
+                                     "Aggiungi permesso" => URL::route('users.permission.edit')
                                  ]);
 });
 
