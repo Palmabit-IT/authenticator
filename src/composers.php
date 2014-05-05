@@ -5,7 +5,7 @@
  */
 View::composer('*', function ($view){
     $view->with('app_name', Config::get('authentication::app_name') );
-    $view->with('siteg_name', Config::get('authentication::site_name') );
+    $view->with('site_name', Config::get('authentication::site_name') );
 });
 
 use Palmabit\Authentication\Classes\Menu\SentryMenuFactory;
@@ -28,7 +28,7 @@ View::composer(['authentication::user.*', 'authentication::group.*', 'authentica
                                      "Aggiungi gruppo"   => URL::route('users.groups.edit'),
                                      "Lista permessi"    => URL::route('users.permission.list'),
                                      "Aggiungi permesso" => URL::route('users.permission.edit'),
-                                    "Importa utenti" => URL::route('users.import'),
+                                     "Importa utenti" => URL::route('users.import'),
                                  ]);
 });
 
