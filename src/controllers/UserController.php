@@ -33,6 +33,8 @@ class UserController extends \BaseController
      * @var \Palmabit\Authentication\Validators\UserValidator
      */
     protected $v;
+    protected $repository_profile;
+
     /**
      * Profile repository
      */
@@ -44,6 +46,7 @@ class UserController extends \BaseController
         $this->v = $v;
         $this->f = new FormModel($this->v, $this->r);
         $this->v_s = $vs;
+        $this->repository_profile = App::make('profile_repository');
     }
 
     public function getList()
@@ -91,7 +94,7 @@ class UserController extends \BaseController
 
         try
         {
-            $user_profile = $this->r_p->getFromUserId($user_id);
+            $user_profile = $this->repository_profile->getFromUserId($user_id);
         }
         catch(UserNotFoundException $e)
         {
