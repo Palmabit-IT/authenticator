@@ -34,18 +34,15 @@ class UserController extends \BaseController
      */
     protected $v;
     protected $repository_profile;
+    protected $user_profile_validator;
 
-    /**
-     * Profile repository
-     */
-    protected $r_p;
-
-    public function __construct(Repo $r, UserValidator $v, UserSignupValidator $vs)
+    public function __construct(Repo $r, UserValidator $v, UserSignupValidator $vs, UserProfileValidator $vp)
     {
         $this->r = $r;
         $this->v = $v;
         $this->f = new FormModel($this->v, $this->r);
         $this->v_s = $vs;
+        $this->user_profile_validator = $vp;
         $this->repository_profile = App::make('profile_repository');
     }
 
@@ -111,7 +108,7 @@ class UserController extends \BaseController
     public function postEditProfile()
     {
         $input = Input::all();
-        $service = new UserProfileService($this->v_p);
+        $service = new UserProfileService($this->user_profile_validator);
 
         try
         {
