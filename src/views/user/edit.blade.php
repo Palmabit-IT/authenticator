@@ -27,7 +27,12 @@ Admin area: modifica utenti
             {{Form::label("activated","Utente attivo")}}
             {{Form::select('activated', ["1" => "Sì", "0" => "No"], (isset($user->activated) && $user->activated) ? $user->activated : "0", ["class"=> "form-control"] )}}
         </div>
-
+        {{Form::hidden('id')}}
+        {{Form::hidden('form_name','user')}}
+        <hr>
+        {{Form::submit('Salva', array("class"=>"btn btn-primary"))}}
+        <a href="{{URL::action('Palmabit\Authentication\Controllers\UserController@deleteUser',['id' => $user->id, '_token' => csrf_token()])}}" class="btn btn-danger margin-left-5 delete">Cancella</a>
+        {{Form::close()}}
     </div>
     <div class="col-md-6">
         @include('authentication::user.groups')

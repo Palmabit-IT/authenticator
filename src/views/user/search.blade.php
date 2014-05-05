@@ -4,7 +4,7 @@
     </div>
     <div class="panel-body">
         {{Form::open(['action' => 'Palmabit\Authentication\Controllers\UserController@getList','method' => 'get'])}}
-        {{FormField::email(['label' => 'email'])}}
+        {{FormField::email(['label' => 'Email: '])}}
         {{FormField::first_name(['label' => 'Nome:'])}}
         {{FormField::last_name(['label' => 'Cognome:'])}}
         {{FormField::billing_address_zip(['label' => 'Cap pagamento:'])}}

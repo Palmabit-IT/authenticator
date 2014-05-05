@@ -32,24 +32,6 @@ Admin area: modifica profilo utente
             <div class="col-md-6">
                 {{FormField::phone(["label" => "Telefono:", "autocomplete" => "off"])}}
                 <span class="text-danger">{{$errors->first('phone')}}</span>
-                <div class="form-group">
-                    {{Form::label('profile_type', 'Tipo di profilo:', ["class" => "control-label"])}}<br/>
-                    {{Form::select('profile_type', [
-                    "" => "",
-                    "Special Effects Company" => "Special Effects Company",
-                    "Manufacturer" => "Manufacturer",
-                    "NightClub" => "NightClub",
-                    "Production Company" => "Production Company",
-                    "Full service" => "Full service",
-                    "Retail Store" => "Retail Store",
-                    "Theater" => "Theater",
-                    "Theme Parks" => "Theme Parks",
-                    "Trade Show" => "Trade Show",
-                    "Film Company" => "Film Company",
-                    "End user" => "End user",
-                    ], $user_profile->profile_type, ["class"=>"form-control"])}}
-                    <span class="text-danger">{{$errors->first('profile_type')}}</span>
-                </div>
             </div>
         </div>
         <hr>

@@ -27,7 +27,6 @@ class UserProfile extends BaseModel
         'shipping_state',
         'shipping_city',
         'shipping_country',
-        'profile_type',
         'company'
     ];
 

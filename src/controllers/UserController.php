@@ -7,7 +7,7 @@
 use Illuminate\Support\MessageBag;
 use Palmabit\Authentication\Exceptions\ProfileNotFoundException;
 use Palmabit\Authentication\Models\UserProfile;
-use Palmabit\Authentication\Repository\SentryUserRepository as Repo;
+use Palmabit\Authentication\Repository\SentryUserRepository as UserRepository;
 use Palmabit\Authentication\Services\UserRegisterService;
 use Palmabit\Authentication\Validators\UserImportValidator;
 use Palmabit\Authentication\Validators\UserSignupValidator;
@@ -36,7 +36,7 @@ class UserController extends \BaseController
     protected $repository_profile;
     protected $user_profile_validator;
 
-    public function __construct(Repo $r, UserValidator $v, UserSignupValidator $vs, UserProfileValidator $vp)
+    public function __construct(UserRepository $r, UserValidator $v, UserSignupValidator $vs, UserProfileValidator $vp)
     {
         $this->r = $r;
         $this->v = $v;
@@ -141,7 +141,7 @@ class UserController extends \BaseController
         $user_id = Input::get('id');
         $group_id = Input::get('group_id');
 
-        if( ! App::make('authenticator')->getLoggedUser()->hasAccess("_super_admin") ) return;
+        if( ! App::make('authenticator')->getLoggedUser()->hasAccess("_admin") ) return;
 
         try
         {
