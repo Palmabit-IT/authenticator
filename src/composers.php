@@ -64,5 +64,5 @@ View::composer('*', function ($view) {
 });
 
 View::composer('*', function ($view) {
-    $view-with('logged_user', App::make('authenticator')->getLoggedUser());
+    $view->with('logged_user', App::make('authenticator')->getLoggedUser());
 });
