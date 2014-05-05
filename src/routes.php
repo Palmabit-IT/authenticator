@@ -2,7 +2,7 @@
 //////////////////// Registration //////////////////////////
 
 Route::get('/user/signup', ['as' => 'users.signup', 'uses' => 'Palmabit\Authentication\Controllers\UserController@getSignupUser']);
-Route::post('/user/signup', ['before' => 'csrf', 'as' => 'users.signuo', 'uses' => 'Palmabit\Authentication\Controllers\UserController@postSignupUser']);
+Route::post('/user/signup', ['before' => 'csrf', 'as' => 'users.signup', 'uses' => 'Palmabit\Authentication\Controllers\UserController@postSignupUser']);
 
 //////////////////// Authentication //////////////////////////
 /**

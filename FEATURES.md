@@ -1,6 +1,7 @@
 - login/logout (OK)
-- admin panel
+- admin panel (OK)
 - users crud
+- filtri
 - groups
 - permissions
 - registration (da migliorare e completare)

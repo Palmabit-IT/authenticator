@@ -85,6 +85,43 @@ class UserController extends \BaseController
         return Redirect::action('Palmabit\Authentication\Controllers\UserController@editUser',["id" => $obj->id])->withMessage("Utente modificato con successo.");
     }
 
+    public function editProfile()
+    {
+        $user_id = Input::get('user_id');
+
+        try
+        {
+            $user_profile = $this->r_p->getFromUserId($user_id);
+        }
+        catch(UserNotFoundException $e)
+        {
+            return Redirect::action('Palmabit\Authentication\Controllers\UserController@getList')->withErrors(new MessageBag(['model' => 'Utente non presente.']));
+        }
+        catch(ProfileNotFoundException $e)
+        {
+            $user_profile = new UserProfile(["user_id" => $user_id]);
+        }
+
+        return View::make('authentication::user.profile')->with(['user_profile' => $user_profile]);
+    }
+
+    public function postEditProfile()
+    {
+        $input = Input::all();
+        $service = new UserProfileService($this->v_p);
+
+        try
+        {
+            $user_profile = $service->processForm($input);
+        }
+        catch(PalmabitExceptionsInterface $e)
+        {
+            $errors = $service->getErrors();
+            return Redirect::route("users.profile.edit", ["user_id" => $input['user_id'] ])->withInput()->withErrors($errors);
+        }
+        return Redirect::action('Palmabit\Authentication\Controllers\UserController@editProfile',["user_id" => $user_profile->user_id])->withMessage("Profilo modificato con successo.");
+    }
+
     public function deleteUser()
     {
         try
