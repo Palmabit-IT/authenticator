@@ -41,6 +41,7 @@ View::composer(['authentication::user.edit','authentication::group.edit'], funct
     $values_permission = $fh->getSelectValuesPermission();
     $view->with('permission_values', $values_permission);
 });
+
 /**
  * Sends the group select to the view
  */
@@ -49,7 +50,6 @@ View::composer(['authentication::user.edit','authentication::group.edit'], funct
     $values_group = $fh->getSelectValuesGroups();
     $view->with('group_values', $values_group);
 });
-
 
 View::composer('*', function ($view) {
 

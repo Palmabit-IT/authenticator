@@ -1,6 +1,6 @@
 <div class="panel panel-default margin-top-20">
     <div class="panel-heading">
-        <h3 class="panel-title">Ricerca utente</h3>
+        <h3 class="panel-title"><i class="glyphicon glyphicon-search"></i> Ricerca utente</h3>
     </div>
     <div class="panel-body">
         {{Form::open(['action' => 'Palmabit\Authentication\Controllers\UserController@getList','method' => 'get'])}}

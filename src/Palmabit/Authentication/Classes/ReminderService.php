@@ -1,5 +1,4 @@
 <?php namespace Palmabit\Authentication\Classes;
-
 use Illuminate\Support\MessageBag;
 use Palmabit\Authentication\Validators\ReminderValidator;
 use Palmabit\Library\Exceptions\MailException;

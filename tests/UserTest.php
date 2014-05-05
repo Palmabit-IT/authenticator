@@ -39,5 +39,19 @@ class UserTest extends DbTestCase {
         $user = $repo->update(1,["copyEmail" => $new_email]);
         $this->assertEquals($new_email, $user->email);
     }
+    
+    /**
+     * @test
+     * @expectedException \Palmabit\Authentication\Exceptions\LoginRequiredException
+     **/
+    public function itValidateUserExistence()
+    {
+        $user = new UserNoLoginAttributeStub();
+        $user->validate();
+    }
 }
- 
+
+class UserNoLoginAttributeStub extends User
+{
+    protected static $loginAttribute = 'falseAttribute';
+}
