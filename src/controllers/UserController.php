@@ -133,6 +133,11 @@ class UserController extends \BaseController
         return Redirect::action('Palmabit\Authentication\Controllers\UserController@editUser',["id" => $user_id])->withMessage("Gruppo cancellato con successo.");
     }
 
+    public function getSignupUser()
+    {
+        return View::make('authentication::user.signup');
+    }
+
     public function postSignupUser()
     {
         $input = Input::all();
