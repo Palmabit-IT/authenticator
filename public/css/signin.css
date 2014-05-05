@@ -45,3 +45,7 @@ body {
 .form-signin .form-group {
   margin: 0;
 }
+
+.login-panel {
+  margin-top: 90px;
+}

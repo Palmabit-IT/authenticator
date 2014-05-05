@@ -1,4 +1,4 @@
-@extends('layouts.nobar')
+@extends('authentication::layouts.baseauth')
 @section('content')
 
   <div class="container">
@@ -12,7 +12,7 @@
                     <h1>Richiesta inviata con successo</h1>
                     <p class="error-para">La tua richiesta è stata inviata con successo. Riceverai subito un email di conferma con le istruzioni da seguire.<br> Grazie</p>
                     <br>
-                    <a href="/" class="btn btn-lg btn-success btn-block">Torna alle faqs</a>
+                    <a href="/" class="btn btn-lg btn-success btn-block">Torna al sito</a>
                   </div>
               </div>
           </div>

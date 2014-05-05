@@ -1,4 +1,4 @@
-@extends('layouts.nobar')
+@extends('authentication::layouts.baseauth')
 @section('content')
 
 <div class="container">
@@ -28,7 +28,6 @@
             <p>
                 <a href="{{URL::to('/user/login')}}" alt="Sei qui per errore?">Sei qui per errore?</a><br>
                 <a href="{{URL::to('/user/signup')}}" alt="Non sei ancora registrato?">Non sei ancora registrato?</a><br><br>
-                <a href="http://www.fism.net" alt="Torna al sito FISM">Torna al sito FISM</a>
             </p>
         </div>
     </div>

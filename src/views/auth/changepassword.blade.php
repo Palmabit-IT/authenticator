@@ -1,4 +1,4 @@
-@extends('layouts.nobar')
+@extends('authentication::layouts.baseauth')
 @section('content')
 
   <div class="container">
@@ -31,7 +31,7 @@
                     </div>
                 </div>
                 <p>
-                    <a href="http://www.fism.net" alt="Torna al sito FISM">Torna al sito FISM</a>
+                    <a href="{{URL::to('/')}}" alt="Torna al sito">Torna al sito FISM</a>
                 </p>
           </div>
       </div>

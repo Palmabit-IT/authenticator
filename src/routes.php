@@ -1,7 +1,7 @@
 <?php
 //////////////////// Registration //////////////////////////
 
-Route::post('/users/signup', ['before' => 'csrf', 'as' => 'users.profile.edit', 'uses' => 'Palmabit\Authentication\Controllers\UserController@postSignupUser']);
+Route::post('/user/signup', ['before' => 'csrf', 'as' => 'users.profile.edit', 'uses' => 'Palmabit\Authentication\Controllers\UserController@postSignupUser']);
 
 //////////////////// Authentication //////////////////////////
 /**

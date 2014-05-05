@@ -1,4 +1,4 @@
-@extends('layouts.nobar')
+@extends('authentication::layouts.baseauth')
 @section('content')
 
   <div class="container">
@@ -36,7 +36,7 @@
               <p>
                 {{link_to_action('Palmabit\Authentication\Controllers\AuthController@getReminder','Password dimenticata?') }}<br>
                 <a href="/user/signup" alt="Non sei ancora registrato?">Non sei ancora registrato?</a><br><br>
-                <a href="http://www.fism.net" alt="Torna al sito FISM">Torna al sito FISM</a>
+                <a href="{{URL::to('/')}}" alt="Torna al sito FISM">Torna al sito</a>
               </p>
           </div>
       </div>

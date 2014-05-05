@@ -26,7 +26,7 @@
     <body>
         {{-- content --}}
         <div class="container">
-            @yield('container')
+            @yield('content')
         </div>
 
         {{-- Start footer scripts --}}

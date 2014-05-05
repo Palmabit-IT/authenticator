@@ -1,4 +1,4 @@
-@extends('layouts.nobar')
+@extends('authentication::layouts.baseauth')
 @section('content')
 
   <div class="container">
