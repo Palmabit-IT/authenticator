@@ -1,13 +1,13 @@
 <?php namespace Palmabit\Authentication\Controllers;
 
-use BaseController, View, Sentry, Input, Redirect;
+use Controller, View, Sentry, Input, Redirect;
 use Palmabit\Library\Exceptions\PalmabitExceptionsInterface as Pbi;
 use Palmabit\Authentication\Classes\SentryAuthenticator;
 use Palmabit\Authentication\Classes\ReminderService;
 use Cartalyst\Sentry\Users\UserNotActivatedException;
 use L;
 
-class AuthController extends BaseController {
+class AuthController extends Controller {
 
     protected $auth;
     protected $reminder;
@@ -34,21 +34,14 @@ class AuthController extends BaseController {
         $password = Input::get('password');
         $remember = Input::get('remember');
 
-        try
-        {
-            $success = $this->auth->authenticate(array(
-                                                "email" => $email,
-                                                "password" => $password
-                                             ), $remember);
-        }
-        catch(UserNotActivatedException $e)
-        {
-            return Redirect::to('/landing');
-        }
+        $success = $this->auth->authenticate(array(
+                                            "email" => $email,
+                                            "password" => $password
+                                         ), $remember);
 
         if($success)
         {
-            return Redirect::to('/');
+            return Redirect::to('/admin/users/list');
         }
         else
         {
