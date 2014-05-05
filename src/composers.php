@@ -5,6 +5,7 @@
  */
 View::composer('*', function ($view){
     $view->with('app_name', Config::get('authentication::app_name') );
+    $view->with('siteg_name', Config::get('authentication::site_name') );
 });
 
 use Palmabit\Authentication\Classes\Menu\SentryMenuFactory;
@@ -21,13 +22,13 @@ View::composer('authentication::layouts.*', function ($view){
  */
 View::composer(['authentication::user.*', 'authentication::group.*', 'authentication::permission.*'], function ($view){
     $view->with('sidebar_items', [
-                                    "Lista utenti" =>  URL::route('users.list'),
-                                    "Aggiungi utente" =>  URL::route('users.edit'),
-                                    "Importa utente" => URL::route('users.import'),
-                                     "Lista gruppi" => URL::route('users.groups.list'),
-                                     "Aggiungi gruppo" => URL::route('users.groups.edit'),
-                                     "Lista permessi" => URL::route('users.permission.list'),
-                                     "Aggiungi permesso" => URL::route('users.permission.edit')
+                                     "Lista utenti"      => URL::route('users.list'),
+                                     "Aggiungi utente"   => URL::route('users.edit'),
+                                     "Lista gruppi"      => URL::route('users.groups.list'),
+                                     "Aggiungi gruppo"   => URL::route('users.groups.edit'),
+                                     "Lista permessi"    => URL::route('users.permission.list'),
+                                     "Aggiungi permesso" => URL::route('users.permission.edit'),
+                                    "Importa utenti" => URL::route('users.import'),
                                  ]);
 });
 

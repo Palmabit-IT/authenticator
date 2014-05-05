@@ -23,7 +23,7 @@
                 </li>
             </ul>
             <p class="navbar-text navbar-right">
-                <a href="{{URL::to('/')}}" style="margin-right:10px; color:#eee;" target="_blank">Vai a SFX shop</a>
+                <a href="{{URL::to('/')}}" style="margin-right:10px; color:#eee;" target="_blank">Vai a {{$site_name}}</a>
             </p>
         </div><!--/.nav-collapse -->
     </div>

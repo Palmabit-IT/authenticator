@@ -23,15 +23,14 @@ Admin area: modifica utenti
         {{Form::label('password','password: ')}}
         {{Form::text('password','',["autocomplete" => "off", "class" => "form-control"])}}
         </div>
-        <span class="text-danger">{{$errors->first('password')}}</span>
-        {{--    {{FormField::last_name( ["label" => "Nome", "autocomplete" => "off"] ) }}
-        <span class="text-danger">{{$errors->first('last_name')}}</span>
-        {{FormField::first_name( ["label" => "Cognome", "autocomplete" => "off"] ) }}
-        <span class="text-danger">{{$errors->first('first_name')}}</span> --}}
         <div class="form-group">
             {{Form::label("activated","Utente attivo")}}
             {{Form::select('activated', ["1" => "Sì", "0" => "No"], (isset($user->activated) && $user->activated) ? $user->activated : "0", ["class"=> "form-control"] )}}
         </div>
+
+    </div>
+    <div class="col-md-6">
+        @include('authentication::user.groups')
     </div>
 </div>
 @stop
