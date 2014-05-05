@@ -17,18 +17,17 @@ use Palmabit\Authentication\Exceptions\UserNotFoundException;
 use Palmabit\Authentication\Validators\UserValidator;
 use Palmabit\Authentication\Validators\UserProfileValidator;
 use Palmabit\Library\Exceptions\PalmabitExceptionsInterface;
-use View, Input, Redirect, App;
+use View, Input, Redirect, App, L, URLT;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Palmabit\Authentication\Services\UserProfileService;
 use Palmabit\Authentication\Services\UserImport\UserImportService;
-use L, URLT;
 
 class UserController extends \BaseController
 {
     /**
      * @var \Palmabit\Authentication\Repository\SentryUserRepository
      */
-    protected $r;
+    protected $user_repository;
     /**
      * @var \Palmabit\Authentication\Validators\UserValidator
      */
@@ -36,11 +35,11 @@ class UserController extends \BaseController
     protected $repository_profile;
     protected $user_profile_validator;
 
-    public function __construct(UserRepository $r, UserValidator $v, UserSignupValidator $vs, UserProfileValidator $vp)
+    public function __construct(UserRepository $user_repository, UserValidator $v, UserSignupValidator $vs, UserProfileValidator $vp)
     {
-        $this->r = $r;
+        $this->user_repository = $user_repository;
         $this->v = $v;
-        $this->f = new FormModel($this->v, $this->r);
+        $this->f = new FormModel($this->v, $this->user_repository);
         $this->v_s = $vs;
         $this->user_profile_validator = $vp;
         $this->repository_profile = App::make('profile_repository');
@@ -48,7 +47,7 @@ class UserController extends \BaseController
 
     public function getList()
     {
-        $users = $this->r->all(Input::all());
+        $users = $this->user_repository->all(Input::all());
 
         return View::make('authentication::user.list')->with(["users" => $users]);
     }
@@ -57,7 +56,7 @@ class UserController extends \BaseController
     {
         try
         {
-            $user = $this->r->find(Input::get('id'));
+            $user = $this->user_repository->find(Input::get('id'));
         }
         catch(PalmabitExceptionsInterface $e)
         {
@@ -145,7 +144,7 @@ class UserController extends \BaseController
 
         try
         {
-            $this->r->addGroup($user_id, $group_id);
+            $this->user_repository->addGroup($user_id, $group_id);
         }
         catch(PalmabitExceptionsInterface $e)
         {
@@ -161,7 +160,7 @@ class UserController extends \BaseController
 
         try
         {
-            $this->r->removeGroup($user_id, $group_id);
+            $this->user_repository->removeGroup($user_id, $group_id);
         }
         catch(PalmabitExceptionsInterface $e)
         {

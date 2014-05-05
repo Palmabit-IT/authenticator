@@ -53,7 +53,7 @@ Admin area: lista utenti
             @else
             <h5>Non ho trovato risultati.</h5>
             @endif
-            <a href="{{URL::action('Palmabit\Authentication\Controllers\UserController@editUser')}}" class="btn btn-primary"><i class="glyphicon glyphicon-plus"></i> Aggiungi nuovo</a>
+            <a href="{{URL::action('Palmabit\Authentication\Controllers\UserController@editUser')}}" class="btn btn-primary"><i class="glyphicon glyphicon-plus"></i> Aggiungi</a>
         </div>
         <div class="col-md-3">
             @include('authentication::user.search')

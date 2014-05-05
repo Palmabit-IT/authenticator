@@ -36,7 +36,7 @@
     @else
         <h5>Non ci sono gruppi presenti nel sistema.</h5>
     @endif
-    <a href="{{URL::action('Palmabit\Authentication\Controllers\GroupController@editGroup')}}" class="btn btn-primary pull-right">Aggiungi</a>
+    <a href="{{URL::action('Palmabit\Authentication\Controllers\GroupController@editGroup')}}" class="btn btn-primary pull-right"><i class="glyphicon glyphicon-plus"></i> Aggiungi</a>
 </div>
 @stop
 

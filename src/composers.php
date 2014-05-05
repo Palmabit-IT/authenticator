@@ -62,3 +62,7 @@ View::composer('*', function ($view) {
     }
     $view->with('admin_area', $admin_area);
 });
+
+View::composer('*', function ($view) {
+    $view-with('logged_user', App::make('authenticator')->getLoggedUser());
+});
