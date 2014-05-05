@@ -40,7 +40,7 @@ class PrepareCommand extends Command {
    */
   public function fire()
   {
-    $this->call_wrapper->call('config:publish', ['bench' => 'palmabit/authentication' ] );
+    $this->call_wrapper->call('config:publish', ['package' => 'palmabit/authentication' ] );
 
     $this->info('## Authentication prepared successfully ##');
 

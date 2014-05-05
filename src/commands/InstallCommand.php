@@ -42,7 +42,7 @@ class InstallCommand extends Command {
 	 */
 	public function fire()
 	{
-    $this->call_wrapper->call('migrate', ['--bench' => 'palmabit/authentication', '--database' => "authentication" ] );
+    $this->call_wrapper->call('migrate', ['--package' => 'palmabit/authentication', '--database' => "authentication" ] );
 
     $this->db_seeder->run();
 

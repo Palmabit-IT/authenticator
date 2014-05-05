@@ -26,21 +26,6 @@ class DbTestCase extends TestCase
     }
 
     /**
-     * @deprecated used for old mysql test
-     */
-    protected function cleanDb()
-    {
-        $manager = DB::getDoctrineSchemaManager();
-        $tables = $manager->listTableNames();
-
-        DB::Statement("SET FOREIGN_KEY_CHECKS=0");
-        foreach ($tables as $key => $table) {
-            DB::Statement("DROP TABLE ".$table."");
-        }
-        DB::Statement("SET FOREIGN_KEY_CHECKS=1");
-    }
-
-    /**
      * Define environment setup.
      *
      * @param  \Illuminate\Foundation\Application    $app
