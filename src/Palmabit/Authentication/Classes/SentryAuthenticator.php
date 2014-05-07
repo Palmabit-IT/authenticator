@@ -12,6 +12,7 @@ use Illuminate\Support\MessageBag;
 use Palmabit\Authentication\Exceptions\UserNotFoundException;
 use Palmabit\Authentication\Interfaces\AuthenticateInterface;
 use Palmabit\Authentication\Models\User;
+use Event;
 
 class SentryAuthenticator implements AuthenticateInterface{
 
@@ -51,7 +52,13 @@ class SentryAuthenticator implements AuthenticateInterface{
             $this->errors->add('login','Il campo password è richiesto.');
         }
 
-        return $this->errors->isEmpty() ? $user : false;
+        if($this->errors->isEmpty())
+        {
+            Event::fire('authentication.login',[$user]);
+            return $user;
+        }
+
+        return false;
     }
 
     /**

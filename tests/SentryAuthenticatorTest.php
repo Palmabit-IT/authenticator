@@ -1,6 +1,6 @@
 <?php namespace Palmabit\Authentication\Tests;
 use Mockery as m;
-use App;
+use App, Event;
 use Palmabit\Authentication\Classes\SentryAuthenticator;
     use Palmabit\Authentication\Models\Group;
     use Palmabit\Authentication\Repository\SentryUserRepository;
@@ -135,5 +135,38 @@ class SentryAuthenticatorTest extends DbTestCase {
         $user_found = $repo->find(1);
 
         $this->assertEquals($user_found->email, $user_saved->email);
+    }
+
+    /**
+     * @test
+     **/
+    public function itFireEventOnAuthenticate()
+    {
+        $mock_sentry = $this->mockSentryAuthenticateSuccess();
+        App::instance('sentry', $mock_sentry);
+
+        $authenticator = new SentryAuthenticator;
+
+        $found = false;
+        Event::listen('authentication.login', function() use (&$found)
+        {
+            $found = true;
+        });
+
+        $authenticator->authenticate([]);
+        $this->assertTrue($found);
+    }
+
+    /**
+     * @return m\MockInterface
+     */
+    private function mockSentryAuthenticateSuccess()
+    {
+        $mock_sentry = m::mock('StdClass')
+                ->shouldReceive('authenticate')
+                ->andReturn(new \StdClass)
+                ->getMock();
+
+        return $mock_sentry;
     }
 }
