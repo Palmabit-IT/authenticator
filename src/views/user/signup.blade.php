@@ -29,7 +29,7 @@
                                   <input class="form-control" placeholder="Cognome" name="last_name" type="text" autofocus autocomplete="off">
                                   <span class="text-danger">{{$errors->first('last_name')}}</span>
                               </div>
-                              {{Form::submit('Registrami', ["class" => "btn btn-lg btn-success btn-block"])}}
+                              {{Form::submit('Registrami', ["class" => "btn btn-lg btn-primary btn-block"])}}
                           </fieldset>
                       {{Form::close()}}
                   </div>

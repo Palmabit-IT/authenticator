@@ -20,7 +20,7 @@ Admin area: lista utenti
             <div class="alert alert-danger">{{$error}}</div>
             @endforeach
             @endif
-            <h3>Utenti</h3>
+            <h3><i class="glyphicon glyphicon-user"></i> Utenti</h3>
             @if(! $users->isEmpty() )
             <table class="table table-striped">
                 <tr>

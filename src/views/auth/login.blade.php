@@ -28,7 +28,7 @@
                                   </label>
                               </div>
                               <!-- Change this to a button or input when using this as a form -->
-                            {{Form::submit('Login', array("class"=>"btn btn-lg btn-success btn-block"))}}
+                            {{Form::submit('Login', array("class"=>"btn btn-lg btn-primary btn-block"))}}
                         </fieldset>
                     {{Form::close()}}
                   </div>

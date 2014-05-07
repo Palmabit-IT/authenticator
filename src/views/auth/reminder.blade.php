@@ -8,7 +8,7 @@
                 <div class="panel-heading">
                     <h3 class="panel-title">Recupera password</h3>
                 </div>
-                @if($errors && ! $errors->isEmpty() )
+                @if($errors && ! $errors->isEmpty())
                 @foreach($errors->all() as $error)
                 <div class="alert alert-danger">{{$error}}</div>
                 @endforeach
@@ -20,7 +20,7 @@
                             <input class="form-control" placeholder="E-mail" name="email" type="email" autofocus>
                         </div>
                         <!-- Change this to a button or input when using this as a form -->
-                        {{Form::submit('Recupera', ['class' => 'btn btn-lg btn-success btn-block'])}}
+                        {{Form::submit('Recupera', ['class' => 'btn btn-lg btn-primary btn-block'])}}
                     </fieldset>
                     {{Form::close()}}
                 </div>
