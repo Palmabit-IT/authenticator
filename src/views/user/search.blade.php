@@ -13,7 +13,7 @@
             {{Form::label('activated', 'Attivo: ')}}
             {{Form::select('activated', ['' => '', 1 => 'Sì', 0 => 'No'], Input::get('activated',''), ["class" => "form-control"])}}
         </div>
-        {{Form::reset('Pulisci', ["class" => "btn btn-default"])}}
+        <a href="{{URL::action('Palmabit\Authentication\Controllers\UserController@getList')}}" class="btn btn-default">Pulisci</a>
         {{Form::submit('Cerca', ["class" => "btn btn-primary"])}}
         {{Form::close()}}
     </div>
