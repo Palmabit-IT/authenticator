@@ -41,56 +41,32 @@ class UserRegisterServiceTest extends DbTestCase {
     /**
      * @test
      **/
-    public function it_register_a_user()
+    public function it_create_an_user_and_his_profile()
     {
+        $user_email = "test@test.com";
+        $shipping_state = "PL";
         $input = [
-            "email" => "test@test.com",
+            "email" => $user_email,
             "password" => "password@test.com",
-            "group_id" => 1
+            "group_id" => 1,
+            "shipping_state" => $shipping_state
         ];
-        $mock_mailer = m::mock('StdClass')->shouldReceive('sendTo')
-            ->andReturn(true)
-            ->getMock();
+        $mock_mailer = $this->mockMailerInfiniteSendTo();
         App::instance('palmamailer', $mock_mailer);
-        $mock_auth_helper = m::mock('StdClass')->shouldReceive('getNotificationRegistrationUsersEmail')->once()->andReturn([])->getMock();
-        \App::instance('authentication_helper', $mock_auth_helper);
-        $mock_validator = $this->getValidatorSuccess();
-
-        $service = new UserRegisterService($mock_validator);
-        $this->u_g->create(["name"=> "name"]);
-
-        $service->register($input);
-
-        $user = $this->u_r->find(1);
-        $this->assertNotEmpty($user);
-    }
-
-    /**
-     * @test
-     **/
-    public function it_create_a_profile()
-    {
-        $input = [
-            "email" => "test@test.com",
-            "password" => "password@test.com",
-            "group_id" => 1
-        ];
-        $mock_mailer = m::mock('StdClass')->shouldReceive('sendTo')
-            ->andReturn(true)
-            ->getMock();
-        App::instance('palmamailer', $mock_mailer);
-        $mock_auth_helper = m::mock('StdClass')->shouldReceive('getNotificationRegistrationUsersEmail')->once()->andReturn([])->getMock();
+        $mock_auth_helper = $this->mockRegistrationUserEmail();
         \App::instance('authentication_helper', $mock_auth_helper);
         $this->u_g->create(["name"=> "name"]);
-        $mock_validator = $this->getValidatorSuccess();
-
-        $service = new UserRegisterService($mock_validator);
+        $service = new UserRegisterService($this->getValidatorSuccess());
 
         $service->register($input);
 
         $user = $this->u_r->find(1);
         $profile = App::make('profile_repository')->getFromUserId($user->id);
+
         $this->assertNotEmpty($profile);
+        $this->assertNotEmpty($user);
+        $this->assertEquals($user_email, $user->email);
+        $this->assertEquals($shipping_state, $profile->shipping_state);
     }
     
     /**
@@ -103,11 +79,9 @@ class UserRegisterServiceTest extends DbTestCase {
             "password" => "password@test.com",
             "group_id" => 1
         ];
-        $mock_mailer = m::mock('StdClass')->shouldReceive('sendTo')
-            ->andReturn(true)
-            ->getMock();
+        $mock_mailer = $this->mockMailerInfiniteSendTo();
         App::instance('palmamailer', $mock_mailer);
-        $mock_auth_helper = m::mock('StdClass')->shouldReceive('getNotificationRegistrationUsersEmail')->once()->andReturn([])->getMock();
+        $mock_auth_helper = $this->mockRegistrationUserEmail();
         $mock_user = new \StdClass;
         $mock_user->id = 1;
         $mock_user->email = "";
@@ -142,7 +116,7 @@ class UserRegisterServiceTest extends DbTestCase {
             ->andReturn(true)
             ->getMock();
         App::instance('palmamailer', $mock_mailer);
-        $mock_auth_helper = m::mock('StdClass')->shouldReceive('getNotificationRegistrationUsersEmail')->once()->andReturn([])->getMock();
+        $mock_auth_helper = $this->mockRegistrationUserEmail();
         \App::instance('authentication_helper', $mock_auth_helper);
         $this->u_g->create(["name"=> "name"]);
         $mock_validator = $this->getValidatorSuccess();
@@ -170,7 +144,7 @@ class UserRegisterServiceTest extends DbTestCase {
             ->andReturn(true)
             ->getMock();
         App::instance('palmamailer', $mock_mailer);
-        $mock_auth_helper = m::mock('StdClass')->shouldReceive('getNotificationRegistrationUsersEmail')->once()->andReturn(["admin@admin.com"])->getMock();
+        $mock_auth_helper = $this->mockRegistrationUserEmail(["admin@admin.com"]);
         \App::instance('authentication_helper', $mock_auth_helper);
         $this->u_g->create(["name"=> "name"]);
         $mock_validator = $this->getValidatorSuccess();
@@ -208,11 +182,9 @@ class UserRegisterServiceTest extends DbTestCase {
             "password" => "password@test.com",
             "group_id" => 1
         ];
-        $mock_mailer = m::mock('StdClass')->shouldReceive('sendTo')
-            ->andReturn(true)
-            ->getMock();
+        $mock_mailer = $this->mockMailerInfiniteSendTo();
         App::instance('palmamailer', $mock_mailer);
-        $mock_auth_helper = m::mock('StdClass')->shouldReceive('getNotificationRegistrationUsersEmail')->once()->andReturn([])->getMock();
+        $mock_auth_helper = $this->mockRegistrationUserEmail();
         \App::instance('authentication_helper', $mock_auth_helper);
         $this->u_g->create(["name"=> "name"]);
 
@@ -328,5 +300,23 @@ class UserRegisterServiceTest extends DbTestCase {
         $mock_validator = m::mock('Palmabit\Authentication\Validators\UserSignupValidator')->shouldReceive('validate')->once()->andReturn(false)->getMock();
 
         return $mock_validator;
+    }
+
+    /**
+     * @return m\MockInterface
+     */
+    protected function mockMailerInfiniteSendTo()
+    {
+        $mock_mailer = m::mock('StdClass')->shouldReceive('sendTo')->andReturn(true)->getMock();
+        return $mock_mailer;
+    }
+
+    /**
+     * @return m\MockInterface
+     */
+    protected function mockRegistrationUserEmail($return = [])
+    {
+        $mock_auth_helper = m::mock('StdClass')->shouldReceive('getNotificationRegistrationUsersEmail')->once()->andReturn($return)->getMock();
+        return $mock_auth_helper;
     }
 }

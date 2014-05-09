@@ -11,6 +11,8 @@ class UserSignupValidator extends OverrideConnectionValidator
         "last_name" => "required|max:255",
         "phone" => "required",
         "vat" => "numeric",
-        "agree" => "accepted"
+        "agree" => "accepted",
+        "shipping_state" => "required",
+        "shipping_country" => "required"
     );
 } 
