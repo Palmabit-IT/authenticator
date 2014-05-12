@@ -12,7 +12,7 @@ class UserSignupValidator extends OverrideConnectionValidator
         "phone" => "required",
         "vat" => "numeric",
         "agree" => "accepted",
-        "shipping_state" => "required",
-        "shipping_country" => "required"
+        "billing_state" => "required",
+        "billing_country" => "required"
     );
 } 
