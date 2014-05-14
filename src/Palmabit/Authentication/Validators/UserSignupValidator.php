@@ -4,6 +4,14 @@ use Palmabit\Library\Validators\OverrideConnectionValidator;
 
 class UserSignupValidator extends OverrideConnectionValidator
 {
+    public function __construct()
+    {
+        Event::listen('validating.withvalidator', function($validator)
+        {
+            $validator->addReplacer("unique", "Email");
+        });
+    }
+
     protected static $rules = array(
         "email" => ["required", "email", "unique:users,email"],
         "password" => ["required", "min:6"],
@@ -15,4 +23,5 @@ class UserSignupValidator extends OverrideConnectionValidator
         "billing_state" => "required",
         "billing_country" => "required"
     );
+
 } 
