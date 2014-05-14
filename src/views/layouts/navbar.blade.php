@@ -1,7 +1,7 @@
 <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
     <div class="container">
         <div class="navbar-header">
-            <a class="navbar-brand" href="#">{{$app_name}}</a>
+            <a class="navbar-brand" href="#">{{$panel_name}}</a>
         </div>
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav">

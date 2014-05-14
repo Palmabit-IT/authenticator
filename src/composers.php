@@ -5,6 +5,7 @@
  */
 View::composer('*', function ($view){
     $view->with('app_name', Config::get('authentication::app_name') );
+    $view->with('panel_name', Config::get('authentication::panel_name') );
 });
 
 use Palmabit\Authentication\Classes\Menu\SentryMenuFactory;
