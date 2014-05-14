@@ -69,9 +69,9 @@ Admin area: modifica profilo utente
                 {{FormField::billing_address_zip(["label" => "CAP fatturazione", "autocomplete" => "off"])}}
                 <span class="text-danger">{{$errors->first('billing_address_zip')}}</span>
                 {{FormField::billing_state(["label" => "Provincia fatturazione", "autocomplete" => "off"])}}
-                <span class="text-danger">{{$errors->first('billing_state')}}</span>
-                {{FormField::billing_country(["label" => "Nazione fatturazione", "autocomplete" => "off"])}}
                 <span class="text-danger">{{$errors->first('billing_country')}}</span>
+                {{FormField::billing_country(["label" => "Nazione fatturazione", "autocomplete" => "off"])}}
+                <span class="text-danger">{{$errors->first('billing_state')}}</span>
 
             </div>
             <div class="col-md-6">
@@ -83,9 +83,9 @@ Admin area: modifica profilo utente
                 {{FormField::shipping_address_zip(["label" => "CAP spedizione", "autocomplete" => "off"])}}
                 <span class="text-danger">{{$errors->first('shipping_address_zip')}}</span>
                 {{FormField::shipping_state(["label" => "Provincia spedizione", "autocomplete" => "off"])}}
-                <span class="text-danger">{{$errors->first('shipping_state')}}</span>
-                {{FormField::shipping_country(["label" => "Nazione spedizione", "autocomplete" => "off"])}}
                 <span class="text-danger">{{$errors->first('shipping_country')}}</span>
+                {{FormField::shipping_country(["label" => "Nazione spedizione", "autocomplete" => "off"])}}
+                <span class="text-danger">{{$errors->first('shipping_state')}}</span>
 
 
             </div>
