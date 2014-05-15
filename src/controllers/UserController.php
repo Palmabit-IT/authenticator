@@ -187,7 +187,7 @@ class UserController extends \BaseController
         }
         catch(PalmabitExceptionsInterface $e)
         {
-            return Redirect::back()->withInput()->withErrors($service->getErrors())->with(array('errorSignup' => $service->getErrors()));
+            return Redirect::back()->withInput()->with(array('errorsSignup' => $service->getErrors()));
         }
 
         return Redirect::to(URLT::action("UserController@signupSuccess"));
