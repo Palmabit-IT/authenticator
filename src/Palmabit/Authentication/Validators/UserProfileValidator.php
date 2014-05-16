@@ -12,6 +12,8 @@ class UserProfileValidator extends OverrideConnectionValidator
         "phone" => "max:20",
         "vat" => "max:50",
         "profile_type" => "max:25",
-        "company" => 'max:255'
+        "company" => 'max:255',
+        "billing_address_zip" => "integer",
+        "shipping_address_zip" => "integer"
     );
 }
