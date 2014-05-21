@@ -1,4 +1,4 @@
-@if( App::make('authenticator')->getLoggedUser()->hasAccess("_admin") )
+@if( App::make('authenticator')->getLoggedUser()->hasAccess("_superadmin") )
     <h3>Gruppi</h3>
     <h3>Gruppi associati:</h3>
     @if( ! $user->groups->isEmpty() )

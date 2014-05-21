@@ -140,7 +140,7 @@ class UserController extends \BaseController
         $user_id = Input::get('id');
         $group_id = Input::get('group_id');
 
-        if( ! App::make('authenticator')->getLoggedUser()->hasAccess("_admin") ) return;
+        if( ! App::make('authenticator')->getLoggedUser()->hasAccess("_superadmin") ) return;
 
         try
         {
