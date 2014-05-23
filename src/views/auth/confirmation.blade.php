@@ -12,7 +12,7 @@
                     <h1>Password modificata con successo</h1>
                     <p class="error-para">La tua password è stata modificata con successo.<br> Grazie</p>
                     <br>
-                    <a href="/" class="btn btn-lg btn-success btn-block">Torna alle faqs</a>
+                    <a href="/" class="btn btn-lg btn-success btn-block">Torna al sito</a>
                   </div>
               </div>
           </div>

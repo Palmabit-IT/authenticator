@@ -36,7 +36,7 @@
               <p>
                 {{link_to_action('Palmabit\Authentication\Controllers\AuthController@getReminder','Password dimenticata?') }}<br>
                 <a href="/user/signup" alt="Non sei ancora registrato?">Non sei ancora registrato?</a><br><br>
-                <a href="{{URL::to('/')}}" alt="Torna al sito FISM">Torna al sito</a>
+                <a href="{{URL::to('/')}}" alt="Torna al sito">Torna al sito</a>
               </p>
           </div>
       </div>

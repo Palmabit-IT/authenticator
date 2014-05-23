@@ -31,7 +31,7 @@
                     </div>
                 </div>
                 <p>
-                    <a href="{{URL::to('/')}}" alt="Torna al sito">Torna al sito FISM</a>
+                    <a href="{{URL::to('/')}}" alt="Torna al sito">Torna al sito</a>
                 </p>
           </div>
       </div>
