@@ -87,7 +87,7 @@ class AuthController extends Controller {
         catch(Pbi $e)
         {
             $errors = $this->reminder->getErrors();
-            return Redirect::to("/user/recupero-password")->with(array('errors'=>$errors));
+            return Redirect::back()->with(array('errors'=>$errors));
         }
     }
 
