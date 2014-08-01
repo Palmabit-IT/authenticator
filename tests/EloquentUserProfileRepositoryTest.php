@@ -76,7 +76,7 @@ class EloquentUserProfileRepositoryTest extends DbTestCase {
                 'first_name' => $this->faker->firstName(),
                 'last_name' => $this->faker->lastName(),
                 'phone' => $this->faker->phoneNumber(),
-                'vat' => $this->faker->randomNumber(12),
+                'vat' => $this->faker->randomNumber(5),
                 'cf' => $this->faker->text(12),
                 'billing_address' => $this->faker->address(),
                 'billing_address_zip' => $this->faker->postcode(),
