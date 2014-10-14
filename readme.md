@@ -1,10 +1,10 @@
-#Multilanguage
+#Authentication
 
 [![Build Status](https://travis-ci.org/Palmabit-IT/authenticator.png)](https://travis-ci.org/Palmabit-IT/authenticator)
 
 ##description
 
-This package adds multilanguage capability to your laravel app.
+This package adds authentication and user management to your laravel application.
 
 ## Installation
 
