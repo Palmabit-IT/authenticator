@@ -1,32 +1,35 @@
 <?php namespace Palmabit\Authentication\Tests;
+
 /**
  * Test TestCase
  *
  * @author jacopo beschi j.beschi@palmabit.com
  */
-class TestCase extends \Orchestra\Testbench\TestCase  {
+class TestCase extends \Orchestra\Testbench\TestCase {
 
-    public function setUp()
-    {
-        parent::setUp();
+  public function setUp() {
+    parent::setUp();
 
-        require_once __DIR__ . "/../src/routes.php";
-    }
+    require_once __DIR__ . "/../src/routes.php";
+  }
 
-    protected function getPackageProviders()
-    {
-        return [
-                'Cartalyst\Sentry\SentryServiceProvider',
-                'Palmabit\Authentication\AuthenticationServiceProvider',
-            ];
-    }
+  protected function getPackageProviders() {
+    return [
+            'Cartalyst\Sentry\SentryServiceProvider',
+            'Palmabit\Authentication\AuthenticationServiceProvider',
+    ];
+  }
 
-    protected function getPackageAliases()
-    {
-        return [
+  protected function getPackageAliases() {
+    return [
             'Sentry' => 'Cartalyst\Sentry\Facades\Laravel\Sentry',
-        ];
-    }
+    ];
+  }
 
+  /**
+   * @test
+   **/
+  public function dummy() {
+  }
 }
  
