@@ -1,6 +1,6 @@
 #Multilanguage
 
-[![Build Status](https://travis-ci.org/Palmabit-IT/multilanguage.png)](https://travis-ci.org/Palmabit-IT/multilanguage)
+[![Build Status](https://travis-ci.org/Palmabit-IT/authentication.png)](https://travis-ci.org/Palmabit-IT/authentication)
 
 ##description
 
