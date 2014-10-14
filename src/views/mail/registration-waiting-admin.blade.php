@@ -4,16 +4,16 @@
     <meta charset="utf-8">
 </head>
 <body>
-<h2>Richiesta di registrazione su {{Config::get('authentication::app_name')}}</h2>
+<h2>Registration request on {{Config::get('authentication::app_name')}}</h2>
 <div>
-    <strong>L'utente: {{$body['email']}}</strong>
+    <strong>The user: {{$body['email']}}</strong>
     <br/>
-    Ha effettuato una richiesta di approvazione per il sito. Verifica il suo profilo prima di procedere con l'attivazione.
+    Sent you a registration request
     <br/>
     @if(! empty($body['comments']) )
-        Commenti : {{$body['comments']}}<br/>
+        Comments : {{$body['comments']}}<br/>
     @endif
-    <a href="{{URL::action('Palmabit\Authentication\Controllers\UserController@editUser', [ 'id' => $body['id'] ] )}}" target="_blank">Vedi utente</a>
+    <a href="{{URL::action('Palmabit\Authentication\Controllers\UserController@editUser', [ 'id' => $body['id'] ] )}}" target="_blank">See user</a>
 </div>
 </body>
 </html>

@@ -1,7 +1,7 @@
 @extends('authentication::layouts.base-2cols')
 
 @section('title')
-Admin area: modifica permesso
+Admin area: edit permission
 @stop
 
 @section('content')
@@ -17,23 +17,23 @@ Admin area: modifica permesso
     @if( isset($message) )
     <div class="alert alert-success">{{$message}}</div>
     @endif
-    <h3><i class="glyphicon glyphicon-lock"></i> Modifica permesso</h3>
+    <h3><i class="glyphicon glyphicon-lock"></i> edit permission</h3>
 
     {{Form::model($permission, [ 'url' => [URL::action('Palmabit\Authentication\Controllers\PermissionController@editPermission'), $permission->id], 'method' => 'post'] ) }}
     {{FormField::description(["label" => "Descrizione:", "type" => "text"])}}
     <span class="text-danger">{{$errors->first('description')}}</span>
-    {{FormField::permission(["label" => "Permesso:"])}}
+    {{FormField::permission(["label" => "permission:"])}}
     <span class="text-danger">{{$errors->first('permission')}}</span>
     {{Form::hidden('id')}}
     <a href="{{URL::action('Palmabit\Authentication\Controllers\PermissionController@deletePermission',['id' => $permission->id, '_token' => csrf_token()])}}" class="btn btn-danger pull-right margin-left-5 delete">Cancella</a>
-    {{Form::submit('Salva', array("class"=>"btn btn-primary pull-right "))}}
+    {{Form::submit('save', array("class"=>"btn btn-primary pull-right "))}}
     {{Form::close()}}
 @stop
 
 @section('footer_scripts')
 <script>
     $(".delete").click(function(){
-        return confirm("Sei sicuro di volere eliminare l'elemento selezionato?");
+        return confirm("Are you sure?");
     });
 </script>
 @stop

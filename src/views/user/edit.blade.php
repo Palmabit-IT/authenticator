@@ -1,7 +1,7 @@
 @extends('authentication::layouts.base-2cols')
 
 @section('title')
-Admin area: modifica utenti
+Admin area: edit user
 @stop
 
 @section('content')
@@ -13,9 +13,9 @@ Admin area: modifica utenti
         <div class="alert alert-success">{{$message}}</div>
     @endif
 
-    <h3><i class="glyphicon glyphicon-user"></i> Gestione utente</h3>
+    <h3><i class="glyphicon glyphicon-user"></i> Edit user</h3>
     <div class="col-md-6">
-        <h3>Dati generali</h3>
+        <h3>General info</h3>
         {{Form::model($user, [ 'url' => [URL::action('Palmabit\Authentication\Controllers\UserController@postEditUser'), $user->id], 'method' => 'post'] ) }}
         {{FormField::copyEmail(["autocomplete" => "off", "label" => "email"])}}
         <span class="text-danger">{{$errors->first('copyEmail')}}</span>
@@ -35,8 +35,8 @@ Admin area: modifica utenti
         {{Form::hidden('id')}}
         {{Form::hidden('form_name','user')}}
         <hr>
-        {{Form::submit('Salva', array("class"=>"btn btn-primary"))}}
-        <a href="{{URL::action('Palmabit\Authentication\Controllers\UserController@deleteUser',['id' => $user->id, '_token' => csrf_token()])}}" class="btn btn-danger margin-left-5 delete">Cancella</a>
+        {{Form::submit('save', array("class"=>"btn btn-primary"))}}
+        <a href="{{URL::action('Palmabit\Authentication\Controllers\UserController@deleteUser',['id' => $user->id, '_token' => csrf_token()])}}" class="btn btn-danger margin-left-5 delete">Delete</a>
         {{Form::close()}}
     </div>
     <div class="col-md-6">

@@ -1,4 +1,4 @@
-<h3>Permessi attivi:</h3>
+<h3>active permissions:</h3>
 @if( $presenter->permissions )
 <ul class="list-group">
     @foreach($presenter->permissions_obj as $permission)
@@ -10,5 +10,5 @@
     @endforeach
 </ul>
 @else
-<h5>Non ci sono permessi associati al gruppo.</h5>
+<h5>No permission associated.</h5>
 @endif

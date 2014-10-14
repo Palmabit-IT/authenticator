@@ -18,17 +18,33 @@ View::composer('authentication::layouts.*', function ($view){
 });
 
 /**
- * Create users sidebar
+ * Users sidebar
  */
-View::composer(['authentication::user.*', 'authentication::group.*', 'authentication::permission.*'], function ($view){
+View::composer(['authentication::user.*'], function ($view){
     $view->with('sidebar_items', [
-                                    "Lista utenti" =>  URL::route('users.list'),
-                                    "Aggiungi utente" =>  URL::route('users.edit'),
-                                    //"Lista gruppi" => array( URL::route('users.groups.list'), "<i class='glyphicon glyphicon-th-list'></i>"),
-                                    //"Aggiungi gruppo" => array( URL::route('users.groups.edit'), "<i class='glyphicon glyphicon-plus'></i>"),
-                                    //"Lista permessi" => array( URL::route('users.permission.list'), "<i class='glyphicon glyphicon-th-list'></i>"),
-                                    //"Aggiungi permesso" => array( URL::route('users.permission.edit'), "<i class='glyphicon glyphicon-plus'></i>"),
+                                    "Lists" =>  array(URL::route('users.list'), "<i class='glyphicon glyphicon-th-list'></i>"),
+                                    "Add new " =>  array(URL::route('users.edit'), "<i class='glyphicon glyphicon-plus'></i>"),
                                  ]);
+});
+
+/**
+ * Users sidebar
+ */
+View::composer(['authentication::group.*'], function ($view){
+  $view->with('sidebar_items', [
+          "Lists" => array( URL::route('groups.list'), "<i class='glyphicon glyphicon-th-list'></i>"),
+          "Add new" => array( URL::route('groups.edit'), "<i class='glyphicon glyphicon-plus'></i>"),
+  ]);
+});
+
+/**
+ * Users sidebar
+ */
+View::composer(['authentication::permission.*'], function ($view){
+  $view->with('sidebar_items', [
+          "Lists" => array( URL::route('permission.list'), "<i class='glyphicon glyphicon-th-list'></i>"),
+          "Add new" => array( URL::route('permission.edit'), "<i class='glyphicon glyphicon-plus'></i>"),
+  ]);
 });
 
 use Palmabit\Authentication\Helpers\FormHelper;

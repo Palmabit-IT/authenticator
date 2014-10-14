@@ -1,4 +1,4 @@
-<h3>Gruppi associati:</h3>
+<h3>Groups associated:</h3>
 @if( ! $user->groups->isEmpty() )
 <ul class="list-group">
     @foreach($user->groups as $group)
@@ -11,10 +11,10 @@
     @endforeach
 </ul>
 @else
-<h5>Non ci sono gruppi associati all' utente.</h5>
+<h5>There are no groups associated to the user.</h5>
 @if(! $user->exists)
     <div class="alert alert-danger">
-      <h5>Per associare un gruppo bisogna prima creare l'utente.</h5>
+      <h5>You need to create the user first.</h5>
     </div>
 @endif
 @endif

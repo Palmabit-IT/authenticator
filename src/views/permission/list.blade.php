@@ -1,7 +1,7 @@
 @extends('authentication::layouts.base-2cols')
 
 @section('title')
-    Admin area: lista permessi
+    Admin area: lista permissions
 @stop
 
 @section('content')
@@ -18,7 +18,7 @@
     <div class="alert alert-danger">{{$error}}</div>
     @endforeach
     @endif
-    <h3>Lista permessi</h3>
+    <h3>Lista permissions</h3>
     @if( ! $permissions->isEmpty() )
         <ul class="list-group">
         @foreach($permissions as $permission)
@@ -27,16 +27,16 @@
 "></span> {{$permission->description}}
                 @if(! $permission->blocked)
                 <a href="{{URL::action('Palmabit\Authentication\Controllers\PermissionController@deletePermission',['id' => $permission->id, '_token' => csrf_token()])}}" ><span class="glyphicon glyphicon-trash pull-right margin-left-5 delete">cancella </span></a>
-                <a href="{{URL::action('Palmabit\Authentication\Controllers\PermissionController@editPermission', ['id' => $permission->id])}}"><span class="glyphicon glyphicon-edit pull-right">modifica </span></a>
+                <a href="{{URL::action('Palmabit\Authentication\Controllers\PermissionController@editPermission', ['id' => $permission->id])}}"><span class="glyphicon glyphicon-edit pull-right">edit </span></a>
                 @endif
                 <span class="clearfix"></span>
             </li>
             @endforeach
         </ul>
     @else
-        <h5>Non ci sono permessi presenti nel sistema.</h5>
+        <h5>No permissions present in the system.</h5>
     @endif
-    <a href="{{URL::action('Palmabit\Authentication\Controllers\PermissionController@editPermission')}}" class="btn btn-primary pull-right">Aggiungi</a>
+    <a href="{{URL::action('Palmabit\Authentication\Controllers\PermissionController@editPermission')}}" class="btn btn-primary pull-right">Add new</a>
 </div>
 @stop
 

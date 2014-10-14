@@ -1,6 +1,6 @@
 @extends('authentication::layouts.baseauth')
 @section('container')
-    <h1>Modifica password</h1>
+    <h1>edit password</h1>
     <?php $message = Session::get('message'); ?>
     @if( isset($message) )
         <div class="alert alert-success">{{$message}}</div>

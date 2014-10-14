@@ -36,7 +36,6 @@
           <hr>
           <div class="container">
             <p class="phelp">
-                <small>Report a problem <a href="mailto:hello@palmabit.com">hello@palmabit.com</a><br>
                 &copy; 2014 • Palmabit • <a href="http://www.palmabit.com">palmabit.com</a></small>
             </p>
           </div>

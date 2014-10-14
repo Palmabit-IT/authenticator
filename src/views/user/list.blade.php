@@ -1,7 +1,7 @@
 @extends('authentication::layouts.base-2cols')
 
 @section('title')
-Admin area: lista utenti
+Admin area: users list
 @stop
 
 @section('content')
@@ -51,9 +51,9 @@ Admin area: lista utenti
             {{$users->links()}}
 
             @else
-            <h5>Non ho trovato risultati.</h5>
+            <h5>No results found.</h5>
             @endif
-            <a href="{{URL::action('Palmabit\Authentication\Controllers\UserController@editUser')}}" class="btn btn-primary"><i class="glyphicon glyphicon-plus"></i> Aggiungi nuovo</a>
+            <a href="{{URL::action('Palmabit\Authentication\Controllers\UserController@editUser')}}" class="btn btn-primary"><i class="glyphicon glyphicon-plus"></i> Add new</a>
         </div>
         <div class="col-md-3">
             @include('authentication::user.search')
@@ -65,7 +65,7 @@ Admin area: lista utenti
 @section('footer_scripts')
 <script>
     $(".delete").click(function(){
-        return confirm("Sei sicuro di volere eliminare l'elemento selezionato?");
+        return confirm("Are you sure?");
     });
 </script>
 @stop

@@ -23,7 +23,7 @@
                 </li>
             </ul>
             <p class="navbar-text navbar-right">
-                <a href="/" style="margin-right:10px; color:#eee;" target="_blank">Vai a {{Config::get('authentication::app_name')}}</a>
+                <a href="/" style="margin-right:10px; color:#eee;" target="_blank">Go to {{Config::get('authentication::app_name')}}</a>
             </p>
         </div><!--/.nav-collapse -->
     </div>

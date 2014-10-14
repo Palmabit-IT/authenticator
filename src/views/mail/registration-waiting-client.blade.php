@@ -4,11 +4,11 @@
     <meta charset="utf-8">
 </head>
 <body>
-<h2>{{L::t('Application for')}} {{Config::get('authentication::app_name')}}</h2>
+<h2>Application for {{Config::get('authentication::app_name')}}</h2>
 <div>
-    <strong>{{L::t('The request for registration has been submitted successfully. A moderator will validate the data you have entered')}}</strong>
+    <strong>The request for registration has been submitted successfully. A moderator will validate the data you have entered</strong>
     <br/>
-    <strong>{{L::t('Summary data')}}: </strong>
+    <strong>Summary data: </strong>
     <ul>
         <li>Username: {{$body['email']}}</li>
         <li>Password: {{$body['password']}}</li>

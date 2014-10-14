@@ -36,15 +36,15 @@ Route::group( ['before' => ['logged', 'can_see']], function()
     Route::post('/admin/users/profile/edit', ['before' => 'csrf', 'as' => 'users.profile.edit', 'uses' => 'Palmabit\Authentication\Controllers\UserController@postEditProfile']);
 
     // groups
-    Route::get('/admin/groups/list', ['as' => 'users.groups.list', 'uses' => 'Palmabit\Authentication\Controllers\GroupController@getList']);
-    Route::get('/admin/groups/edit', ['as' => 'users.groups.edit', 'uses' => 'Palmabit\Authentication\Controllers\GroupController@editGroup']);
-    Route::post('/admin/groups/edit', ["before" => "csrf", 'as' => 'users.groups.edit', 'uses' => 'Palmabit\Authentication\Controllers\GroupController@postEditGroup']);
-    Route::get('/admin/groups/delete', ["before" => "csrf", 'as' => 'users.groups.delete', 'uses' => 'Palmabit\Authentication\Controllers\GroupController@deleteGroup']);
-    Route::any('/admin/groups/editpermission', ["before" => "csrf", 'as' => 'users.groups.edit.permission', 'uses' => 'Palmabit\Authentication\Controllers\GroupController@editPermission']);
+    Route::get('/admin/groups/list', ['as' => 'groups.list', 'uses' => 'Palmabit\Authentication\Controllers\GroupController@getList']);
+    Route::get('/admin/groups/edit', ['as' => 'groups.edit', 'uses' => 'Palmabit\Authentication\Controllers\GroupController@editGroup']);
+    Route::post('/admin/groups/edit', ["before" => "csrf", 'as' => 'groups.edit', 'uses' => 'Palmabit\Authentication\Controllers\GroupController@postEditGroup']);
+    Route::get('/admin/groups/delete', ["before" => "csrf", 'as' => 'groups.delete', 'uses' => 'Palmabit\Authentication\Controllers\GroupController@deleteGroup']);
+    Route::any('/admin/groups/editpermission', ["before" => "csrf", 'as' => 'groups.edit.permission', 'uses' => 'Palmabit\Authentication\Controllers\GroupController@editPermission']);
 
     // permissions
-    Route::get('/admin/permissions/list', ['as' => 'users.permission.list', 'uses' => 'Palmabit\Authentication\Controllers\PermissionController@getList']);
-    Route::get('/admin/permissions/edit', ['as' => 'users.permission.edit', 'uses' => 'Palmabit\Authentication\Controllers\PermissionController@editPermission']);
-    Route::post('/admin/permissions/edit', ["before" => "csrf", 'as' => 'users.permission.edit', 'uses' => 'Palmabit\Authentication\Controllers\PermissionController@postEditPermission']);
-    Route::get('/admin/permissions/delete', ["before" => "csrf", 'as' => 'users.permission.delete', 'uses' => 'Palmabit\Authentication\Controllers\PermissionController@deletePermission']);
+    Route::get('/admin/permissions/list', ['as' => 'permission.list', 'uses' => 'Palmabit\Authentication\Controllers\PermissionController@getList']);
+    Route::get('/admin/permissions/edit', ['as' => 'permission.edit', 'uses' => 'Palmabit\Authentication\Controllers\PermissionController@editPermission']);
+    Route::post('/admin/permissions/edit', ["before" => "csrf", 'as' => 'permission.edit', 'uses' => 'Palmabit\Authentication\Controllers\PermissionController@postEditPermission']);
+    Route::get('/admin/permissions/delete', ["before" => "csrf", 'as' => 'permission.delete', 'uses' => 'Palmabit\Authentication\Controllers\PermissionController@deletePermission']);
 });

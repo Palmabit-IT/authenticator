@@ -72,7 +72,7 @@ class GroupController extends \BaseController
         {
             $errors = $this->f->getErrors();
             // passing the id incase fails editing an already existing item
-            return Redirect::route("users.groups.edit", $id ? ["id" => $id]: [])->withInput()->withErrors($errors);
+            return Redirect::route("groups.edit", $id ? ["id" => $id]: [])->withInput()->withErrors($errors);
         }
         return Redirect::action('Palmabit\Authentication\Controllers\GroupController@editGroup',["id" => $obj->id])->withMessage("Gruppo modificato con successo.");
     }
@@ -105,7 +105,7 @@ class GroupController extends \BaseController
         }
         catch(PalmabitExceptionsInterface $e)
         {
-            return Redirect::route("users.groups.edit")->withInput()->withErrors(new MessageBag(["permissions" => "Permesso non trovato"]));
+            return Redirect::route("groups.edit")->withInput()->withErrors(new MessageBag(["permissions" => "Permesso non trovato"]));
         }
         return Redirect::action('Palmabit\Authentication\Controllers\GroupController@editGroup',["id" => $obj->id])->withMessage("Permesso modificato con successo.");
     }

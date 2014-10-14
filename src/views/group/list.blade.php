@@ -1,7 +1,7 @@
 @extends('authentication::layouts.base-2cols')
 
 @section('title')
-    Admin area: lista gruppi
+    Admin area: groups list
 @stop
 
 @section('content')
@@ -18,7 +18,7 @@
     <div class="alert alert-danger">{{$error}}</div>
     @endforeach
     @endif
-    <h3>Lista gruppi</h3>
+    <h3>Grups list</h3>
     @if( ! $groups->isEmpty() )
         <ul class="list-group">
         @foreach($groups as $group)
@@ -27,16 +27,16 @@
 "></span> {{$group->name}}
                 @if(! $group->blocked)
                 <a href="{{URL::action('Palmabit\Authentication\Controllers\GroupController@deleteGroup',['id' => $group->id, '_token' => csrf_token()])}}" ><span class="glyphicon glyphicon-trash pull-right margin-left-5 delete">cancella </span></a>
-                <a href="{{URL::action('Palmabit\Authentication\Controllers\GroupController@editGroup', ['id' => $group->id])}}"><span class="glyphicon glyphicon-edit pull-right">modifica </span></a>
+                <a href="{{URL::action('Palmabit\Authentication\Controllers\GroupController@editGroup', ['id' => $group->id])}}"><span class="glyphicon glyphicon-edit pull-right">edit </span></a>
                 <span class="clearfix"></span>
                 @endif
             </li>
             @endforeach
         </ul>
     @else
-        <h5>Non ci sono gruppi presenti nel sistema.</h5>
+        <h5>There are no groups present.</h5>
     @endif
-    <a href="{{URL::action('Palmabit\Authentication\Controllers\GroupController@editGroup')}}" class="btn btn-primary pull-right">Aggiungi</a>
+    <a href="{{URL::action('Palmabit\Authentication\Controllers\GroupController@editGroup')}}" class="btn btn-primary pull-right">Add new</a>
 </div>
 @stop
 

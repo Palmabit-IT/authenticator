@@ -1,7 +1,7 @@
 @extends('authentication::layouts.base-2cols')
 
 @section('title')
-Admin area: modifica profilo utente
+Admin area: edit user profile
 @stop
 
 @section('content')
@@ -16,7 +16,7 @@ Admin area: modifica profilo utente
         <div class="alert alert-danger">{{$errors->first('model')}}</div>
     @endif
 
-    <h3><i class="glyphicon glyphicon-user"></i> Modifica profilo utente</h3>
+    <h3><i class="glyphicon glyphicon-user"></i> edit user profile</h3>
     <hr/>
     {{Form::model($user_profile,['route'=>'users.profile.edit', 'method' => 'post'])}}
         <div class="row">
@@ -95,7 +95,7 @@ Admin area: modifica profilo utente
              <div class="col-md-6">
                 {{Form::hidden('user_id', $user_profile->user_id)}}
                 {{Form::hidden('id', $user_profile->id)}}
-                {{Form::submit('Salva',['class' =>'btn btn-primary margin-bottom-30'])}}
+                {{Form::submit('save',['class' =>'btn btn-primary margin-bottom-30'])}}
             </div>
         </div>
     {{Form::close()}}

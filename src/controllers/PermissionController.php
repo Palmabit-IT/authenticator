@@ -63,7 +63,7 @@ class PermissionController extends \BaseController
         {
             $errors = $this->f->getErrors();
             // passing the id incase fails editing an already existing item
-            return Redirect::route("users.permission.edit", $id ? ["id" => $id]: [])->withInput()->withErrors($errors);
+            return Redirect::route("permission.edit", $id ? ["id" => $id]: [])->withInput()->withErrors($errors);
         }
 
         return Redirect::action('Palmabit\Authentication\Controllers\PermissionController@editPermission',["id" => $obj->id])->withMessage("Permesso modificato con successo.");

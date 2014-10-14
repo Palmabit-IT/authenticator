@@ -1,7 +1,7 @@
 @extends('authentication::layouts.base-1cols')
 
 @section('title')
-{{$app_name}} Admin area: benvenuto
+{{$app_name}} Admin area: welcome
 @stop
 
 @section('content')
