@@ -12,6 +12,7 @@ The simplest method of installation is to install it as a global Composer packag
 
 composer require "palmabit/authentication 1.0.1"
 
+Then run the install command: php artisan authentication:installg
 
 ## Docs
 
