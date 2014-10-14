@@ -1,7 +1,7 @@
 <?php
 
 return [
-    "app_name" => "SFX Shop",
-    "panel_name" => "SFX Shop - Pannello di controllo",
+    "app_name" => "Palmabit",
+    "panel_name" => "Palmabit - Admin panel",
     'users_per_page' => 25
 ];

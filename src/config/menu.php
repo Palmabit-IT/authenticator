@@ -2,21 +2,21 @@
 
 return [
         [
-            "name" => "Utenti",
+            "name" => "Users",
             "route" => "users",
             "link" => URL::route('users.list'),
-            "permissions" => ["_admin"]
+            "permissions" => ["_admin","_superadmin"]
         ],
-        [
-            "name" => "Prodotti",
-            "route" => "products",
-            "link" => URL::route('products.lists'),
-            "permissions" => ["_admin"]
-        ],
-        [
-            "name" => "Categorie",
-            "route" => "category",
-            "link" => URL::route('category.lists'),
-            "permissions" => ["_admin"]
-        ]
+//        [
+//            "name" => "Products",
+//            "route" => "products",
+//            "link" => URL::route('products.lists'),
+//            "permissions" => ["_admin"]
+//        ],
+//        [
+//            "name" => "Categories",
+//            "route" => "category",
+//            "link" => URL::route('category.lists'),
+//            "permissions" => ["_admin"]
+//        ]
 ];

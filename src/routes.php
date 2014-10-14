@@ -1,6 +1,5 @@
 <?php
 //////////////////// Registration //////////////////////////
-
 Route::post('/users/signup', ['before' => 'csrf', 'as' => 'users.profile.edit', 'uses' => 'Palmabit\Authentication\Controllers\UserController@postSignupUser']);
 
 //////////////////// Authentication //////////////////////////
@@ -36,7 +35,6 @@ Route::group( ['before' => ['logged', 'can_see']], function()
     Route::get('/admin/users/profile/edit', ['as' => 'users.profile.edit', 'uses' => 'Palmabit\Authentication\Controllers\UserController@editProfile']);
     Route::post('/admin/users/profile/edit', ['before' => 'csrf', 'as' => 'users.profile.edit', 'uses' => 'Palmabit\Authentication\Controllers\UserController@postEditProfile']);
 
-
     // groups
     Route::get('/admin/groups/list', ['as' => 'users.groups.list', 'uses' => 'Palmabit\Authentication\Controllers\GroupController@getList']);
     Route::get('/admin/groups/edit', ['as' => 'users.groups.edit', 'uses' => 'Palmabit\Authentication\Controllers\GroupController@editGroup']);
@@ -49,5 +47,4 @@ Route::group( ['before' => ['logged', 'can_see']], function()
     Route::get('/admin/permissions/edit', ['as' => 'users.permission.edit', 'uses' => 'Palmabit\Authentication\Controllers\PermissionController@editPermission']);
     Route::post('/admin/permissions/edit', ["before" => "csrf", 'as' => 'users.permission.edit', 'uses' => 'Palmabit\Authentication\Controllers\PermissionController@postEditPermission']);
     Route::get('/admin/permissions/delete', ["before" => "csrf", 'as' => 'users.permission.delete', 'uses' => 'Palmabit\Authentication\Controllers\PermissionController@deletePermission']);
-
 });

@@ -46,7 +46,9 @@
             "Palmabit\\Authentication\\Tests\\" : "tests/"
         },
         "classmap": [
-            "src/controllers"
+            "src/controllers",
+            "src/commands",
+            "src/seeds"
         ]
     },
     "minimum-stability": "dev",
