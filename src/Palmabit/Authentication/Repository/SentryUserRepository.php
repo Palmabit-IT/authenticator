@@ -1,10 +1,6 @@
 <?php
 namespace Palmabit\Authentication\Repository;
-/**
- * Class UserRepository
- *
- * @author jacopo beschi j.beschi@palmabit.com
- */
+
 use Cartalyst\Sentry\Users\UserExistsException as CartaUserExists;
 use Palmabit\Authentication\Repository\Interfaces\UserRepositoryInterface;
 use Palmabit\Library\Repository\EloquentBaseRepository;
