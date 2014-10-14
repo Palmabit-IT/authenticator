@@ -10,7 +10,7 @@ This package adds authentication and user management to your laravel application
 
 The simplest method of installation is to install it as a global Composer package:
 
-composer require "palmabit/authentication 1.0.0"
+composer require "palmabit/authentication 1.0.1"
 
 
 ## Docs
