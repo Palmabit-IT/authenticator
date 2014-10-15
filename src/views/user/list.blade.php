@@ -24,7 +24,7 @@ Admin area: users list
             @if(! $users->isEmpty() )
             <table class="table table-striped">
                 <tr>
-                    <th>Stato</th>
+                    <th>State</th>
                     <th>Email</th>
                     <th></th>
                 </tr>

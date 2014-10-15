@@ -190,7 +190,7 @@ class UserController extends \BaseController
             return Redirect::back()->withInput()->with(array('errors' => $service->getErrors()));
         }
 
-        return Redirect::to(URL::action("UserController@signupSuccess"));
+        return Redirect::to(URL::action('Palmabit\Authentication\Controllers\UserController@signupSuccess'));
 
     }
 
