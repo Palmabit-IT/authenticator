@@ -17,11 +17,13 @@ Admin area: edit user
     <div class="col-md-6">
         <h3>General info</h3>
         {{Form::model($user, [ 'url' => [URL::action('Palmabit\Authentication\Controllers\UserController@postEditUser'), $user->id], 'method' => 'post'] ) }}
+        {{-- Field hidden to fix chrome and safari autocomplete bug --}}
+        {{Form::password('__to_hide_password_autocomplete', ['class' => 'hidden'])}}
         {{FormField::copyEmail(["autocomplete" => "off", "label" => "email"])}}
         <span class="text-danger">{{$errors->first('copyEmail')}}</span>
         <div class="form-group">
         {{Form::label('password','password: ')}}
-        {{Form::text('password','',["autocomplete" => "off", "class" => "form-control"])}}
+        {{Form::password('password',["autocomplete" => "off", "class" => "form-control"])}}
         </div>
         <span class="text-danger">{{$errors->first('password')}}</span>
         {{--    {{FormField::last_name( ["label" => "Nome", "autocomplete" => "off"] ) }}
