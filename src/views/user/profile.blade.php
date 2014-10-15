@@ -36,17 +36,17 @@ Admin area: edit user profile
                     {{Form::label('profile_type', 'Tipo di profilo:', ["class" => "control-label"])}}<br/>
                     {{Form::select('profile_type', [
                     "" => "",
-                    "Special Effects Company" => L::t('Special Effects Company'),
-                    "Manufacturer" => L::t('Manufacturer'),
-                    "NightClub" => L::t('NightClub'),
-                    "Production Company" => L::t('Production Company'),
-                    "Full service" => L::t('Full service'),
-                    "Retail Store" => L::t('Retail Store'),
-                    "Theater" => L::t('Theater'),
-                    "Theme Parks" => L::t('Theme Parks'),
-                    "Trade Show" => L::t('Trade Show'),
-                    "Film Company" => L::t('Film company'),
-                    "End user" => L::t('End user')
+                    "Special Effects Company" =>  'Special Effects Company',
+                    "Manufacturer" =>  'Manufacturer',
+                    "NightClub" =>  'NightClub',
+                    "Production Company" =>  'Production Company',
+                    "Full service" =>  'Full service',
+                    "Retail Store" =>  'Retail Store',
+                    "Theater" =>  'Theater',
+                    "Theme Parks" =>  'Theme Parks',
+                    "Trade Show" =>  'Trade Show',
+                    "Film Company" =>  'Film company',
+                    "End user" =>  'End user'
                     ], $user_profile->profile_type, ["class"=>"form-control"])}}
                     <span class="text-danger">{{$errors->first('profile_type')}}</span>
                 </div>
