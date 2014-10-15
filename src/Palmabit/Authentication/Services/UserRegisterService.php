@@ -80,7 +80,7 @@ class UserRegisterService
     {
         $mailer = App::make('palmamailer');
         // if i activate a deactivated user
-        if(isset($input["activated"]) && $input["activated"] && (! $obj->activated) ) $mailer->sendTo($obj->email, [ "email" => $obj->email ], "Sei stato attivato su ".Config::get('authentication::app_name'), "authentication::mail.registration-activated-client");
+        if(isset($input["activated"]) && $input["activated"] && (! $obj->activated) ) $mailer->sendTo($obj->email, [ "email" => $obj->email ], "You are activated on ".Config::get('authentication::app_name'), "authentication::mail.registration-activated-client");
     }
 
     /**
