@@ -7,14 +7,17 @@
                         <div class="alert alert-danger">{{$error}}</div>
                     @endforeach
             @endif
-
+            <?php $message = Session::get('message'); ?>
+            @if($message)
+                <div class="alert alert-success">{{$message}}</div>
+            @endif
             {{FormField::email(array('label' => '', 'placeholder' => 'email'))}}
             {{FormField::password(array('label' => '', 'placeholder' => 'password'))}}
             {{Form::label('checkbox','Remember')}}
             {{Form::checkbox('checkbox',null, null)}}
             {{Form::submit('Login', array("class"=>"btn btn-lg btn-primary btn-block"))}}
             <div class="signin-btn">
-                <a href="{{URL::to('user/signup')}}" alt="Sei gi&agrave; iscritto?">Don't have an account? Signup here</a><br>
+                <a href="{{URL::to('user/signup')}}" alt="Sei già iscritto?">Don't have an account? Signup here</a><br>
                 {{link_to_action('Palmabit\Authentication\Controllers\AuthController@getReminder','Forgot password?') }}<br>
                 <a href="/">Go to website</a>
             <div>

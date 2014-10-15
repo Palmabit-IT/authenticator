@@ -11,8 +11,9 @@ Route::post('/user/login', ["before" => "csrf", "uses" => "Palmabit\\Authenticat
  */
 Route::get('/user/change-password', 'Palmabit\Authentication\Controllers\AuthController@getChangePassword');
 Route::get('/user/recupero-password', "Palmabit\\Authentication\\Controllers\\AuthController@getReminder");
-Route::post('/user/change-password/', ["before" => "csrf", 'uses' => "Palmabit\\Authentication\\Controllers\\AuthController@postChangePassword"]);
+Route::post('/user/change-password', ["before" => "csrf", 'uses' => "Palmabit\\Authentication\\Controllers\\AuthController@postChangePassword"]);
 Route::post('/user/recupero-password', ["before" => "csrf", 'uses' => "Palmabit\\Authentication\\Controllers\\AuthController@postReminder"]);
+Route::get('/user/recupero-success', ['uses' => "Palmabit\\Authentication\\Controllers\\AuthController@reminderSuccess"]);
 /**
  * Signup
  */

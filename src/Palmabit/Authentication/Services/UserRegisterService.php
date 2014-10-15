@@ -55,7 +55,7 @@ class UserRegisterService
     protected function sendMailToClient($mailer, $input)
     {
         // send email to client
-        $mailer->sendTo( $input['email'], [ "email" => $input["email"], "password" => $input["password"] ], "Richiesta registrazione su: " . \Config::get('authentication::app_name'), "authentication::mail.registration-waiting-client");
+        $mailer->sendTo( $input['email'], [ "email" => $input["email"], "password" => $input["password"] ], "Registration request on: " . \Config::get('authentication::app_name'), "authentication::mail.registration-waiting-client");
     }
 
     /**
@@ -68,7 +68,7 @@ class UserRegisterService
         $mails       = $mail_helper->getNotificationRegistrationUsersEmail();
         if (!empty($mails)) foreach ($mails as $mail)
         {
-            $mailer->sendTo($mail, [ "email" => $input["email"], "id" => $user->id, "comments" => $input['comments'] ], "Richiesta di registrazione utente", "authentication::mail.registration-waiting-admin");
+            $mailer->sendTo($mail, [ "email" => $input["email"], "id" => $user->id, "comments" => $input['comments'] ], "User signup request", "authentication::mail.registration-waiting-admin");
         }
     }
 
@@ -108,7 +108,7 @@ class UserRegisterService
             {
                 DB::connection()->getPdo()->rollback();
             }
-            $this->errors = new MessageBag(["model" => "L'utente esiste già."]);
+            $this->errors = new MessageBag(["model" => "The user already exists."]);
             throw new UserExistsException;
         }
 
