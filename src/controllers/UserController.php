@@ -19,7 +19,7 @@ use Palmabit\Library\Exceptions\PalmabitExceptionsInterface;
 use View, Input, Redirect, App;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Palmabit\Authentication\Services\UserProfileService;
-use L, URLT;
+use L, URL;
 
 class UserController extends \BaseController
 {
@@ -176,7 +176,7 @@ class UserController extends \BaseController
         return Redirect::action('Palmabit\Authentication\Controllers\UserController@editProfile',["user_id" => $user_profile->user_id])->withMessage("Profilo modificato con successo.");
     }
 
-    public function postSignupUser()
+    public function postSignup()
     {
         $input = Input::all();
         $service = new UserRegisterService();
@@ -187,11 +187,16 @@ class UserController extends \BaseController
         }
         catch(PalmabitExceptionsInterface $e)
         {
-            return Redirect::back()->withInput()->with(array('errorsSignup' => $service->getErrors()));
+            return Redirect::back()->withInput()->with(array('errors' => $service->getErrors()));
         }
 
-        return Redirect::to(URLT::action("UserController@signupSuccess"));
+        return Redirect::to(URL::action("UserController@signupSuccess"));
 
     }
+
+  public function signupSuccess()
+  {
+    return View::make('authentication::auth.signupsuccess');
+  }
 
 }

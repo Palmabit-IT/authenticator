@@ -29,25 +29,14 @@ class PermissionSeeder
     ];
     $permission_repository->create($permission1);
     $permission2 = [
-            "description" => "user editor",
-            "permission"  => "_user-editor"
+            "description" => "admin",
+            "permission"  => "_admin"
     ];
     $permission_repository->create($permission2);
     $permission3 = [
-            "description" => "group editor",
-            "permission"  => "_group-editor"
+            "description" => "profile editor",
+            "permission"  => "_profile_editor"
     ];
-    $permission_repository->create($permission3);
-    $permission4 = [
-            "description" => "permission editor",
-            "permission"  => "_permission-editor"
-    ];
-    $permission_repository->create($permission4);
-    $permission5 = [
-            "description" => "profile type editor",
-            "permission"  => "_profile-editor"
-    ];
-    $permission_repository->create($permission5);
   }
 }
 
@@ -63,25 +52,24 @@ class GroupsSeeder
 
     $group1 = [
             "name" => "superadmin",
-            "permissions" => ["_superadmin" => 1]
+            "permissions" => ["_superadmin" => 1, "_admin" => 1]
     ];
 
     $group_repository->create($group1);
 
     $group2 = [
-            "name" => "editor",
-            "permissions" => ["_user-editor" => 1, "_group-editor" => 1]
+            "name" => "admin",
+            "permissions" => ["_admin" => 1]
     ];
 
     $group_repository->create($group2);
 
     $group3 = [
-            "name" => "base admin",
-            "permissions" => ["_user-editor" => 1]
+            "name" => "mail notification",
+            "permissions" => []
     ];
 
     $group_repository->create($group3);
-
   }
 }
 
@@ -108,6 +96,8 @@ class UserSeeder
 
     $superadmin_group = $this->getSuperadminGroup($group_repository);
     $user_repository->addGroup($user->id, $superadmin_group->id);
+    $mail_notification_group = $this->getMailNotificationGroup($group_repository);
+    $user_repository->addGroup($user->id, $mail_notification_group->id);
   }
 
   /**
@@ -117,6 +107,17 @@ class UserSeeder
   private function getSuperadminGroup ($group_repository)
   {
     $superadmin_group = $group_repository->all(["name" => "superadmin"])->first();
+    return $superadmin_group;
+  }
+
+
+  /**
+   * @param $group_repository
+   * @return mixed
+   */
+  private function getMailNotificationGroup ($group_repository)
+  {
+    $superadmin_group = $group_repository->all(["name" => "mail notification"])->first();
     return $superadmin_group;
   }
 }

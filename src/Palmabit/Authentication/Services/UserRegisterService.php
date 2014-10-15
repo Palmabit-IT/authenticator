@@ -3,18 +3,12 @@ use Illuminate\Support\Facades\App;
 use Config, Redirect, DB;
 use Illuminate\Support\MessageBag;
 use Palmabit\Authentication\Exceptions\UserExistsException;
-use Palmabit\Authentication\Exceptions\UserNotFoundException;
 use Palmabit\Authentication\Validators\UserSignupValidator;
 use Palmabit\Library\Exceptions\NotFoundException;
 use Palmabit\Library\Exceptions\PalmabitExceptionsInterface;
 use Palmabit\Library\Exceptions\ValidationException;
 
-/**
- * Class UserRegisterService
- *
- * @author jacopo beschi j.beschi@palmabit.com
- */
-class UserRegisterService 
+class UserRegisterService
 {
     /**
      * @var \Palmabit\Authentication\Repository\Interfaces\UserRepositoryInterface

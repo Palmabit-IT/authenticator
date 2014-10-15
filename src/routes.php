@@ -1,7 +1,4 @@
 <?php
-//////////////////// Registration //////////////////////////
-Route::post('/users/signup', ['before' => 'csrf', 'as' => 'users.profile.edit', 'uses' => 'Palmabit\Authentication\Controllers\UserController@postSignupUser']);
-
 //////////////////// Authentication //////////////////////////
 /**
  * User login and logout
@@ -16,6 +13,14 @@ Route::get('/user/change-password', 'Palmabit\Authentication\Controllers\AuthCon
 Route::get('/user/recupero-password', "Palmabit\\Authentication\\Controllers\\AuthController@getReminder");
 Route::post('/user/change-password/', ["before" => "csrf", 'uses' => "Palmabit\\Authentication\\Controllers\\AuthController@postChangePassword"]);
 Route::post('/user/recupero-password', ["before" => "csrf", 'uses' => "Palmabit\\Authentication\\Controllers\\AuthController@postReminder"]);
+/**
+ * Signup
+ */
+Route::get('/user/signup', function(){
+  return View::make('authentication::auth.signup');
+});
+Route::post('/user/signup', ['before' => 'csrf', 'as' => 'user.signup', 'uses' => 'Palmabit\Authentication\Controllers\UserController@postSignup']);
+Route::get('/user/signupsuccess', ['as' => 'user.signup.success', 'uses' => 'Palmabit\Authentication\Controllers\UserController@signupSuccess']);
 
 //////////////////// Admin Panel //////////////////////////
 

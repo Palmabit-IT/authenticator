@@ -37,19 +37,19 @@ class SentryAuthenticator implements AuthenticateInterface{
         }
         catch (\Cartalyst\Sentry\Users\LoginRequiredException $e)
         {
-            $this->errors->add('login','Il campo login è richiesto.');
+            $this->errors->add('login','Login is required.');
         }
         catch (\Cartalyst\Sentry\Users\UserNotFoundException $e)
         {
-            $this->errors->add('login','Login fallito.');
+            $this->errors->add('login','Login failed.');
         }
         catch (\Cartalyst\Sentry\Users\UserNotActivatedException $e)
         {
-            $this->errors->add('login','Utente non è stato attivato.');
+            $this->errors->add('login','Utente not active.');
         }
         catch(\Cartalyst\Sentry\Users\PasswordRequiredException $e)
         {
-            $this->errors->add('login','Il campo password è richiesto.');
+            $this->errors->add('login','Password is required.');
         }
 
         if($this->errors->isEmpty())
@@ -82,15 +82,15 @@ class SentryAuthenticator implements AuthenticateInterface{
         }
         catch (\Cartalyst\Sentry\Users\LoginRequiredException $e)
         {
-            $this->errors->add('login','Login richiesto.');
+            $this->errors->add('login','Login required.');
         }
         catch (\Cartalyst\Sentry\Users\UserNotActivatedException $e)
         {
-            $this->errors->add('login','Utente non attivo.');
+            $this->errors->add('login','User not active.');
         }
         catch (\Cartalyst\Sentry\Users\UserNotFoundException $e)
         {
-            $this->errors->add('login','Utente non trovato.');
+            $this->errors->add('login','User not found.');
         }
 
         return $this->errors->isEmpty() ? true : false;

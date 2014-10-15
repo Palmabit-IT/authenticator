@@ -18,11 +18,6 @@ class UserSignupValidator extends OverrideConnectionValidator
         "password" => ["required", "min:6"],
         "first_name" => "required|max:255",
         "last_name" => "required|max:255",
-        "phone" => "required",
-        "vat" => "numeric",
-        "agree" => "accepted",
-        "billing_state" => "required",
-        "billing_country" => "required"
     );
 
 } 
