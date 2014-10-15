@@ -4,7 +4,6 @@
  *
  * @author jacopo beschi jacopo@jacopobeschi.com
  */
-use Palmabit\Authentication\Helpers\SentryAuthenticationHelper;
 use Palmabit\Authentication\Interfaces\MenuInterface;
 use App;
 
