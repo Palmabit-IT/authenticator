@@ -36,7 +36,8 @@
           <hr>
           <div class="container">
             <p class="phelp">
-                &copy; 2014 • Palmabit • <a href="http://www.palmabit.com">palmabit.com</a></small>
+              &copy; {{$copy_year}} • {{$copy_name}} •
+              <a href="http://{{$copy_website_url}}">{{$copy_website_url}}</a>
             </p>
           </div>
         </div>

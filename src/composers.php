@@ -6,6 +6,9 @@
 View::composer('*', function ($view){
     $view->with('app_name', Config::get('authentication::app_name') );
     $view->with('panel_name', Config::get('authentication::panel_name') );
+    $view->with('copy_name', Config::get('authentication::copy_name') );
+    $view->with('copy_year', Config::get('authentication::copy_year') );
+    $view->with('copy_website_url', Config::get('authentication::copy_website_url') );
 });
 
 use Palmabit\Authentication\Classes\Menu\SentryMenuFactory;
