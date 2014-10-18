@@ -1,20 +1,22 @@
-<?php  namespace Palmabit\Authentication\Interfaces; 
+<?php  namespace Palmabit\Authentication\Interfaces;
+
 /**
  * Interface PermissionProfileHelperInterface
- *
- * @author jacopo beschi j.beschi@palmabit.com
  */
-interface PermissionProfileHelperInterface 
-{
-    /**
-     * Check if the current user has permission to edit the profile
-     * @return boolean
-     */
-    public function checkProfileEditPermission($user_id);
+interface PermissionProfileHelperInterface {
 
-    /**
-     * Obtain the user email that needs to be notificated on registration
-     * @return array
-     */
-    public function getNotificationRegistrationUsersEmail();
+  /**
+   * Check if the current user has permission to edit the profile
+   *
+   * @param $user_id
+   * @return mixed
+   */
+  public function checkProfileEditPermission($user_id);
+
+  /**
+   * Obtain the user email that needs to be notificated on registration
+   *
+   * @return array
+   */
+  public function getNotificationRegistrationUsersEmail();
 }

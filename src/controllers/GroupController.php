@@ -2,7 +2,6 @@
 /**
  * Class GroupController
  *
- * @author jacopo beschi j.beschi@palmabit.com
  */
 use Illuminate\Support\MessageBag;
 use Palmabit\Authentication\Presenters\GroupPresenter;

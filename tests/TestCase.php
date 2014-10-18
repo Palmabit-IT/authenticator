@@ -2,14 +2,16 @@
 
 /**
  * Test TestCase
- *
- * @author jacopo beschi j.beschi@palmabit.com
+
  */
 class TestCase extends \Orchestra\Testbench\TestCase {
+
+  protected $fake;
 
   public function setUp() {
     parent::setUp();
 
+    $this->fake = \Faker\Factory::create();
     require_once __DIR__ . "/../src/routes.php";
   }
 

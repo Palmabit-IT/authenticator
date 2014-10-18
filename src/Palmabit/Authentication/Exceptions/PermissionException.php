@@ -2,7 +2,6 @@
 /**
  * Class PermissionException
  *
- * @author jacopo beschi j.beschi@palmabit.com
  */
 
 use Exception;

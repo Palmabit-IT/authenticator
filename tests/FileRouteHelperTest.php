@@ -4,7 +4,6 @@ use Config, Route;
 /**
  * Test FileRouteHelperTest
  *
- * @author jacopo beschi jacopo@jacopobeschi.com
  */
 class FileRouteHelperTest extends TestCase {
 

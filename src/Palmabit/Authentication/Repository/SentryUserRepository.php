@@ -2,9 +2,9 @@
 namespace Palmabit\Authentication\Repository;
 
 use Cartalyst\Sentry\Users\UserExistsException as CartaUserExists;
+use Illuminate\Support\Facades\Config;
 use Palmabit\Authentication\Repository\Interfaces\UserRepositoryInterface;
 use Palmabit\Library\Repository\EloquentBaseRepository;
-use Palmabit\Library\Repository\Interfaces\BaseRepositoryInterface;
 use Palmabit\Authentication\Exceptions\UserNotFoundException as NotFoundException;
 use Palmabit\Authentication\Exceptions\UserExistsException as UserExistsException;
 use Cartalyst\Sentry\Users\UserNotFoundException;
@@ -39,14 +39,17 @@ class SentryUserRepository extends EloquentBaseRepository implements UserReposit
   /**
    * Create a new object
    *
+   * @param array $input
    * @return mixed
+   * @throws \Palmabit\Authentication\Exceptions\UserExistsException
    * @todo db test
    */
   public function create(array $input) {
     $data = array (
-            "email"     => isset($input["email"]) ? $input["email"] : $input["copyEmail"],
-            "password"  => $input["password"],
-            "activated" => $input["activated"],
+            "email"          => isset($input["email"]) ? $input["email"] : $input["copyEmail"],
+            "password"       => $input["password"],
+            "activated"      => $input["activated"],
+            "preferred_lang" => isset($input["preferred_lang"]) ? $input["preferred_lang"] : Config::get('authentication::default_preferred_lang')
     );
     try {
       $user = $this->sentry->createUser($data);
@@ -100,9 +103,10 @@ class SentryUserRepository extends EloquentBaseRepository implements UserReposit
   /**
    * Add a group to the user
    *
-   * @param $id group id
+   * @param $user_id
+   * @param $group_id
+   * @return mixed|void
    * @throws \Palmabit\Authentication\Exceptions\UserNotFoundException
-   * @todo test
    */
   public function addGroup($user_id, $group_id) {
     try {
@@ -117,7 +121,9 @@ class SentryUserRepository extends EloquentBaseRepository implements UserReposit
   /**
    * Remove a group to the user
    *
-   * @param $id group id
+   * @param $user_id
+   * @param $group_id
+   * @return mixed|void
    * @throws \Palmabit\Authentication\Exceptions\UserNotFoundException
    * @todo test
    */
@@ -166,15 +172,14 @@ class SentryUserRepository extends EloquentBaseRepository implements UserReposit
    * Obtain a list of user from a given group
    *
    * @param String $group_name
-   * @throws \Palmabit\Authentication\Exceptions\UserNotFoundException
    * @return mixed
+   * @throws \Cartalyst\Sentry\Users\UserNotFoundException
    */
   public function findFromGroupName($group_name) {
     $group = $this->sentry->findGroupByName($group_name);
     if (!$group) {
       throw new UserNotFoundException;
     }
-
     return $group->users;
   }
 

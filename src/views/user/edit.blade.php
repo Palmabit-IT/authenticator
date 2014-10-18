@@ -34,6 +34,10 @@ Admin area: edit user
             {{Form::label("activated","Utente attivo")}}
             {{Form::select('activated', ["1" => "Sì", "0" => "No"], (isset($user->activated) && $user->activated) ? $user->activated : "0", ["class"=> "form-control"] )}}
         </div>
+        <div class="form-group">
+        {{Form::label("preferred_lang","Lingua predefinita")}}
+        @include('authentication::layouts.partials.select_lang')
+        </div>
         {{Form::hidden('id')}}
         {{Form::hidden('form_name','user')}}
         <hr>
