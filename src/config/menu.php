@@ -41,19 +41,5 @@ return [
                         "link"        => URL::route('permission.list'),
                         "permissions" => ["_superadmin"]
                 ]
-                /*
-                //        [
-                //            "name" => "Products",
-                //            "route" => "products",
-                //            "link" => URL::route('products.lists'),
-                //            "permissions" => ["_admin"]
-                //        ],
-                //        [
-                //            "name" => "Categories",
-                //            "route" => "category",
-                //            "link" => URL::route('category.lists'),
-                //            "permissions" => ["_admin"]
-                //        ]
-                */
         ]
 ];

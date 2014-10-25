@@ -36,7 +36,7 @@
           <hr>
           <div class="container">
             <p class="phelp">
-                &copy; 2014 • Palmabit • <a href="http://www.palmabit.com">palmabit.com</a></small>
+                &copy; {{Carbon::now()->format('Y')}} • Palmabit • <a href="http://www.palmabit.com">palmabit.com</a></small>
             </p>
           </div>
         </div>
