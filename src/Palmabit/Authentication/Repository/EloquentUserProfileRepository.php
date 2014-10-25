@@ -11,8 +11,6 @@ use Palmabit\Library\Repository\Interfaces\BaseRepositoryInterface;
 
 /**
  * Class EloquentUserProfileRepository
- *
- * @author jacopo beschi j.beschi@palmabit.com
  */
 class EloquentUserProfileRepository extends EloquentBaseRepository implements UserProfileRepositoryInterface {
   /**

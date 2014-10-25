@@ -2,7 +2,6 @@
 /**
  * Class PermissionController
  *
- * @author jacopo beschi jacopo@jacopobeschi.com
  */
 use Palmabit\Authentication\Repository\EloquentPermissionRepository as Repo;
 use Palmabit\Library\Form\FormModel;

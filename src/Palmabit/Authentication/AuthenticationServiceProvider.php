@@ -112,6 +112,7 @@ class AuthenticationServiceProvider extends ServiceProvider {
 
   protected function loadOtherProviders() {
     $this->app->register('Cartalyst\Sentry\SentryServiceProvider');
+    $this->app->register('Palmabit\Multilanguage\MultilanguageServiceProvider');
     $this->app->register('Way\Form\FormServiceProvider');
   }
 

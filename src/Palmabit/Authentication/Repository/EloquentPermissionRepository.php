@@ -2,8 +2,6 @@
 
 /**
  * Class PermissionRepository
- *
- * @author jacopo beschi j.beschi@palmabit.com
  */
 use Palmabit\Authentication\Exceptions\PermissionException;
 use Palmabit\Authentication\Models\Permission;

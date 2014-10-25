@@ -17,6 +17,7 @@ class CreateUsersTable extends Migration {
             $table->increments('id');
             $table->string('email');
             $table->string('password');
+            $table->string('preferred_lang')->default(Config::get('authentication::default_preferred_lang'));
             $table->text('permissions')->nullable();
             $table->boolean('activated')->default(0);
             $table->string('activation_code')->nullable();

@@ -1,18 +1,15 @@
-<?php  namespace Palmabit\Authentication\Models; 
+<?php  namespace Palmabit\Authentication\Models;
+
 /**
  * Class Group
- *
- * @author jacopo beschi jacopo@jacopobeschi.com
  */
 use Cartalyst\Sentry\Groups\Eloquent\Group as SentryGroup;
 use Palmabit\Library\Traits\OverrideConnectionTrait;
 
-class Group extends SentryGroup
-{
-    use OverrideConnectionTrait;
+class Group extends SentryGroup {
+  use OverrideConnectionTrait;
 
-    protected $guarded = ["id"];
+  protected $guarded = ["id"];
 
-    protected $fillable = ["name", "permissions", "blocked"];
-
-} 
+  protected $fillable = ["name", "permissions", "blocked"];
+}
