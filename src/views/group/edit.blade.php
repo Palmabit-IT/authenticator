@@ -24,7 +24,12 @@ Admin area: edit user
         {{-- group base form --}}
         <h3>Informazioni base</h3>
         {{Form::model($group, [ 'url' => [URL::action('Palmabit\Authentication\Controllers\GroupController@postEditGroup'), $group->id], 'method' => 'post'] ) }}
-        {{FormField::name(["label" => "Nome:"])}}
+
+        <div class="form-group">
+            <label for="name">Nome:</label>
+            {{Form::text('name',null,['class'=>'form-control'])}}
+        </div>
+
         <span class="text-danger">{{$errors->first('name')}}</span>
         {{Form::hidden('id')}}
         <a href="{{URL::action('Palmabit\Authentication\Controllers\GroupController@deleteGroup',['id' => $group->id, '_token' => csrf_token()])}}" class="btn btn-danger pull-right margin-left-5 delete">Cancella</a>

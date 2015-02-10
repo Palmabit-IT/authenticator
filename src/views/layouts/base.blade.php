@@ -8,9 +8,9 @@
     <meta name="keywords" content="">
     <meta name="author" content="">
 
-    {{ HTML::style('packages/palmabit/authentication/css/bootstrap.min.css') }}
-    {{ HTML::style('packages/palmabit/authentication/css/style.css') }}
-    {{ HTML::style('packages/palmabit/authentication/css/sticky-footer.css') }}
+    {{ HTML::style('packages/palmabit/authenticator/css/bootstrap.min.css') }}
+    {{ HTML::style('packages/palmabit/authenticator/css/style.css') }}
+    {{ HTML::style('packages/palmabit/authenticator/css/sticky-footer.css') }}
 
     @yield('head_css')
     {{-- End head css --}}
@@ -45,8 +45,8 @@
         {{-- Start footer scripts --}}
         @yield('before_footer_scripts')
 
-        {{ HTML::script('packages/palmabit/authentication/js/jquery-1.10.2.min.js') }}
-        {{ HTML::script('packages/palmabit/authentication/js/bootstrap.min.js') }}
+        {{ HTML::script('packages/palmabit/authenticator/js/jquery-1.10.2.min.js') }}
+        {{ HTML::script('packages/palmabit/authenticator/js/bootstrap.min.js') }}
 
         @yield('footer_scripts')
         {{-- End footer scripts --}}

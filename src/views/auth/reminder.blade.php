@@ -11,7 +11,10 @@
         @endforeach
     @endif
     {{Form::open(array('url' => URL::action("Palmabit\Authentication\Controllers\AuthController@postReminder"), 'method' => 'post') )}}
-    {{FormField::email(array('label' => "email") )}}
+    <div class="form-group">
+        <label for="email">Email</label>
+        {{Form::text('email',null,['class'=>'form-control'])}}
+    </div>
     {{Form::submit('Invia', array("class"=>"btn btn-large btn-primary"))}}
     {{Form::close()}}
 @stop

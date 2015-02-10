@@ -9,9 +9,9 @@
     <meta name="author" content="">
 
 
-    {{ HTML::style('packages/palmabit/authentication/css/bootstrap.min.css') }}
-    {{ HTML::style('packages/palmabit/authentication/css/style.css') }}
-    {{ HTML::style('packages/palmabit/authentication/css/signin.css') }}
+    {{ HTML::style('packages/palmabit/authenticator/css/bootstrap.min.css') }}
+    {{ HTML::style('packages/palmabit/authenticator/css/style.css') }}
+    {{ HTML::style('packages/palmabit/authenticator/css/signin.css') }}
 
     @yield('head_css')
     {{-- End head css --}}
@@ -30,7 +30,7 @@
         </div>
 
         {{-- Start footer scripts --}}
-        {{ HTML::script('packages/palmabit/authentication/js/jquery-1.10.2.min.js') }}
-        {{ HTML::script('packages/palmabit/authentication/js/bootstrap.min.js') }}
+        {{ HTML::script('packages/palmabit/authenticator/js/jquery-1.10.2.min.js') }}
+        {{ HTML::script('packages/palmabit/authenticator/js/bootstrap.min.js') }}
     </body>
 </html>
