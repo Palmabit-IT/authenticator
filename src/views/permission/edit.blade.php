@@ -6,7 +6,7 @@ Admin area: edit permission
 
 @section('content')
 
-<div class="row">
+
     {{-- model general errors from the form --}}
     @if($errors->has('model') )
     <div class="alert alert-danger">{{$errors->first('model')}}</div>
@@ -20,12 +20,18 @@ Admin area: edit permission
     <h3><i class="glyphicon glyphicon-lock"></i> edit permission</h3>
 
     {{Form::model($permission, [ 'url' => [URL::action('Palmabit\Authentication\Controllers\PermissionController@editPermission'), $permission->id], 'method' => 'post'] ) }}
-    {{FormField::description(["label" => "Descrizione:", "type" => "text"])}}
+    <div class="form-group">
+        <label for="description">Description:</label>
+        {{Form::text('description',null,['class'=>'form-control'])}}
+    </div>
     <span class="text-danger">{{$errors->first('description')}}</span>
-    {{FormField::permission(["label" => "permission:"])}}
+    <div class="form-group">
+        <label for="permission">Permission:</label>
+        {{Form::text('permission',null,['class'=>'form-control'])}}
+    </div>
     <span class="text-danger">{{$errors->first('permission')}}</span>
     {{Form::hidden('id')}}
-    <a href="{{URL::action('Palmabit\Authentication\Controllers\PermissionController@deletePermission',['id' => $permission->id, '_token' => csrf_token()])}}" class="btn btn-danger pull-right margin-left-5 delete">Cancella</a>
+    <a href="{{URL::action('Palmabit\Authentication\Controllers\PermissionController@deletePermission',['id' => $permission->id, '_token' => csrf_token()])}}" class="btn btn-danger pull-left delete">Delete</a>
     {{Form::submit('save', array("class"=>"btn btn-primary pull-right "))}}
     {{Form::close()}}
 @stop

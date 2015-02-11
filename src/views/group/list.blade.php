@@ -6,7 +6,7 @@
 
 @section('content')
 
-<div class="row">
+
     {{-- print messages --}}
     <?php $message = Session::get('message'); ?>
     @if( isset($message) )
@@ -26,8 +26,8 @@
                 <span class="glyphicon glyphicon-user
 "></span> {{$group->name}}
                 @if(! $group->blocked)
-                <a href="{{URL::action('Palmabit\Authentication\Controllers\GroupController@deleteGroup',['id' => $group->id, '_token' => csrf_token()])}}" ><span class="glyphicon glyphicon-trash pull-right margin-left-5 delete">cancella </span></a>
-                <a href="{{URL::action('Palmabit\Authentication\Controllers\GroupController@editGroup', ['id' => $group->id])}}"><span class="glyphicon glyphicon-edit pull-right">edit </span></a>
+                <a class ="pull-right margin-left-20" href="{{URL::action('Palmabit\Authentication\Controllers\GroupController@deleteGroup',['id' => $group->id, '_token' => csrf_token()])}}" ><span class="glyphicon glyphicon-trash margin-left-5 delete">cancella </span></a>
+                <a class ="pull-right margin-left-20" href="{{URL::action('Palmabit\Authentication\Controllers\GroupController@editGroup', ['id' => $group->id])}}"><span class="glyphicon glyphicon-edit">edit </span></a>
                 <span class="clearfix"></span>
                 @endif
             </li>
@@ -37,7 +37,6 @@
         <h5>There are no groups present.</h5>
     @endif
     <a href="{{URL::action('Palmabit\Authentication\Controllers\GroupController@editGroup')}}" class="btn btn-primary pull-right">Add new</a>
-</div>
 @stop
 
 @section('footer_scripts')

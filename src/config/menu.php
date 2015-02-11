@@ -3,6 +3,18 @@
 return [
         "list" => [
                 [
+                        "name"        => "Permission",
+                        "route"       => "permission",
+                        "link"        => URL::route('permission.list'),
+                        "permissions" => ["_superadmin"]
+                ],
+                [
+                        "name"        => "Groups",
+                        "route"       => "groups",
+                        "link"        => URL::route('groups.list'),
+                        "permissions" => ["_superadmin"]
+                ],
+                [
                   /*
                    * the name of the link: you will see it in the admin menu panel.
                    * Note: If you don't want to show this item in the menu
@@ -28,18 +40,6 @@ return [
                   * check fails (for example in this case every route named users.*)
                   */
                   "permissions" => ["_admin", "_superadmin"]
-                ],
-                [
-                        "name"        => "Groups",
-                        "route"       => "groups",
-                        "link"        => URL::route('groups.list'),
-                        "permissions" => ["_superadmin"]
-                ],
-                [
-                        "name"        => "Permission",
-                        "route"       => "permission",
-                        "link"        => URL::route('permission.list'),
-                        "permissions" => ["_superadmin"]
                 ]
         ]
 ];

@@ -1,12 +1,11 @@
 @extends('authentication::layouts.base-2cols')
 
 @section('title')
-    Admin area: lista permissions
+    Admin area: permissions list
 @stop
 
 @section('content')
 
-<div class="row">
     {{-- print messages --}}
     <?php $message = Session::get('message'); ?>
     @if( isset($message) )
@@ -18,16 +17,15 @@
     <div class="alert alert-danger">{{$error}}</div>
     @endforeach
     @endif
-    <h3>Lista permissions</h3>
+    <h3>Permissions list</h3>
     @if( ! $permissions->isEmpty() )
         <ul class="list-group">
         @foreach($permissions as $permission)
             <li class="list-group-item">
-                <span class="glyphicon glyphicon-lock
-"></span> {{$permission->description}}
+                <span class="glyphicon glyphicon-lock"></span> {{$permission->description}}
                 @if(! $permission->blocked)
-                <a href="{{URL::action('Palmabit\Authentication\Controllers\PermissionController@deletePermission',['id' => $permission->id, '_token' => csrf_token()])}}" ><span class="glyphicon glyphicon-trash pull-right margin-left-5 delete">cancella </span></a>
-                <a href="{{URL::action('Palmabit\Authentication\Controllers\PermissionController@editPermission', ['id' => $permission->id])}}"><span class="glyphicon glyphicon-edit pull-right">edit </span></a>
+                <a class ="pull-right margin-left-20" href="{{URL::action('Palmabit\Authentication\Controllers\PermissionController@deletePermission',['id' => $permission->id, '_token' => csrf_token()])}}" ><span class="glyphicon glyphicon-trash delete margin-left-20">delete </span></a>
+                <a class ="pull-right margin-left-20" href="{{URL::action('Palmabit\Authentication\Controllers\PermissionController@editPermission', ['id' => $permission->id])}}"><span class="glyphicon glyphicon-edit margin-left-20">edit </span></a>
                 @endif
                 <span class="clearfix"></span>
             </li>
@@ -37,13 +35,12 @@
         <h5>No permissions present in the system.</h5>
     @endif
     <a href="{{URL::action('Palmabit\Authentication\Controllers\PermissionController@editPermission')}}" class="btn btn-primary pull-right">Add new</a>
-</div>
 @stop
 
 @section('footer_scripts')
     <script>
         $(".delete").click(function(){
-            return confirm("Sei sicuro di volere eliminare l'elemento selezionato?");
+            return confirm("Are you sure?");
         });
     </script>
 @stop

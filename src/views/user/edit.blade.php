@@ -19,7 +19,10 @@ Admin area: edit user
         {{Form::model($user, [ 'url' => [URL::action('Palmabit\Authentication\Controllers\UserController@postEditUser'), $user->id], 'method' => 'post'] ) }}
         {{-- Field hidden to fix chrome and safari autocomplete bug --}}
         {{Form::password('__to_hide_password_autocomplete', ['class' => 'hidden'])}}
-        {{FormField::copyEmail(["autocomplete" => "off", "label" => "email"])}}
+        <div class="form-group">
+            <label for="copyEmail">Email</label>
+            {{Form::text('copyEmail',null,['class'=>'form-control','autocomplete' => 'off'])}}
+        </div>
         <span class="text-danger">{{$errors->first('copyEmail')}}</span>
         <div class="form-group">
         {{Form::label('password','password: ')}}
@@ -28,14 +31,17 @@ Admin area: edit user
         <span class="text-danger">{{$errors->first('password')}}</span>
         {{--    {{FormField::last_name( ["label" => "Nome", "autocomplete" => "off"] ) }}
         <span class="text-danger">{{$errors->first('last_name')}}</span>
-        {{FormField::first_name( ["label" => "Cognome", "autocomplete" => "off"] ) }}
+        <div class="form-group">
+            <label for="first_name">Cognome</label>
+            {{Form::text('first_name',null,['class'=>'form-control','autocomplete' => 'off'])}}
+        </div>
         <span class="text-danger">{{$errors->first('first_name')}}</span> --}}
         <div class="form-group">
-            {{Form::label("activated","Utente attivo")}}
-            {{Form::select('activated', ["1" => "Sì", "0" => "No"], (isset($user->activated) && $user->activated) ? $user->activated : "0", ["class"=> "form-control"] )}}
+            {{Form::label("activated","Active user")}}
+            {{Form::select('activated', ["1" => "Yes", "0" => "No"], (isset($user->activated) && $user->activated) ? $user->activated : "0", ["class"=> "form-control"] )}}
         </div>
         <div class="form-group">
-        {{Form::label("preferred_lang","Lingua predefinita")}}
+        {{Form::label("preferred_lang","Preferred language")}}
         @include('authentication::layouts.partials.select_lang')
         </div>
         {{Form::hidden('id')}}
@@ -46,7 +52,7 @@ Admin area: edit user
         {{Form::close()}}
     </div>
     <div class="col-md-6">
-        <h3>Gruppi</h3>
+        <h3>Group</h3>
         @include('authentication::user.groups')
     </div>
 </div>
@@ -55,7 +61,7 @@ Admin area: edit user
 @section('footer_scripts')
 <script>
     $(".delete").click(function(){
-        return confirm("Sei sicuro di volere eliminare l'elemento selezionato?");
+        return confirm("Are you sure?");
     });
 </script>
 @stop

@@ -4,8 +4,9 @@
     @foreach($user->groups as $group)
     <li class="list-group-item">
         <span class="glyphicon glyphicon-user"></span> {{$group->name}}
-        <a href="{{URL::action('Palmabit\Authentication\Controllers\UserController@deleteGroup',['_token' => csrf_token(), 'group_id' => $group->id, 'id' => $user->id])}}
-        " ><span class="glyphicon glyphicon-trash pull-right margin-left-5 delete">cancella </span></a>
+        <a href="{{URL::action('Palmabit\Authentication\Controllers\UserController@deleteGroup',['_token' => csrf_token(), 'group_id' => $group->id, 'id' => $user->id])}}">
+            <span class="glyphicon glyphicon-trash pull-right margin-left-5 delete">delete </span>
+        </a>
         <span class="clearfix"></span>
     </li>
     @endforeach
@@ -13,9 +14,9 @@
 @else
 <h5>There are no groups associated to the user.</h5>
 @if(! $user->exists)
-    <div class="alert alert-danger">
-      <h5>You need to create the user first.</h5>
-    </div>
+<div class="alert alert-danger">
+    <h5>You need to create the user first.</h5>
+</div>
 @endif
 @endif
 

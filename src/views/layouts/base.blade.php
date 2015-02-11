@@ -9,8 +9,8 @@
     <meta name="author" content="">
 
     {{ HTML::style('packages/palmabit/authenticator/css/bootstrap.min.css') }}
-    {{ HTML::style('packages/palmabit/authenticator/css/style.css') }}
     {{ HTML::style('packages/palmabit/authenticator/css/sticky-footer.css') }}
+    {{ HTML::style('packages/palmabit/authenticator/css/style.css') }}
 
     @yield('head_css')
     {{-- End head css --}}
