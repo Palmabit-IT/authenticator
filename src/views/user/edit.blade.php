@@ -13,7 +13,11 @@ Admin area: edit user
         <div class="alert alert-success">{{$message}}</div>
     @endif
 
+    @if($user->id)
     <h3><i class="glyphicon glyphicon-user"></i> Edit user</h3>
+    @else
+    <h3><i class="glyphicon glyphicon-user"></i> New user</h3>
+    @endif
     <div class="col-md-6">
         <h3>General info</h3>
         {{Form::model($user, [ 'url' => [URL::action('Palmabit\Authentication\Controllers\UserController@postEditUser'), $user->id], 'method' => 'post'] ) }}
@@ -29,13 +33,13 @@ Admin area: edit user
         {{Form::password('password',["autocomplete" => "off", "class" => "form-control"])}}
         </div>
         <span class="text-danger">{{$errors->first('password')}}</span>
-        {{--    {{FormField::last_name( ["label" => "Nome", "autocomplete" => "off"] ) }}
+           {{FormField::last_name( ["label" => "Nome", "autocomplete" => "off"] ) }}
         <span class="text-danger">{{$errors->first('last_name')}}</span>
         <div class="form-group">
             <label for="first_name">Cognome</label>
             {{Form::text('first_name',null,['class'=>'form-control','autocomplete' => 'off'])}}
         </div>
-        <span class="text-danger">{{$errors->first('first_name')}}</span> --}}
+        <span class="text-danger">{{$errors->first('first_name')}}</span>
         <div class="form-group">
             {{Form::label("activated","Active user")}}
             {{Form::select('activated', ["1" => "Yes", "0" => "No"], (isset($user->activated) && $user->activated) ? $user->activated : "0", ["class"=> "form-control"] )}}

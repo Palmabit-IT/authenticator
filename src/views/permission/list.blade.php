@@ -24,8 +24,8 @@
             <li class="list-group-item">
                 <span class="glyphicon glyphicon-lock"></span> {{$permission->description}}
                 @if(! $permission->blocked)
-                <a class ="pull-right margin-left-20" href="{{URL::action('Palmabit\Authentication\Controllers\PermissionController@deletePermission',['id' => $permission->id, '_token' => csrf_token()])}}" ><span class="glyphicon glyphicon-trash delete margin-left-20">delete </span></a>
-                <a class ="pull-right margin-left-20" href="{{URL::action('Palmabit\Authentication\Controllers\PermissionController@editPermission', ['id' => $permission->id])}}"><span class="glyphicon glyphicon-edit margin-left-20">edit </span></a>
+                <a class ="pull-right margin-left-20" href="{{URL::action('Palmabit\Authentication\Controllers\PermissionController@deletePermission',['id' => $permission->id, '_token' => csrf_token()])}}" ><span class="glyphicon glyphicon-trash delete margin-left-20"></span> delete</a>
+                <a class ="pull-right margin-left-20" href="{{URL::action('Palmabit\Authentication\Controllers\PermissionController@editPermission', ['id' => $permission->id])}}"><span class="glyphicon glyphicon-edit margin-left-20"></span> edit</a>
                 @endif
                 <span class="clearfix"></span>
             </li>
