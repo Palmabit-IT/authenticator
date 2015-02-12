@@ -21,33 +21,32 @@ Admin area: edit user profile
     {{Form::model($user_profile,['route'=>'users.profile.edit', 'method' => 'post'])}}
         <div class="row">
             <div class="col-md-6">
-                {{FormField::code()}}
-                {{FormField::new_password(["label" => "Password:", "autocomplete" => "off"])}}
+                <div class="form-group">
+                    <label for="code">Code</label>
+                    {{Form::text('code',null,['class'=>'form-control', 'autocomplete' => 'off'])}}
+                </div>
+
                 <span class="text-danger">{{$errors->first('password')}}</span>
-                {{FormField::first_name(["label" => "Nome:", "autocomplete" => "off"])}}
+                <div class="form-group">
+                    <label for="first_name">First name:</label>
+                    {{Form::text('first_name',null,['class'=>'form-control','autocomplete' => 'off'])}}
+                </div>
                 <span class="text-danger">{{$errors->first('first_name')}}</span>
-                {{FormField::last_name(["label" => "Cognome:", "autocomplete" => "off"])}}
+                <div class="form-group">
+                    <label for="last_name">Last name:</label>
+                    {{Form::text('last_name',null,['class'=>'form-control','autocomplete' => 'off'])}}
+                </div>
                 <span class="text-danger">{{$errors->first('last_name')}}</span>
             </div>
             <div class="col-md-6">
-                {{FormField::phone(["label" => "Telefono:", "autocomplete" => "off"])}}
+                <div class="form-group">
+                    <label for="phone">Phone number:</label>
+                    {{Form::text('phone',null,['class'=>'form-control','autocomplete' => 'off'])}}
+                </div>
                 <span class="text-danger">{{$errors->first('phone')}}</span>
                 <div class="form-group">
-                    {{Form::label('profile_type', 'Tipo di profilo:', ["class" => "control-label"])}}<br/>
-                    {{Form::select('profile_type', [
-                    "" => "",
-                    "Special Effects Company" =>  'Special Effects Company',
-                    "Manufacturer" =>  'Manufacturer',
-                    "NightClub" =>  'NightClub',
-                    "Production Company" =>  'Production Company',
-                    "Full service" =>  'Full service',
-                    "Retail Store" =>  'Retail Store',
-                    "Theater" =>  'Theater',
-                    "Theme Parks" =>  'Theme Parks',
-                    "Trade Show" =>  'Trade Show',
-                    "Film Company" =>  'Film company',
-                    "End user" =>  'End user'
-                    ], $user_profile->profile_type, ["class"=>"form-control"])}}
+                    {{Form::label('profile_type', 'Profile type:', ["class" => "control-label"])}}<br/>
+                    {{Form::select('profile_type', $profile_type, $user_profile->profile_type, ["class"=>"form-control"])}}
                     <span class="text-danger">{{$errors->first('profile_type')}}</span>
                 </div>
             </div>
@@ -55,36 +54,78 @@ Admin area: edit user profile
         <hr>
         <div class="row">
             <div class="col-md-6">
-                <h4>Informazioni di fatturazione</h4>
-                {{FormField::company(["label" => "Ragione sociale:", "autocomplete" => "off"])}}
+                <h4>Billing information</h4>
+
+                <div class="form-group">
+                    <label for="company">Company name:</label>
+                    {{Form::text('company',null,['class'=>'form-control','autocomplete' => 'off'])}}
+                </div>
+
                 <span class="text-danger">{{$errors->first('company')}}</span>
-                {{FormField::vat(["label" => "Partita IVA", "autocomplete" => "off"])}}
+                <div class="form-group">
+                    <label for="vat">VAT:</label>
+                    {{Form::text('vat',null,['class'=>'form-control','autocomplete' => 'off'])}}
+                </div>
+
                 <span class="text-danger">{{$errors->first('vat')}}</span>
-                {{FormField::cf(["label" => "Codice fiscale", "autocomplete" => "off"])}}
+                <div class="form-group">
+                    <label for="cf">Fiscal Code:</label>
+                    {{Form::text('cf',null,['class'=>'form-control','autocomplete' => 'off'])}}
+                </div>
                 <span class="text-danger">{{$errors->first('cf')}}</span>
-                {{FormField::billing_address(["label" => "Indirizzo di fatturazione", "autocomplete" => "off"])}}
+                <div class="form-group">
+                    <label for="billing_address">Billing address:</label>
+                    {{Form::text('billing_address',null,['class'=>'form-control','autocomplete' => 'off'])}}
+                </div>
                 <span class="text-danger">{{$errors->first('billing_address')}}</span>
-                {{FormField::billing_city(["label" => "Città fatturazione", "autocomplete" => "off"])}}
+                 <div class="form-group">
+                    <label for="billing_city">City:</label>
+                    {{Form::text('billing_city',null,['class'=>'form-control','autocomplete' => 'off'])}}
+                </div>
                 <span class="text-danger">{{$errors->first('billing_city')}}</span>
-                {{FormField::billing_address_zip(["label" => "CAP fatturazione", "autocomplete" => "off"])}}
+                <div class="form-group">
+                    <label for="billing_address_zip">Address zip:</label>
+                    {{Form::text('billing_address_zip',null,['class'=>'form-control','autocomplete' => 'off'])}}
+                </div>
                 <span class="text-danger">{{$errors->first('billing_address_zip')}}</span>
-                {{FormField::billing_country(["label" => "Provincia fatturazione", "autocomplete" => "off"])}}
+                <div class="form-group">
+                    <label for="billing_country">Country:</label>
+                    {{Form::text('billing_country',null,['class'=>'form-control','autocomplete' => 'off'])}}
+                </div>
                 <span class="text-danger">{{$errors->first('billing_country')}}</span>
-                {{FormField::billing_state(["label" => "Nazione fatturazione", "autocomplete" => "off"])}}
+                <div class="form-group">
+                    <label for="billing_state">State:</label>
+                    {{Form::text('billing_state',null,['class'=>'form-control','autocomplete' => 'off'])}}
+                </div>
                 <span class="text-danger">{{$errors->first('billing_state')}}</span>
 
             </div>
             <div class="col-md-6">
-                <h4>Informazioni di spedizione</h4>
-                {{FormField::shipping_address(["label" => "Indirizzo di spedizione", "autocomplete" => "off"])}}
+                <h4>Send information</h4>
+                <div class="form-group">
+                    <label for="shipping_address">Address:</label>
+                    {{Form::text('shipping_address',null,['class'=>'form-control','autocomplete' => 'off'])}}
+                </div>
                 <span class="text-danger">{{$errors->first('shipping_address')}}</span>
-                {{FormField::shipping_city(["label" => "Città spedizione", "autocomplete" => "off"])}}
+                <div class="form-group">
+                    <label for="shipping_city">City:</label>
+                    {{Form::text('shipping_city',null,['class'=>'form-control','autocomplete' => 'off'])}}
+                </div>
                 <span class="text-danger">{{$errors->first('shipping_city')}}</span>
-                {{FormField::shipping_address_zip(["label" => "CAP spedizione", "autocomplete" => "off"])}}
+                <div class="form-group">
+                    <label for="shipping_address_zip">Zip address:</label>
+                    {{Form::text('shipping_address_zip',null,['class'=>'form-control','autocomplete' => 'off'])}}
+                </div>
                 <span class="text-danger">{{$errors->first('shipping_address_zip')}}</span>
-                {{FormField::shipping_country(["label" => "Provincia spedizione", "autocomplete" => "off"])}}
+                <div class="form-group">
+                    <label for="shipping_country">Country:</label>
+                    {{Form::text('shipping_country',null,['class'=>'form-control','autocomplete' => 'off'])}}
+                </div>
                 <span class="text-danger">{{$errors->first('shipping_country')}}</span>
-                {{FormField::shipping_state(["label" => "Nazione spedizione", "autocomplete" => "off"])}}
+                <div class="form-group">
+                    <label for="shipping_state">State:</label>
+                    {{Form::text('shipping_state',null,['class'=>'form-control','autocomplete' => 'off'])}}
+                </div>
                 <span class="text-danger">{{$errors->first('shipping_state')}}</span>
 
 

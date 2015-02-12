@@ -23,9 +23,9 @@ Admin area: new group
 <div class="row">
     <div class="col-md-12">
     @if($group->id)
-    <h3><i class="glyphicon glyphicon-user"></i> Edit group</h3>
+    <h3><i class="glyphicon glyphicon-list-alt"></i> Edit group</h3>
     @else
-    <h3><i class="glyphicon glyphicon-user"></i> New group</h3>
+    <h3><i class="glyphicon glyphicon-list-alt"></i> New group</h3>
     @endif
 
         {{-- group base form --}}

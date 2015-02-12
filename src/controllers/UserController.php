@@ -12,7 +12,7 @@ use Palmabit\Authentication\Exceptions\UserNotFoundException;
 use Palmabit\Authentication\Validators\UserValidator;
 use Palmabit\Authentication\Validators\UserProfileValidator;
 use Palmabit\Library\Exceptions\PalmabitExceptionsInterface;
-use View, Input, Redirect, App;
+use View, Input, Redirect, App, Config;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Palmabit\Authentication\Services\UserProfileService;
 use L, URL;
@@ -131,8 +131,7 @@ class UserController extends \BaseController {
     } catch (ProfileNotFoundException $e) {
       $user_profile = new UserProfile(["user_id" => $user_id]);
     }
-
-    return View::make('authentication::user.profile')->with(['user_profile' => $user_profile]);
+    return View::make('authentication::user.profile')->with(['user_profile' => $user_profile,'profile_type' => Config::get('authentication::config_profile_type')]);
   }
 
   public function postEditProfile() {

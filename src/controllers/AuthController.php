@@ -77,7 +77,7 @@ class AuthController extends BaseController {
       return Redirect::to("/user/recupero-success")->with(array ("messageReminder" => L::t('Check your mail inbox, we sent you an email to recover your password.')));
     } catch (Pbi $e) {
       $errors = $this->reminder->getErrors();
-      return Redirect::back()->withErrors($errors);
+      return Redirect::back()->withInput()->withErrors($errors);
     }
   }
 

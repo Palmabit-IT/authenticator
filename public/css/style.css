@@ -88,3 +88,6 @@
 .user-buttons a{
     margin-right: 10px;
 }
+.width-name-user-list {
+    width: 230px;
+}

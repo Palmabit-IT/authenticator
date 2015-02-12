@@ -35,10 +35,10 @@ Admin area: users list
                             <span class="badge {{$user->activated ? 'badge-green' : 'badge-red'}}">&nbsp;</span>
                         </td>
                         <td>
-                            {{$user->email}} {{($user->first_name) ? ucfirst($user->first_name): ''}} {{($user->last_name) ? ucfirst($user->last_name): ''}}
+                            {{$user->email}}
                         </td>
-                        <td></td>
-                        <td>
+                        <td> {{($user->first_name) ? ucfirst($user->first_name): ''}} {{($user->last_name) ? ucfirst($user->last_name): ''}}</td>
+                        <td class="width-name-user-list">
                             <div class="user-buttons pull-right">
 
                             @if(! $user->blocked)
