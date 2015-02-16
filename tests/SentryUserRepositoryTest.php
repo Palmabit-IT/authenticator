@@ -77,13 +77,12 @@ class SentryUserRepositoryTest extends DbTestCase {
             "last_name"           => "surname",
             "billing_address_zip" => "22222",
             "code"                => "12345",
-            "user_id"             => $user->id
+            "user_id"             => $user->id,
     ];
     $repo_profile->create($input);
-
     $users = $repo->all(["first_name" => "name"]);
     $this->assertEquals("name", $users->first()->first_name);
-    $users = $repo->all(["last_name" => "urname"]);
+    $users = $repo->all(["last_name" => "surname"]);
     $this->assertEquals("surname", $users->first()->last_name);
     $users = $repo->all(["billing_address_zip" => "22222"]);
     $this->assertEquals("22222", $users->first()->billing_address_zip);
