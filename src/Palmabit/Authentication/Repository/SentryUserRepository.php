@@ -272,14 +272,13 @@ class SentryUserRepository extends EloquentBaseRepository implements UserReposit
         return $q;
     }
 
-    public function excludeUserGroup($q)
+    public function excludeUserGroup($q, $toExclude = false, $groupsToExclude = [])
     {
-        $exclude = Config::get('authentication::exclude_user_type');
-        if ($exclude['exclude']) {
+        if ($toExclude) {
             $q = $q->join('users_groups', 'users.id', '=', 'users_groups.user_id')
                 ->join('groups', 'users_groups.group_id', '=', 'groups.id');
-            foreach ($exclude['exclude_type'] as $excludeType) {
-                $groups = DB::table('groups')->where('name', '=', $excludeType)->get();
+            foreach ($groupsToExclude as $groupExclude) {
+                $groups = DB::table('groups')->where('name', '=', $groupExclude)->get();
                 foreach ($groups as $group) {
                     $q = $q->where('group_id', '!=', $group->id);
                 }
@@ -298,6 +297,25 @@ class SentryUserRepository extends EloquentBaseRepository implements UserReposit
         $results_per_page = $this->config->get('authentication::users_per_page');
         return $query->paginate($results_per_page);
 
+    }
+
+    /***
+     * @param $loggedUser
+     * @param $excludeConfig
+     * @return bool
+     */
+    public function inGroup($loggedUser, $excludeConfig)
+    {
+            $result = $excludeConfig['exclude'];
+        foreach ($loggedUser->groups()->get() as $groupUserLogged) {
+
+            foreach ($excludeConfig['exclude_type'] as $groupToExclude) {
+                if ($groupToExclude == $groupUserLogged->name) {
+                    $result = false;
+                }
+            }
+            return $result;
+        }
     }
 
 }

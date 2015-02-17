@@ -14,7 +14,7 @@ class User extends CartaUser {
   protected $fillable = [
           "email",
           "copyEmail",
-          "copuPassword",
+          "copyPassword",
           "password",
           "permissions",
           "activated",

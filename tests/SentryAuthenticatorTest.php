@@ -97,7 +97,6 @@ class SentryAuthenticatorTest extends DbTestCase {
                           ->once()
                           ->andReturn($get_mock)
                           ->getMock();
-
     $mock_sentry = m::mock('StdClass')
                     ->shouldReceive('getUser')
                     ->once()
@@ -107,7 +106,6 @@ class SentryAuthenticatorTest extends DbTestCase {
 
     $authenticator = new SentryAuthenticator();
     $user_profile = $authenticator->getLoggedUserProfile();
-
     $this->assertEquals($expected_profile, $user_profile);
   }
 

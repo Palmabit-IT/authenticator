@@ -42,6 +42,12 @@ class UserController extends \BaseController
      * @var \Palmabit\Authentication\Validators\UserSignupValidator
      */
     protected $v_s;
+    /**
+     * Sentry instance
+     *
+     * @var
+     */
+    protected $sentry;
 
     public function __construct(Repo $r, UserValidator $v, UserProfileValidator $vp, UserSignupValidator $vs)
     {
@@ -51,12 +57,15 @@ class UserController extends \BaseController
         $this->v_p = $vp;
         $this->r_p = App::make('profile_repository');
         $this->v_s = $vs;
+        $this->sentry = \App::make('sentry');
     }
 
     public function getList()
     {
+        $exclude = Config::get('authentication::exclude_user_type');
         $allUsers = $this->r->all(Input::all());
-        $usersExclude = $this->r->excludeUserGroup($allUsers);
+        $execute = $this->r->inGroup($this->sentry->getUser() ,$exclude);
+        $usersExclude = $this->r->excludeUserGroup($allUsers,  $execute, $exclude['exclude_type']);
         $users = $this->r->paginate($usersExclude);
 
         return View::make('authentication::user.list')->with(["users" => $users]);
@@ -69,7 +78,6 @@ class UserController extends \BaseController
         } catch (PalmabitExceptionsInterface $e) {
             $user = new User;
         }
-
         return View::make('authentication::user.edit')->with(["user" => $user]);
     }
 
@@ -178,4 +186,6 @@ class UserController extends \BaseController
     {
         return View::make('authentication::auth.signupsuccess');
     }
+
+
 }
