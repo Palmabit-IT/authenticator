@@ -208,12 +208,13 @@ class SentryUserRepositoryTest extends DbTestCase
 
         $repo->addGroup($admin->id, $adminGroup->id);
         $repo->addGroup($user->id, $userGroup->id);
-        $this->assertFalse($repo->inGroup($user, [
+        $this->assertFalse($repo->inGroupExlude($user, [
                 'exclude' => true,
                 'exclude_type' => ['Users']
             ]
         ));
     }
+
 
 }
  

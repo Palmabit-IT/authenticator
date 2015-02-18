@@ -26,6 +26,12 @@ Admin area: new permission
 @else
 <h3><i class="glyphicon glyphicon-lock"></i> new permission</h3>
 @endif
+{{-- print errors --}}
+@if($errors && ! $errors->isEmpty() )
+@foreach($errors->all() as $error)
+<div class="alert alert-danger">{{$error}}</div>
+@endforeach
+@endif
 
 {{Form::model($permission, [ 'url' => [URL::action('Palmabit\Authentication\Controllers\PermissionController@editPermission'), $permission->id], 'method' => 'post'] ) }}
 <div class="form-group">

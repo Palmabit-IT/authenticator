@@ -62,7 +62,6 @@ class GroupController extends \BaseController
     public function postEditGroup()
     {
         $id = Input::get('id');
-
         try
         {
             $obj = $this->f->process(Input::all());

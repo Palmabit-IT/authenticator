@@ -1,4 +1,5 @@
-<?php  namespace Palmabit\Authentication\Controllers; 
+<?php  namespace Palmabit\Authentication\Controllers;
+
 /**
  * Class PermissionController
  *
@@ -38,44 +39,47 @@ class PermissionController extends \BaseController
 
     public function editPermission()
     {
-        try
-        {
+
+        try {
             $obj = $this->r->find(Input::get('id'));
-        }
-        catch(PalmabitExceptionsInterface $e)
-        {
+        } catch (PalmabitExceptionsInterface $e) {
             $obj = new Permission;
         }
-
         return View::make('authentication::permission.edit')->with(["permission" => $obj]);
     }
 
     public function postEditPermission()
     {
         $id = Input::get('id');
-
-        try
-        {
-            $obj = $this->f->process(Input::all());
+        try {
+            $permission = $this->r->getPermission($id);
+            $this->r->checkIsNotSuperadminOrAdmin($permission);
+        } catch (PalmabitExceptionsInterface $e) {
+            return Redirect::back()->withInput()->withErrors("Non e' possibile modificare questo permesso");
         }
-        catch(PalmabitExceptionsInterface $e)
-        {
+        try {
+            $obj = $this->f->process(Input::all());
+        } catch (PalmabitExceptionsInterface $e) {
             $errors = $this->f->getErrors();
             // passing the id incase fails editing an already existing item
-            return Redirect::route("permission.edit", $id ? ["id" => $id]: [])->withInput()->withErrors($errors);
+            return Redirect::route("permission.edit", $id ? ["id" => $id] : [])->withInput()->withErrors($errors);
         }
 
-        return Redirect::action('Palmabit\Authentication\Controllers\PermissionController@editPermission',["id" => $obj->id])->withMessage("Permesso modificato con successo.");
+        return Redirect::action('Palmabit\Authentication\Controllers\PermissionController@editPermission', ["id" => $obj->id])->withMessage("Permesso modificato con successo.");
     }
 
     public function deletePermission()
     {
-        try
-        {
-            $this->f->delete(Input::all());
+        $id = Input::get('id');
+        try {
+            $permission = $this->r->getPermission($id);
+            $this->r->checkIsNotSuperadminOrAdmin($permission);
+        } catch (PalmabitExceptionsInterface $e) {
+            return Redirect::back()->withInput()->withErrors("Non e' possibile eliminare questo permesso");
         }
-        catch(PalmabitExceptionsInterface $e)
-        {
+        try {
+            $this->f->delete(Input::all());
+        } catch (PalmabitExceptionsInterface $e) {
             $errors = $this->f->getErrors();
             return Redirect::action('Palmabit\Authentication\Controllers\PermissionController@getList')->withErrors($errors);
         }

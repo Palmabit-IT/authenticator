@@ -8,6 +8,7 @@ use Palmabit\Library\Repository\EloquentBaseRepository;
 use Palmabit\Authentication\Exceptions\UserNotFoundException as NotFoundException;
 use Palmabit\Authentication\Exceptions\UserExistsException as UserExistsException;
 use Cartalyst\Sentry\Users\UserNotFoundException;
+use Palmabit\Library\Exceptions\PalmabitExceptionsInterface;
 use Palmabit\Authentication\Models\User;
 use Palmabit\Authentication\Models\Group;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -304,7 +305,7 @@ class SentryUserRepository extends EloquentBaseRepository implements UserReposit
      * @param $excludeConfig
      * @return bool
      */
-    public function inGroup($loggedUser, $excludeConfig)
+    public function inGroupExlude($loggedUser, $excludeConfig)
     {
             $result = $excludeConfig['exclude'];
         foreach ($loggedUser->groups()->get() as $groupUserLogged) {
@@ -317,6 +318,16 @@ class SentryUserRepository extends EloquentBaseRepository implements UserReposit
             return $result;
         }
     }
-
+/**
+ * @todo delete this function
+ */
+//    public function isGroup($loggedUser, $group_id){
+//        $group = DB::table('groups')->where('id','=',$group_id);
+//        foreach($loggedUser->groups()->get() as $groupUserLogged){
+//            if($groupUserLogged != $group->name){
+//               throw new NotFoundException;
+//            }
+//        }
+//    }
 }
 

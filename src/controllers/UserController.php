@@ -6,6 +6,7 @@ use Palmabit\Authentication\Models\UserProfile;
 use Palmabit\Authentication\Repository\SentryUserRepository as Repo;
 use Palmabit\Authentication\Services\UserRegisterService;
 use Palmabit\Authentication\Validators\UserSignupValidator;
+use Palmabit\Library\Exceptions\NotFoundException;
 use Palmabit\Library\Form\FormModel;
 use Palmabit\Authentication\Models\User;
 use Palmabit\Authentication\Exceptions\UserNotFoundException;
@@ -64,7 +65,7 @@ class UserController extends \BaseController
     {
         $exclude = Config::get('authentication::exclude_user_type');
         $allUsers = $this->r->all(Input::all());
-        $execute = $this->r->inGroup($this->sentry->getUser() ,$exclude);
+        $execute = $this->r->inGroupExlude($this->sentry->getUser() ,$exclude);
         $usersExclude = $this->r->excludeUserGroup($allUsers,  $execute, $exclude['exclude_type']);
         $users = $this->r->paginate($usersExclude);
 
@@ -84,7 +85,6 @@ class UserController extends \BaseController
     public function postEditUser()
     {
         $id = Input::get('id');
-
         try {
             $obj = $this->f->process(Input::all());
         } catch (PalmabitExceptionsInterface $e) {
@@ -112,7 +112,12 @@ class UserController extends \BaseController
     {
         $user_id = Input::get('id');
         $group_id = Input::get('group_id');
-
+        try{
+            $this->r->isGroup($this->sentry->getUser(),$group_id);
+        }catch (PalmabitExceptionsInterface $e){
+            return Redirect::action('Palmabit\Authentication\Controllers\UserController@editUser', ["id" => $user_id])
+                ->withErrors(new MessageBag(["name" => "Non hai i permessi per farlo"]));
+        }
         try {
             $this->r->addGroup($user_id, $group_id);
         } catch (PalmabitExceptionsInterface $e) {
@@ -127,7 +132,6 @@ class UserController extends \BaseController
     {
         $user_id = Input::get('id');
         $group_id = Input::get('group_id');
-
         try {
             $this->r->removeGroup($user_id, $group_id);
         } catch (PalmabitExceptionsInterface $e) {
