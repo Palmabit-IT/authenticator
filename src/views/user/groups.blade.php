@@ -1,6 +1,5 @@
 <h3>Groups associated:</h3>
 <div class="form-select">
-
     {{-- form to associate groups --}}
     {{Form::open(["action" => "Palmabit\Authentication\Controllers\UserController@addGroup"])}}
     <div class="form-group">

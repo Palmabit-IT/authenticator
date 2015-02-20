@@ -1,10 +1,13 @@
 <?php  namespace Palmabit\Authentication\Tests;
 
 use App;
+use Cartalyst\Sentry\Groups\GroupNotFoundException;
 use Illuminate\Support\Facades\Config;
 use Mockery as m;
 use Palmabit\Authentication\Repository\SentryGroupRepository;
 use Palmabit\Authentication\Repository\SentryUserRepository;
+use Palmabit\Authentication\Tests\traits\CreateGroupTrait;
+use Palmabit\Authentication\Tests\traits\CreateUserTrait;
 
 /**
  * Test SentryUserRepositoryTest
@@ -12,7 +15,7 @@ use Palmabit\Authentication\Repository\SentryUserRepository;
  */
 class SentryUserRepositoryTest extends DbTestCase
 {
-
+    use CreateUserTrait, CreateGroupTrait;
 
     /**
      * @test
@@ -42,12 +45,7 @@ class SentryUserRepositoryTest extends DbTestCase
     public function it_find_user_from_a_group()
     {
         $repo = App::make('user_repository');
-        $input = [
-            "email" => "admin@admin.com",
-            "password" => "password",
-            "activated" => 1
-        ];
-        $repo->create($input);
+        $this->createSuperadminTrait();
         $group_repo = App::make('group_repository');
         $input = [
             "name" => "admin"
@@ -64,19 +62,8 @@ class SentryUserRepositoryTest extends DbTestCase
      **/
     public function it_gets_all_user_filtered_by_first_name_last_name_zip_email_code()
     {
-        $per_page = 5;
-        $config = m::mock('ConfigMock');
-        $config->shouldReceive('get')
-            ->with('authentication::users_per_page')
-            ->andReturn($per_page)
-            ->getMock();
-        $repo = new SentryUserRepository($config);
-        $input = [
-            "email" => "admin@admin.com",
-            "password" => "password",
-            "activated" => 1
-        ];
-        $user = $repo->create($input);
+        $repo = $this->repository();
+        $user = $this->createSuperadminTrait();
         $repo_profile = App::make('profile_repository');
         $input = [
             "first_name" => "name",
@@ -104,16 +91,10 @@ class SentryUserRepositoryTest extends DbTestCase
      */
     public function exclude_user_group()
     {
-        $per_page = 5;
-        $config = m::mock('ConfigMock');
-        $config->shouldReceive('get')
-            ->with('authentication::users_per_page')
-            ->andReturn($per_page)
-            ->getMock();
-        $repo = new SentryUserRepository($config);
+        $repo = $this->repository();
         $this->createUserStub();
         $listUser = $repo->all();
-        $usersExclude = $repo->excludeUserGroup($listUser, true, ['Admin']);
+        $usersExclude = $repo->excludeUserGroup($listUser, true, ['admin']);
         foreach ($usersExclude->get() as $user) {
             $this->assertEquals('user@user.com', $user->email);
         }
@@ -121,46 +102,13 @@ class SentryUserRepositoryTest extends DbTestCase
 
     private function createUserStub()
     {
-        $per_page = 5;
-        $config = m::mock('ConfigMock');
-        $config->shouldReceive('get')
-            ->with('authentication::users_per_page')
-            ->andReturn($per_page)
-            ->getMock();
-        $repo = new SentryUserRepository($config);
-        $groupRepository = new SentryGroupRepository();
-        $inputAdmin = [
-            "email" => "admin@admin.com",
-            "password" => "password",
-            "activated" => 1
-        ];
-        $inputUser = [
-            "email" => "user@user.com",
-            "password" => "password",
-            "activated" => 1
-        ];
-        $admin = $repo->create($inputAdmin);
-        $user = $repo->create($inputUser);
-        $inputUser = [
-            'name' => 'Users',
-            'permissions' => [
-                'user' => 1,
-            ],
-            "blocked" => 0,
-        ];
-        $userGroup = $groupRepository->create($inputUser);
-        $inputAdmin = [
-            'name' => 'Admin',
-            'permissions' => [
-                'administrator' => 1,
-            ],
-            "blocked" => 0,
-        ];
-        $adminGroup = $groupRepository->create($inputAdmin);
-
+        $repo = $this->repository();
+        $admin = $this->createSuperadminTrait();
+        $user = $this->createAdminTrait();
+        $adminGroup = $this->createAdminGroup();
+        $userGroup = $this->createUserGroup();
         $repo->addGroup($admin->id, $adminGroup->id);
         $repo->addGroup($user->id, $userGroup->id);
-//        dd($repo->inGroup($admin, Config::get('authentication::exclude_user_type')));
     }
 
 
@@ -169,52 +117,41 @@ class SentryUserRepositoryTest extends DbTestCase
      */
     public function isLoggedUserIsExcludedGroupTest()
     {
-        $per_page = 5;
-        $config = m::mock('ConfigMock');
-        $config->shouldReceive('get')
-            ->with('authentication::users_per_page')
-            ->andReturn($per_page)
-            ->getMock();
-        $repo = new SentryUserRepository($config);
-        $groupRepository = new SentryGroupRepository();
-        $inputAdmin = [
-            "email" => "admin@admin.com",
-            "password" => "password",
-            "activated" => 1
-        ];
-        $inputUser = [
-            "email" => "user@user.com",
-            "password" => "password",
-            "activated" => 1
-        ];
-        $admin = $repo->create($inputAdmin);
-        $user = $repo->create($inputUser);
-        $inputUser = [
-            'name' => 'Users',
-            'permissions' => [
-                'user' => 1,
-            ],
-            "blocked" => 0,
-        ];
-        $userGroup = $groupRepository->create($inputUser);
-        $inputAdmin = [
-            'name' => 'Admin',
-            'permissions' => [
-                'administrator' => 1,
-            ],
-            "blocked" => 0,
-        ];
-        $adminGroup = $groupRepository->create($inputAdmin);
-
+        $admin = $this->createSuperadminTrait();
+        $user = $this->createAdminTrait();
+        $adminGroup = $this->createAdminGroup();
+        $userGroup = $this->createUserGroup();
+        $repo = $this->repository();
         $repo->addGroup($admin->id, $adminGroup->id);
         $repo->addGroup($user->id, $userGroup->id);
         $this->assertFalse($repo->inGroupExlude($user, [
                 'exclude' => true,
-                'exclude_type' => ['Users']
+                'exclude_type' => ['User']
             ]
         ));
     }
 
+    /**
+     * @todo
+     * @test
+     * @expectedException Palmabit\Authentication\Exceptions\GroupNotFoundException
+     */
+    public function permissionToAddGroupTest()
+    {
+        $user = $this->createAdminTrait();
+        $superadminGroup = $this->createSuperadminGroup();
+        $sentryUserRepository = new SentryUserRepository();
+        $noAccessGroups = Config::get('authentication::no_access_group');
+//        $excludedGroups = $noAccessGroups[$user->name];
+        dd($user->getGroups());
+        foreach ($excludedGroups as $excludedGroup) {
+            if ($superadminGroup->name == $excludedGroup) {
+                throw new GroupNotFoundException;
+            }
+        }
+//        $sentryUserRepository->permissionGroup();
+//TEST PER LANCIARE L'ECCEZZIONE IN CASO DI INSERIMENTO MANUALE DI UN GRUPPO
+    }
 
 }
  

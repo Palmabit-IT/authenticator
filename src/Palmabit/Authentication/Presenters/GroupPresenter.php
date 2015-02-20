@@ -5,9 +5,11 @@
  */
 use Palmabit\Library\Presenters\AbstractPresenter;
 use Palmabit\Authentication\Models\Permission;
-
+use Config;
 class GroupPresenter extends AbstractPresenter {
-  /**
+
+
+    /**
    * Obtains the permission obj associated to the model
    *
    * @param null $model
@@ -24,4 +26,5 @@ class GroupPresenter extends AbstractPresenter {
     }
     return $objs;
   }
-} 
+
+}

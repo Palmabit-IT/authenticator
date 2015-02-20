@@ -40,7 +40,6 @@ class GroupController extends \BaseController
     public function getList()
     {
         $groups = $this->r->all();
-
         return View::make('authentication::group.list')->with(["groups" => $groups]);
     }
 

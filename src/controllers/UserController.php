@@ -79,6 +79,7 @@ class UserController extends \BaseController
         } catch (PalmabitExceptionsInterface $e) {
             $user = new User;
         }
+
         return View::make('authentication::user.edit')->with(["user" => $user]);
     }
 

@@ -318,16 +318,10 @@ class SentryUserRepository extends EloquentBaseRepository implements UserReposit
             return $result;
         }
     }
-/**
- * @todo delete this function
- */
-//    public function isGroup($loggedUser, $group_id){
-//        $group = DB::table('groups')->where('id','=',$group_id);
-//        foreach($loggedUser->groups()->get() as $groupUserLogged){
-//            if($groupUserLogged != $group->name){
-//               throw new NotFoundException;
-//            }
-//        }
-//    }
+
+    public function permissionToAddGroup($userId,$groupId){
+        $exludedGroup = Config::get('authentication::exclude_user_type');
+    }
+
 }
 
