@@ -1,5 +1,5 @@
 <?php
 return  [
-    'exclude' => false,
+    'exclude' => true,
     'exclude_type' => ['mail notification']
 ];

@@ -5,7 +5,7 @@ use Palmabit\Authentication\Repository\SentryUserRepository;
 
 trait CreateUserTrait {
 
-    public function createSuperadminTrait(){
+    public function createSuperadmin(){
         $per_page = 5;
         $config = m::mock('ConfigMock');
         $config->shouldReceive('get')
@@ -21,7 +21,7 @@ trait CreateUserTrait {
        return $repo->create($input);
     }
 
-    public function createAdminTrait(){
+    public function createAdmin(){
        $repo =  $this->repository();
         $input = [
             "email" => "user@user.com",

@@ -1,8 +1,10 @@
 <?php
 namespace Palmabit\Authentication\Repository;
 
+use Cartalyst\Sentry\Groups\GroupNotFoundException;
 use Cartalyst\Sentry\Users\UserExistsException as CartaUserExists;
 use Illuminate\Support\Facades\Config;
+use Palmabit\Authentication\Exceptions\ProfileNotFoundException;
 use Palmabit\Authentication\Repository\Interfaces\UserRepositoryInterface;
 use Palmabit\Library\Repository\EloquentBaseRepository;
 use Palmabit\Authentication\Exceptions\UserNotFoundException as NotFoundException;
@@ -307,7 +309,7 @@ class SentryUserRepository extends EloquentBaseRepository implements UserReposit
      */
     public function inGroupExlude($loggedUser, $excludeConfig)
     {
-            $result = $excludeConfig['exclude'];
+        $result = $excludeConfig['exclude'];
         foreach ($loggedUser->groups()->get() as $groupUserLogged) {
 
             foreach ($excludeConfig['exclude_type'] as $groupToExclude) {
@@ -319,8 +321,61 @@ class SentryUserRepository extends EloquentBaseRepository implements UserReposit
         }
     }
 
-    public function permissionToAddGroup($userId,$groupId){
-        $exludedGroup = Config::get('authentication::exclude_user_type');
+    public function permissionToAddGroup($userId, $groupId)
+    {
+        $user = User::findOrFail($userId);
+        $exludedGroup = Config::get('authentication::no_access_group');
+        $groupToAssociate = Group::findOrFail($groupId);
+        foreach ($user->getGroups() as $groupsAssociatedUser) {
+            $excludedGroups = $exludedGroup[$groupsAssociatedUser->name];
+            foreach ($excludedGroups as $excludedGroup) {
+                if ($groupToAssociate->name == $excludedGroup) {
+                    throw new GroupNotFoundException;
+                }
+            }
+        }
+    }
+
+    public function hasPermissionToEditUser($loggedUser, $userToEditId)
+    {
+        $exludedGroup = Config::get('authentication::no_access_group');
+        $userToEdit = User::find($userToEditId);
+        foreach ($loggedUser->getGroups() as $groupsAssociatedUser) {
+            $excludedGroups = $exludedGroup[$groupsAssociatedUser->name];
+            if ($this->checkUserGroups($userToEdit, $excludedGroups)) {
+                throw new ProfileNotFoundException;
+            }
+        }
+    }
+
+    /**
+     * @param $userToEdit
+     * @param $excludedGroups
+     * @return bool
+     */
+    public function checkUserGroups($userToEdit, $excludedGroups)
+    {
+        foreach ($userToEdit->getGroups() as $userToEditAssociatedGroups) {
+            if ($this->checkExcludedGroup($excludedGroups, $userToEditAssociatedGroups)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * @param $excludedGroups
+     * @param $userToEditAssociatedGroups
+     * @return bool
+     */
+    public function checkExcludedGroup($excludedGroups, $userToEditAssociatedGroups)
+    {
+        foreach ($excludedGroups as $excludedGroup) {
+            if ($userToEditAssociatedGroups->name == $excludedGroup) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }

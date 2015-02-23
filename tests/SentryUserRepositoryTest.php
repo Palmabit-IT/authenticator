@@ -1,10 +1,8 @@
 <?php  namespace Palmabit\Authentication\Tests;
 
 use App;
-use Cartalyst\Sentry\Groups\GroupNotFoundException;
 use Illuminate\Support\Facades\Config;
 use Mockery as m;
-use Palmabit\Authentication\Repository\SentryGroupRepository;
 use Palmabit\Authentication\Repository\SentryUserRepository;
 use Palmabit\Authentication\Tests\traits\CreateGroupTrait;
 use Palmabit\Authentication\Tests\traits\CreateUserTrait;
@@ -45,7 +43,7 @@ class SentryUserRepositoryTest extends DbTestCase
     public function it_find_user_from_a_group()
     {
         $repo = App::make('user_repository');
-        $this->createSuperadminTrait();
+        $this->createSuperadmin();
         $group_repo = App::make('group_repository');
         $input = [
             "name" => "admin"
@@ -63,7 +61,7 @@ class SentryUserRepositoryTest extends DbTestCase
     public function it_gets_all_user_filtered_by_first_name_last_name_zip_email_code()
     {
         $repo = $this->repository();
-        $user = $this->createSuperadminTrait();
+        $user = $this->createSuperadmin();
         $repo_profile = App::make('profile_repository');
         $input = [
             "first_name" => "name",
@@ -103,8 +101,8 @@ class SentryUserRepositoryTest extends DbTestCase
     private function createUserStub()
     {
         $repo = $this->repository();
-        $admin = $this->createSuperadminTrait();
-        $user = $this->createAdminTrait();
+        $admin = $this->createSuperadmin();
+        $user = $this->createAdmin();
         $adminGroup = $this->createAdminGroup();
         $userGroup = $this->createUserGroup();
         $repo->addGroup($admin->id, $adminGroup->id);
@@ -117,8 +115,8 @@ class SentryUserRepositoryTest extends DbTestCase
      */
     public function isLoggedUserIsExcludedGroupTest()
     {
-        $admin = $this->createSuperadminTrait();
-        $user = $this->createAdminTrait();
+        $admin = $this->createSuperadmin();
+        $user = $this->createAdmin();
         $adminGroup = $this->createAdminGroup();
         $userGroup = $this->createUserGroup();
         $repo = $this->repository();
@@ -132,25 +130,37 @@ class SentryUserRepositoryTest extends DbTestCase
     }
 
     /**
-     * @todo
      * @test
-     * @expectedException Palmabit\Authentication\Exceptions\GroupNotFoundException
+     * @expectedException Cartalyst\Sentry\Groups\GroupNotFoundException
      */
     public function permissionToAddGroupTest()
     {
-        $user = $this->createAdminTrait();
+        $user = $this->createAdmin();
+        $adminGroup = $this->createAdminGroup();
         $superadminGroup = $this->createSuperadminGroup();
         $sentryUserRepository = new SentryUserRepository();
-        $noAccessGroups = Config::get('authentication::no_access_group');
-//        $excludedGroups = $noAccessGroups[$user->name];
-        dd($user->getGroups());
-        foreach ($excludedGroups as $excludedGroup) {
-            if ($superadminGroup->name == $excludedGroup) {
-                throw new GroupNotFoundException;
-            }
-        }
-//        $sentryUserRepository->permissionGroup();
-//TEST PER LANCIARE L'ECCEZZIONE IN CASO DI INSERIMENTO MANUALE DI UN GRUPPO
+        $repo = $this->repository();
+        $repo->addGroup($user->id, $adminGroup->id);
+        $sentryUserRepository->permissionToAddGroup($user->id, $superadminGroup->id);
+    }
+
+    /**
+     * @test
+     * @expectedException Palmabit\Authentication\Exceptions\ProfileNotFoundException
+     */
+    public function permissionToEditOtherUserTest()
+    {
+        $user = $this->createAdmin();
+        $adminGroup = $this->createAdminGroup();
+        $superadmin = $this->createSuperadmin();
+        $superadminGroup = $this->createSuperadminGroup();
+        $sentryUserRepository = new SentryUserRepository();
+        $repo = $this->repository();
+        $repo->addGroup($user->id, $adminGroup->id);
+        $repo->addGroup($superadmin->id, $superadminGroup->id);
+        $sentryUserRepository->hasPermissionToEditUser($user, $superadmin->id);
+
+
     }
 
 }

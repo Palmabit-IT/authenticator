@@ -18,6 +18,11 @@ Admin area: edit user profile
 
     <h3><i class="glyphicon glyphicon-user"></i> edit user profile</h3>
     <hr/>
+    @if($errors->first('permissionNotAllowed'))
+    <div class="alert alert-danger" role="alert">
+        <span>{{$errors->first('permissionNotAllowed')}}</span>
+    </div>
+    @endif
     {{Form::model($user_profile,['route'=>'users.profile.edit', 'method' => 'post'])}}
         <div class="row">
             <div class="col-md-6">

@@ -21,6 +21,11 @@ Admin area: edit user
         @endif
 
         <h3>General info</h3>
+        @if($errors->first('permissionNotAllowed'))
+        <div class="alert alert-danger" role="alert">
+            <span>{{$errors->first('permissionNotAllowed')}}</span>
+        </div>
+        @endif
         {{Form::model($user, [ 'url' =>
         [URL::action('Palmabit\Authentication\Controllers\UserController@postEditUser'),
         $user->id], 'method' => 'post'] ) }}
@@ -37,6 +42,7 @@ Admin area: edit user
             {{Form::password('password',["autocomplete" => "off", "class" => "form-control"])}}
         </div>
         <span class="text-danger">{{$errors->first('password')}}</span>
+
         <div class="row">
             <div class="col-md-6">
                 {{Form::label("activated","Active user")}}

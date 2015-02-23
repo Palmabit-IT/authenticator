@@ -19,8 +19,8 @@ class GroupsFilterTest extends DbTestCase
     {
         $groupFilter = new GroupsFilter();
         $repo = $this->repository();
-        $user = $this->createAdminTrait();
-        $admin = $this->createSuperadminTrait();
+        $user = $this->createAdmin();
+        $admin = $this->createSuperadmin();
         $adminGroup = $this->createAdminGroup();
         $userGroup = $this->createUserGroup();
         $repo->addGroup($user->id, $userGroup->id);
@@ -36,8 +36,8 @@ class GroupsFilterTest extends DbTestCase
     {
         $groupFilter = new GroupsFilter();
         $repo = $this->repository();
-        $user = $this->createAdminTrait();
-        $admin = $this->createSuperadminTrait();
+        $user = $this->createAdmin();
+        $admin = $this->createSuperadmin();
         $userGroup = $this->createUserGroup();
         $adminGroup = $this->createAdminGroup();
         $repo->addGroup($user->id, $userGroup->id);
@@ -54,8 +54,8 @@ class GroupsFilterTest extends DbTestCase
     {
         $groupFilter = new GroupsFilter();
         $repo = $this->repository();
-        $user = $this->createAdminTrait();
-        $admin = $this->createSuperadminTrait();
+        $user = $this->createAdmin();
+        $admin = $this->createSuperadmin();
         $this->createSuperadminGroup();
         $adminGroup = $this->createAdminGroup();
         $userGroup = $this->createUserGroup();
