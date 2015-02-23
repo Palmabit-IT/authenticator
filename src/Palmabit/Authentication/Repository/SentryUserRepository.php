@@ -310,7 +310,7 @@ class SentryUserRepository extends EloquentBaseRepository implements UserReposit
     public function inGroupExlude($loggedUser, $excludeConfig)
     {
         $result = $excludeConfig['exclude'];
-        foreach ($loggedUser->groups()->get() as $groupUserLogged) {
+        foreach ($loggedUser->getGroups() as $groupUserLogged) {
 
             foreach ($excludeConfig['exclude_type'] as $groupToExclude) {
                 if ($groupToExclude == $groupUserLogged->name) {
@@ -376,6 +376,35 @@ class SentryUserRepository extends EloquentBaseRepository implements UserReposit
             }
         }
         return false;
+    }
+
+    public function checkEditablePermission($users, $loggedUser)
+    {
+        $exludedGroup = Config::get('authentication::no_access_group');
+        foreach ($loggedUser->getGroups() as $groupLoggedUser) {
+            $excludedGroups = $exludedGroup[$groupLoggedUser->name];
+            $users = $this->permissionToEditUsers($users, $excludedGroups);
+        }
+        return $users;
+    }
+
+    /**
+     * @param $users
+     * @param $excludedGroups
+     */
+    public function permissionToEditUsers($users, $excludedGroups)
+    {
+        foreach ($users as $index=>$user) {
+            $user = User::find($user->id);
+            if ($this->checkUserGroups($user, $excludedGroups)) {
+                $user->permissionToEdit = false;
+            } else {
+                $user->permissionToEdit = true;
+
+            }
+            $users[$index] = $user;
+        }
+        return $users;
     }
 
 }

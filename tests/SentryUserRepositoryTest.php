@@ -163,5 +163,30 @@ class SentryUserRepositoryTest extends DbTestCase
 
     }
 
+    /**
+     * @test
+     */
+    public function checkEditablePermissionTest()
+    {
+        $user = $this->createAdmin();
+        $adminGroup = $this->createAdminGroup();
+        $superadmin = $this->createSuperadmin();
+        $superadminGroup = $this->createSuperadminGroup();
+        $sentryUserRepository = new SentryUserRepository();
+        $repo = $this->repository();
+        $repo->addGroup($user->id, $adminGroup->id);
+        $repo->addGroup($superadmin->id, $superadminGroup->id);
+
+        $exclude = Config::get('authentication::exclude_user_type');
+        $allUsers = $sentryUserRepository->all();
+        $execute = $sentryUserRepository->inGroupExlude($user, $exclude);
+        $usersExclude = $sentryUserRepository->excludeUserGroup($allUsers, $execute, $exclude['exclude_type']);
+        $users = $sentryUserRepository->paginate($usersExclude);
+
+        $users = $sentryUserRepository->checkEditablePermission($users,$user);
+
+        dd($users[0]);
+
+    }
 }
  

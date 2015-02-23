@@ -69,7 +69,7 @@ class UserController extends \BaseController
         $execute = $this->r->inGroupExlude($this->sentry->getUser(), $exclude);
         $usersExclude = $this->r->excludeUserGroup($allUsers, $execute, $exclude['exclude_type']);
         $users = $this->r->paginate($usersExclude);
-
+        $users = $this->r->checkEditablePermission($users,$this->sentry->getUser());
         return View::make('authentication::user.list')->with(["users" => $users]);
     }
 
@@ -132,8 +132,7 @@ class UserController extends \BaseController
         } catch (ProfileNotFoundException $e) {
             return Redirect::back()
                 ->withErrors(new MessageBag(["permissionNotAllowed" => "Non hai i permessi per apportare modifiche a questo utente"]));
-        }
-         catch (GroupNotFoundException $e) {
+        } catch (GroupNotFoundException $e) {
             return Redirect::action('Palmabit\Authentication\Controllers\UserController@editUser', ["id" => $user_id])
                 ->withErrors(new MessageBag(["name" => "Non hai i permessi per aggiungere il gruppo selezionato"]));
         } catch (ModelNotFoundException $e) {
