@@ -8,6 +8,7 @@
                 <h3 class="panel-title">Signup</h3>
             </div>
             <div class="panel-body">
+
                 @if($errors && ! $errors->isEmpty() )
                 @foreach($errors->all() as $error)
                 <div class="alert alert-danger">{{$error}}</div>

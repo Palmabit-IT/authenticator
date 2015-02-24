@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\App;
 use Config, Redirect, DB;
 use Illuminate\Support\MessageBag;
 use Palmabit\Authentication\Exceptions\UserExistsException;
+use Palmabit\Authentication\Models\User;
 use Palmabit\Authentication\Validators\UserSignupValidator;
 use Palmabit\Library\Exceptions\ValidationException;
 
@@ -39,6 +40,8 @@ class UserRegisterService
 
     public function register(array $input)
     {
+            $this->checkIfExistRegisteredUserWithRecivedEmail($input);
+
         // for default user is not active at registration
         $input["activated"] = false;
 
@@ -145,5 +148,15 @@ class UserRegisterService
     public function getErrors()
     {
         return $this->errors;
+    }
+
+    public function checkIfExistRegisteredUserWithRecivedEmail($input)
+    {
+        $users = User::where('email', '=', $input['email'])->get();
+        if (count($users) != 0) {
+            $this->errors = new MessageBag(['This email is already in use']);
+            throw new UserExistsException;
+        }
+
     }
 } 

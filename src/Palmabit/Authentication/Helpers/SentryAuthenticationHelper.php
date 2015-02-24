@@ -4,9 +4,13 @@
  * Class SentryAuthenticationHelper
 
  */
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\MessageBag;
+use Palmabit\Authentication\Exceptions\PermissionException;
 use Palmabit\Authentication\Interfaces\AuthenticationHelperInterface;
 use Palmabit\Authentication\Interfaces\PermissionProfileHelperInterface;
+use Palmabit\Authentication\Repository\SentryUserRepository;
 use Session, App;
 
 class SentryAuthenticationHelper implements AuthenticationHelperInterface, PermissionProfileHelperInterface
@@ -66,5 +70,19 @@ class SentryAuthenticationHelper implements AuthenticationHelperInterface, Permi
         $users = $user_r->findFromGroupName($group_name)->lists('email');
 
         return $users;
+    }
+
+    public function checkAccessPage($id)
+    {
+        $repository = new SentryUserRepository();
+        $sentry = App::make('sentry');
+        try {
+            $repository->hasPermissionToEditUser($sentry->getUser(), $id);
+        } catch (PermissionException $e) {
+            return false;
+        } catch (ModelNotFoundException $e) {
+            return true;
+        }
+            return true;
     }
 }

@@ -49,8 +49,8 @@ Admin area: users list
                                     class="glyphicon glyphicon-user"></span> Profile</a>
                             <a href="{{URL::action('Palmabit\Authentication\Controllers\UserController@editUser', ['id' => $user->id])}}"><span
                                     class="glyphicon glyphicon-edit"></span> Edit</a>
-                            <a href="{{URL::action('Palmabit\Authentication\Controllers\UserController@deleteUser',['id' => $user->id, '_token' => csrf_token()])}}"><span
-                                    class="glyphicon glyphicon-trash delete"></span> Delete</a>
+                            <a class="delete" href="{{URL::action('Palmabit\Authentication\Controllers\UserController@deleteUser',['id' => $user->id, '_token' => csrf_token()])}}"><span
+                                    class="glyphicon glyphicon-trash"></span> Delete</a>
                             @endif
                             @endif
                         </div>

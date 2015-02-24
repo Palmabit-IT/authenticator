@@ -51,11 +51,13 @@ class PermissionController extends \BaseController
     public function postEditPermission()
     {
         $id = Input::get('id');
-        try {
-            $permission = $this->r->getPermission($id);
-            $this->r->checkIsNotSuperadminOrAdmin($permission);
-        } catch (PalmabitExceptionsInterface $e) {
-            return Redirect::back()->withInput()->withErrors("Non e' possibile modificare questo permesso");
+        if (is_null($id)) {
+            try {
+                $permission = $this->r->getPermission($id);
+                $this->r->checkIsNotSuperadminOrAdmin($permission);
+            } catch (PalmabitExceptionsInterface $e) {
+                return Redirect::back()->withInput()->withErrors("Non e' possibile modificare questo permesso");
+            }
         }
         try {
             $obj = $this->f->process(Input::all());

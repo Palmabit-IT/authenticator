@@ -4,11 +4,12 @@ use Cartalyst\Sentry\Groups\GroupNotFoundException;
 use Illuminate\Support\MessageBag;
 use Palmabit\Authentication\Exceptions\PermissionException;
 use Palmabit\Authentication\Exceptions\ProfileNotFoundException;
+use Palmabit\Authentication\Exceptions\UserExistsException;
+use Palmabit\Authentication\Helpers\SentryAuthenticationHelper;
 use Palmabit\Authentication\Models\UserProfile;
 use Palmabit\Authentication\Repository\SentryUserRepository as Repo;
 use Palmabit\Authentication\Services\UserRegisterService;
 use Palmabit\Authentication\Validators\UserSignupValidator;
-use Palmabit\Library\Exceptions\NotFoundException;
 use Palmabit\Library\Form\FormModel;
 use Palmabit\Authentication\Models\User;
 use Palmabit\Authentication\Exceptions\UserNotFoundException;
@@ -47,10 +48,10 @@ class UserController extends \BaseController
     protected $v_s;
     /**
      * Sentry instance
-     *
-     * @var
      */
     protected $sentry;
+
+    protected $sentryAuthenticationHelper;
 
     public function __construct(Repo $r, UserValidator $v, UserProfileValidator $vp, UserSignupValidator $vs)
     {
@@ -61,6 +62,7 @@ class UserController extends \BaseController
         $this->r_p = App::make('profile_repository');
         $this->v_s = $vs;
         $this->sentry = \App::make('sentry');
+        $this->sentryAuthenticationHelper = new SentryAuthenticationHelper();
     }
 
     public function getList()
@@ -76,14 +78,22 @@ class UserController extends \BaseController
 
     public function editUser()
     {
-        try {
-            $user = $this->r->find(Input::get('id'));
-        } catch (PalmabitExceptionsInterface $e) {
-            $user = new User;
-        }
+        $id = Input::get('id');
+        if ($this->sentryAuthenticationHelper->checkAccessPage($id)) {
 
-        return View::make('authentication::user.edit')->with(["user" => $user]);
+
+            try {
+                $user = $this->r->find(Input::get('id'));
+            } catch (PalmabitExceptionsInterface $e) {
+                $user = new User;
+            }
+
+            return View::make('authentication::user.edit')->with(["user" => $user]);
+        } else {
+
+        }
     }
+
 
     public function postEditUser()
     {
@@ -169,16 +179,20 @@ class UserController extends \BaseController
     public function editProfile()
     {
         $user_id = Input::get('user_id');
-
-        try {
-            $user_profile = $this->r_p->getFromUserId($user_id);
-        } catch (UserNotFoundException $e) {
+        if ($this->sentryAuthenticationHelper->checkAccessPage($user_id)) {
+            try {
+                $user_profile = $this->r_p->getFromUserId($user_id);
+            } catch (UserNotFoundException $e) {
+                return Redirect::action('Palmabit\Authentication\Controllers\UserController@getList')
+                    ->withErrors(new MessageBag(['model' => 'Utente non presente.']));
+            } catch (ProfileNotFoundException $e) {
+                $user_profile = new UserProfile(["user_id" => $user_id]);
+            }
+            return View::make('authentication::user.profile')->with(['user_profile' => $user_profile, 'profile_type' => Config::get('authentication::config_profile_type')]);
+        } else {
             return Redirect::action('Palmabit\Authentication\Controllers\UserController@getList')
-                ->withErrors(new MessageBag(['model' => 'Utente non presente.']));
-        } catch (ProfileNotFoundException $e) {
-            $user_profile = new UserProfile(["user_id" => $user_id]);
+                ->withErrors(new MessageBag(['Non puoi accedere all\'area richiesta']));
         }
-        return View::make('authentication::user.profile')->with(['user_profile' => $user_profile, 'profile_type' => Config::get('authentication::config_profile_type')]);
     }
 
     public function postEditProfile()
@@ -187,7 +201,7 @@ class UserController extends \BaseController
         $service = new UserProfileService($this->v_p);
 
         try {
-            $user_profile = $service->processForm($input,$this->sentry->getUser());
+            $user_profile = $service->processForm($input, $this->sentry->getUser());
         } catch (GroupNotFoundException $e) {
             $errors = $service->getErrors();
             return Redirect::route("users.profile.edit", ["user_id" => $input['user_id']])->withInput()->withErrors($errors);
@@ -209,7 +223,6 @@ class UserController extends \BaseController
         } catch (PalmabitExceptionsInterface $e) {
             return Redirect::back()->withInput()->with(array('errors' => $service->getErrors()));
         }
-
         return Redirect::to(URL::action('Palmabit\Authentication\Controllers\UserController@signupSuccess'));
     }
 

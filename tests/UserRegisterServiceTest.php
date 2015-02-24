@@ -5,6 +5,7 @@ use Palmabit\Authentication\Exceptions\UserExistsException;
 use Palmabit\Authentication\Services\UserRegisterService;
 use App;
 use Mockery as m;
+use Palmabit\Authentication\Tests\traits\CreateUserTrait;
 use Palmabit\Library\Exceptions\NotFoundException;
 use Palmabit\Library\Exceptions\PalmabitExceptionsInterface;
 use Illuminate\Database\QueryException;
@@ -14,6 +15,9 @@ use Illuminate\Database\QueryException;
  */
 class UserRegisterServiceTest extends DbTestCase
 {
+    use CreateUserTrait;
+
+    protected $userRegisterService;
 
     public function setUp()
     {
@@ -22,6 +26,7 @@ class UserRegisterServiceTest extends DbTestCase
         $this->u_r = App::make('user_repository');
 
         $this->u_g = App::make('group_repository');
+        $this->userRegisterService = new UserRegisterService();
     }
 
     public function tearDown()
@@ -318,5 +323,17 @@ class UserRegisterServiceTest extends DbTestCase
     {
         $mock_auth_helper = m::mock('StdClass')->shouldReceive('getNotificationRegistrationUsersEmail')->once()->andReturn($return)->getMock();
         return $mock_auth_helper;
+    }
+
+
+    /**
+     * @test
+     * @expectedException \Palmabit\Authentication\Exceptions\UserExistsException
+     */
+    public function checkIfExistRegisteredUserWithRecivedEmailTestAndLaunchException()
+    {
+        $user = $this->createAdmin();
+        $input = ['email' => $user->email];
+        $this->userRegisterService->checkIfExistRegisteredUserWithRecivedEmail($input);
     }
 }
