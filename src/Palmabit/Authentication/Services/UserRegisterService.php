@@ -40,12 +40,12 @@ class UserRegisterService
 
     public function register(array $input)
     {
-            $this->checkIfExistRegisteredUserWithRecivedEmail($input);
 
         // for default user is not active at registration
         $input["activated"] = false;
 
         $this->validateInput($input);
+        $this->checkIfExistRegisteredUserWithRecivedEmail($input);
 
         $user = $this->saveDbData($input);
 
@@ -152,6 +152,7 @@ class UserRegisterService
 
     public function checkIfExistRegisteredUserWithRecivedEmail($input)
     {
+        if($input)
         $users = User::where('email', '=', $input['email'])->get();
         if (count($users) != 0) {
             $this->errors = new MessageBag(['This email is already in use']);

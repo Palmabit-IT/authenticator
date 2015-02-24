@@ -276,6 +276,7 @@ class SentryUserRepository extends EloquentBaseRepository implements UserReposit
 
     public function excludeUserGroup($q, $toExclude = false, $groupsToExclude = [])
     {
+        $emailLoggedUser = $this->sentry->getUser()->email;
         if ($toExclude) {
             $q = $q->join('users_groups', 'users.id', '=', 'users_groups.user_id')
                 ->join('groups', 'users_groups.group_id', '=', 'groups.id');
@@ -290,7 +291,7 @@ class SentryUserRepository extends EloquentBaseRepository implements UserReposit
         return $q;
     }
 
-    /***
+    /**
      * @param $query (builder)
      * @return mixed
      */
@@ -347,7 +348,9 @@ class SentryUserRepository extends EloquentBaseRepository implements UserReposit
         foreach ($loggedUser->getGroups() as $groupsAssociatedUser) {
             $excludedGroups = $exludedGroup[$groupsAssociatedUser->name];
             if ($this->checkUserGroups($userToEdit, $excludedGroups)) {
+                if(!$this->checkAccessMyPage($loggedUser,$userToEditId)){
                 throw new PermissionException;
+                }
             }
         }
     }
@@ -407,6 +410,29 @@ class SentryUserRepository extends EloquentBaseRepository implements UserReposit
 
             }
             $users[$index] = $user;
+        }
+        return $users;
+    }
+
+    public function checkAccessMyPage($loggedUser, $id)
+    {
+        if($loggedUser->id == $id){
+            return true;
+        }
+        return false;
+    }
+
+    public function ifExludedAddLoggedUser($users, $loggedUser)
+    {
+        $existLoggedUser = false;
+        dd($users->getItems());
+        foreach($users as $user){
+            if($user->email == $loggedUser->email){
+                $existLoggedUser = true;
+            }
+        }
+        if(!$existLoggedUser){
+            array_push($users,$loggedUser);
         }
         return $users;
     }

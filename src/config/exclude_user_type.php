@@ -1,5 +1,5 @@
 <?php
 return [
     'exclude' => true,
-    'exclude_type' => ['superadmin']
+    'exclude_type' => ['superadmin','admin']
 ];

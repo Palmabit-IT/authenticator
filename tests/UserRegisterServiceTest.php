@@ -1,5 +1,6 @@
 <?php  namespace Palmabit\Authentication\Tests;
 
+use ErrorException;
 use Illuminate\Support\MessageBag;
 use Palmabit\Authentication\Exceptions\UserExistsException;
 use Palmabit\Authentication\Services\UserRegisterService;
@@ -247,7 +248,7 @@ class UserRegisterServiceTest extends DbTestCase
 
     /**
      * @test
-     * @expectedException \Palmabit\Authentication\Exceptions\UserExistsException
+     * @expectedException ErrorException
      **/
     public function it_throws_user_exists_exception_if_user_exists()
     {

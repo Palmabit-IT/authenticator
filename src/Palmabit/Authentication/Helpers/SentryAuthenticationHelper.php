@@ -76,13 +76,16 @@ class SentryAuthenticationHelper implements AuthenticationHelperInterface, Permi
     {
         $repository = new SentryUserRepository();
         $sentry = App::make('sentry');
-        try {
-            $repository->hasPermissionToEditUser($sentry->getUser(), $id);
-        } catch (PermissionException $e) {
-            return false;
-        } catch (ModelNotFoundException $e) {
-            return true;
+        if (!$repository->checkAccessMyPage($sentry->getUser(), $id)) {
+
+            try {
+                $repository->hasPermissionToEditUser($sentry->getUser(), $id);
+            } catch (PermissionException $e) {
+                return false;
+            } catch (ModelNotFoundException $e) {
+                return true;
+            }
         }
-            return true;
+        return true;
     }
 }
