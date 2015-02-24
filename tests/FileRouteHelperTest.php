@@ -1,11 +1,14 @@
 <?php  namespace Palmabit\Authentication\Tests;
+
 use Palmabit\Authentication\Helpers\FileRouteHelper;
 use Config, Route;
+
 /**
  * Test FileRouteHelperTest
  *
  */
-class FileRouteHelperTest extends TestCase {
+class FileRouteHelperTest extends TestCase
+{
 
     /**
      * @test
@@ -29,7 +32,7 @@ class FileRouteHelperTest extends TestCase {
         Config::shouldReceive('get')->andReturn($config_arr);
         $helper = new FileRouteHelper();
         $perm = $helper->getPermFromRoute("route2");
-        $this->assertEquals($config_arr[1]["permissions"],$perm);
+        $this->assertEquals($config_arr[1]["permissions"], $perm);
     }
 
     /**
@@ -55,7 +58,7 @@ class FileRouteHelperTest extends TestCase {
         Route::shouldReceive('currentRouteName')->andReturn("route2");
         $helper = new FileRouteHelper();
         $perm = $helper->getPermFromCurrentRoute();
-        $this->assertEquals($config_arr[1]["permissions"],$perm);
+        $this->assertEquals($config_arr[1]["permissions"], $perm);
     }
 }
  

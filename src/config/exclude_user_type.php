@@ -1,5 +1,5 @@
 <?php
-return  [
+return [
     'exclude' => true,
-    'exclude_type' => ['mail notification']
+    'exclude_type' => ['superadmin']
 ];

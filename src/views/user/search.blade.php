@@ -22,7 +22,8 @@
 
         <div class="form-group">
             {{Form::label('activated', 'Active: ')}}
-            {{Form::select('activated', ['' => '', 1 => 'Sì', 0 => 'No'], Input::get('activated',''), ["class" => "form-control"])}}
+            {{Form::select('activated', ['' => '', 1 => 'Sì', 0 => 'No'], Input::get('activated',''), ["class" =>
+            "form-control"])}}
         </div>
         <a href="{{URL::action('Palmabit\Authentication\Controllers\UserController@getList')}}" class="btn btn-default">Clear</a>
         {{Form::submit('Search', ["class" => "btn btn-primary"])}}

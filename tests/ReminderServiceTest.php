@@ -4,7 +4,8 @@ use Palmabit\Authentication\Classes\ReminderService as Reminder;
 use Mockery as m;
 use Palmabit\Authentication\Tests\TestCase;
 
-class ReminderServiceTest extends TestCase {
+class ReminderServiceTest extends TestCase
+{
 
     protected $token;
 
@@ -20,10 +21,10 @@ class ReminderServiceTest extends TestCase {
         m::close();
     }
 
-	public function testCanCreate()
-	{
+    public function testCanCreate()
+    {
         $reminder = new Reminder();
-	}
+    }
 
     public function testSendWorks()
     {

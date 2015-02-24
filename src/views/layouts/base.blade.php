@@ -22,34 +22,34 @@
     <![endif]-->
 </head>
 
-    <body>
-        {{-- navbar --}}
-        @include('authentication::layouts.navbar')
+<body>
+{{-- navbar --}}
+@include('authentication::layouts.navbar')
 
-        {{-- content --}}
-        <div class="container container-body">
-            @yield('container')
-        </div>
+{{-- content --}}
+<div class="container container-body">
+    @yield('container')
+</div>
 
 
-        <div id="footer">
-          <hr>
-          <div class="container">
-            <p class="phelp">
-              &copy; {{$copy_year}} • {{$copy_name}} •
-              <a href="http://{{$copy_website_url}}">{{$copy_website_url}}</a>
-            </p>
-          </div>
-        </div>
+<div id="footer">
+    <hr>
+    <div class="container">
+        <p class="phelp">
+            &copy; {{$copy_year}} • {{$copy_name}} •
+            <a href="http://{{$copy_website_url}}">{{$copy_website_url}}</a>
+        </p>
+    </div>
+</div>
 
-        {{-- Start footer scripts --}}
-        @yield('before_footer_scripts')
+{{-- Start footer scripts --}}
+@yield('before_footer_scripts')
 
-        {{ HTML::script('packages/palmabit/authenticator/js/jquery-1.10.2.min.js') }}
-        {{ HTML::script('packages/palmabit/authenticator/js/bootstrap.min.js') }}
+{{ HTML::script('packages/palmabit/authenticator/js/jquery-1.10.2.min.js') }}
+{{ HTML::script('packages/palmabit/authenticator/js/bootstrap.min.js') }}
 
-        @yield('footer_scripts')
-        {{-- End footer scripts --}}
+@yield('footer_scripts')
+{{-- End footer scripts --}}
 
-    </body>
+</body>
 </html>

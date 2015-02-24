@@ -7,5 +7,6 @@
 use Exception;
 use Palmabit\Library\Exceptions\PalmabitExceptionsInterface;
 
-class GroupNotFoundException extends Exception implements PalmabitExceptionsInterface {
+class GroupNotFoundException extends Exception implements PalmabitExceptionsInterface
+{
 }

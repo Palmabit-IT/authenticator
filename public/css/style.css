@@ -1,55 +1,45 @@
 /*///////////////// structure ////////////////*/
-.container-body
-{
+.container-body {
     margin-top: 65px;
 }
 
-.img-admin
-{
+.img-admin {
     width: 150px;
     height: auto;
 }
 
-.tags
-{
+.tags {
     padding: 0 5px;
 }
 
-.tags li
-{
+.tags li {
     /*display: inline;*/
     font-size: 16px;
     padding: 0;
     list-style: none;
 }
 
-.blue
-{
+.blue {
     color: #428bca;
 }
 
-.margin-right-30
-{
+.margin-right-30 {
     margin-right: 30px;
 }
 
-.margin-right-5
-{
+.margin-right-5 {
     margin-right: 5px;
 }
 
-.margin-bottom-30
-{
+.margin-bottom-30 {
     margin-bottom: 30px;
 }
 
-.margin-left-20
-{
+.margin-left-20 {
     margin-left: 20px !important;
 }
 
-.margin-top-20
-{
+.margin-top-20 {
     margin-top: 20px;
 }
 
@@ -71,23 +61,26 @@
     height: 30px;
 }
 
-.margin-top-10{
+.margin-top-10 {
     margin-top: 10px;
 }
 
-.margin-top-15{
+.margin-top-15 {
     margin-top: 15px;
 }
 
-.margin-top-30{
+.margin-top-30 {
     margin-top: 30px;
 }
-.form-select{
+
+.form-select {
     height: 110px
 }
-.user-buttons a{
+
+.user-buttons a {
     margin-right: 10px;
 }
+
 .width-name-user-list {
     width: 230px;
 }

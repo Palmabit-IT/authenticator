@@ -23,14 +23,14 @@
     <![endif]-->
 </head>
 
-    <body>
-        {{-- content --}}
-        <div class="container">
-            @yield('container')
-        </div>
+<body>
+{{-- content --}}
+<div class="container">
+    @yield('container')
+</div>
 
-        {{-- Start footer scripts --}}
-        {{ HTML::script('packages/palmabit/authenticator/js/jquery-1.10.2.min.js') }}
-        {{ HTML::script('packages/palmabit/authenticator/js/bootstrap.min.js') }}
-    </body>
+{{-- Start footer scripts --}}
+{{ HTML::script('packages/palmabit/authenticator/js/jquery-1.10.2.min.js') }}
+{{ HTML::script('packages/palmabit/authenticator/js/bootstrap.min.js') }}
+</body>
 </html>

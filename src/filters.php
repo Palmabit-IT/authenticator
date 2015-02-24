@@ -8,16 +8,14 @@
 |
 */
 
-Route::filter('logged', function()
-{
+Route::filter('logged', function () {
     $auth = App::make('authenticator');
-    if (! $auth->check()) return Redirect::to('/user/login');
+    if (!$auth->check()) return Redirect::to('/user/login');
 });
 
-Route::filter('logged_401', function()
-{
+Route::filter('logged_401', function () {
     $auth = App::make('authenticator');
-    if (! $auth->check()) return App::abort(401);
+    if (!$auth->check()) return App::abort(401);
 });
 
 /*
@@ -30,11 +28,10 @@ Route::filter('logged_401', function()
 */
 use Palmabit\Authentication\Helpers\FileRouteHelper;
 
-Route::filter('can_see', function()
-{
+Route::filter('can_see', function () {
     $helper = new FileRouteHelper;
     $auth_helper = App::make('authentication_helper');
     $perm = $helper->getPermFromCurrentRoute();
 
-    if( $perm && (! ($auth_helper->hasPermission( $perm ))) ) return Redirect::to('/');
+    if ($perm && (!($auth_helper->hasPermission($perm)))) return Redirect::to('/');
 });

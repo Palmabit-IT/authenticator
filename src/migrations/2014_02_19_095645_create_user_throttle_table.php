@@ -3,7 +3,8 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUserThrottleTable extends Migration {
+class CreateUserThrottleTable extends Migration
+{
 
     /**
      * Run the migrations.
@@ -12,8 +13,7 @@ class CreateUserThrottleTable extends Migration {
      */
     public function up()
     {
-        Schema::create('throttle', function($table)
-        {
+        Schema::create('throttle', function ($table) {
             $table->increments('id');
             $table->integer('user_id')->unsigned();
             $table->string('ip_address')->nullable();

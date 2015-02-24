@@ -63,8 +63,8 @@ class GroupsFilterTest extends DbTestCase
         $repo->addGroup($admin->id, $adminGroup->id);
         $formHelper = new FormHelper();
         $listGroups = $formHelper->getSelectValuesGroups();
-       $assignableGroups = $groupFilter->getAssignableGroups($admin,$listGroups);
-        $this->assertFalse(false, array_search('superadmin',$assignableGroups));
+        $assignableGroups = $groupFilter->getAssignableGroups($admin, $listGroups);
+        $this->assertFalse(false, array_search('superadmin', $assignableGroups));
     }
 
 }

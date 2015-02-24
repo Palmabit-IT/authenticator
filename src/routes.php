@@ -17,17 +17,16 @@ Route::get('/user/recupero-success', ['uses' => "Palmabit\\Authentication\\Contr
 /**
  * Signup
  */
-Route::get('/user/signup', function(){
-  return View::make('authentication::auth.signup');
+Route::get('/user/signup', function () {
+    return View::make('authentication::auth.signup');
 });
 Route::post('/user/signup', ['before' => 'csrf', 'as' => 'user.signup', 'uses' => 'Palmabit\Authentication\Controllers\UserController@postSignup']);
 Route::get('/user/signupsuccess', ['as' => 'user.signup.success', 'uses' => 'Palmabit\Authentication\Controllers\UserController@signupSuccess']);
 
 //////////////////// Admin Panel //////////////////////////
 
-Route::group( ['before' => ['logged', 'can_see']], function()
-{
-    Route::get('/admin/home', ['as' => 'home', function(){
+Route::group(['before' => ['logged', 'can_see']], function () {
+    Route::get('/admin/home', ['as' => 'home', function () {
         return View::make('authentication::home.home');
     }]);
 

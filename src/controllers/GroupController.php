@@ -1,4 +1,5 @@
 <?php  namespace Palmabit\Authentication\Controllers;
+
 /**
  * Class GroupController
  *
@@ -45,12 +46,9 @@ class GroupController extends \BaseController
 
     public function editGroup()
     {
-        try
-        {
+        try {
             $obj = $this->r->find(Input::get('id'));
-        }
-        catch(GroupNotFoundException $e)
-        {
+        } catch (GroupNotFoundException $e) {
             $obj = new Group;
         }
         $presenter = new GroupPresenter($obj);
@@ -61,27 +59,21 @@ class GroupController extends \BaseController
     public function postEditGroup()
     {
         $id = Input::get('id');
-        try
-        {
+        try {
             $obj = $this->f->process(Input::all());
-        }
-        catch(PalmabitExceptionsInterface $e)
-        {
+        } catch (PalmabitExceptionsInterface $e) {
             $errors = $this->f->getErrors();
             // passing the id incase fails editing an already existing item
-            return Redirect::route("groups.edit", $id ? ["id" => $id]: [])->withInput()->withErrors($errors);
+            return Redirect::route("groups.edit", $id ? ["id" => $id] : [])->withInput()->withErrors($errors);
         }
-        return Redirect::action('Palmabit\Authentication\Controllers\GroupController@editGroup',["id" => $obj->id])->withMessage("Gruppo modificato con successo.");
+        return Redirect::action('Palmabit\Authentication\Controllers\GroupController@editGroup', ["id" => $obj->id])->withMessage("Gruppo modificato con successo.");
     }
 
     public function deleteGroup()
     {
-        try
-        {
+        try {
             $this->f->delete(Input::all());
-        }
-        catch(PalmabitExceptionsInterface $e)
-        {
+        } catch (PalmabitExceptionsInterface $e) {
             $errors = $this->f->getErrors();
             return Redirect::action('Palmabit\Authentication\Controllers\GroupController@getList')->withErrors($errors);
         }
@@ -96,14 +88,11 @@ class GroupController extends \BaseController
         $this->fh->prepareSentryPermissionInput($input, $operation);
         $id = Input::get('id');
 
-        try
-        {
+        try {
             $obj = $this->r->update($id, $input);
-        }
-        catch(PalmabitExceptionsInterface $e)
-        {
+        } catch (PalmabitExceptionsInterface $e) {
             return Redirect::route("groups.edit")->withInput()->withErrors(new MessageBag(["permissions" => "Permesso non trovato"]));
         }
-        return Redirect::action('Palmabit\Authentication\Controllers\GroupController@editGroup',["id" => $obj->id])->withMessage("Permesso modificato con successo.");
+        return Redirect::action('Palmabit\Authentication\Controllers\GroupController@editGroup', ["id" => $obj->id])->withMessage("Permesso modificato con successo.");
     }
 }

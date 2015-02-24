@@ -12,8 +12,7 @@ class PermissionValidator extends OverrideConnectionValidator
 
     public function __construct()
     {
-        Event::listen('validating', function($input)
-        {
+        Event::listen('validating', function ($input) {
             static::$rules["permission"][] = "unique:permission,permission,{$input['id']}";
         });
     }

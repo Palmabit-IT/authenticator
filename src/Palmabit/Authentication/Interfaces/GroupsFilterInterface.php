@@ -10,6 +10,6 @@ interface GroupsFilterInterface
 
     public function getEditableGroups();
 
-    public function getAssignableGroups($userGroup,$listGroups);
+    public function getAssignableGroups($userGroup, $listGroups);
 
 } 

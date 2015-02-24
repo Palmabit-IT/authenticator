@@ -24,7 +24,8 @@
         <a href="{{URL::to('user/signup')}}" alt="Sei già iscritto?">Don't have an account? Signup here</a><br>
         {{link_to_action('Palmabit\Authentication\Controllers\AuthController@getReminder','Forgot password?') }}<br>
         <a href="/">Go to website</a>
-    <div>
-</div>
+
+        <div>
+        </div>
         {{Form::close()}}
         @stop

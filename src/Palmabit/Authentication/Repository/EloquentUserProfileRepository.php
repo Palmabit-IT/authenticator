@@ -12,47 +12,52 @@ use Palmabit\Library\Repository\Interfaces\BaseRepositoryInterface;
 /**
  * Class EloquentUserProfileRepository
  */
-class EloquentUserProfileRepository extends EloquentBaseRepository implements UserProfileRepositoryInterface {
-  /**
-   * We use the user profile as a model
-   */
-  public function __construct() {
-    return parent::__construct(new UserProfile);
-  }
-
-  public function getFromUserId($user_id) {
-    // checks if the user exists
-    try {
-      User::findOrFail($user_id);
-    } catch (ModelNotFoundException $e) {
-      throw new UserNotFoundException;
-    }
-    // gets the profile
-    $profile = $this->model->where('user_id', '=', $user_id)
-                           ->get();
-
-    // check if the profile exists
-    if ($profile->isEmpty()) {
-      throw new ProfileNotFoundException;
+class EloquentUserProfileRepository extends EloquentBaseRepository implements UserProfileRepositoryInterface
+{
+    /**
+     * We use the user profile as a model
+     */
+    public function __construct()
+    {
+        return parent::__construct(new UserProfile);
     }
 
-    return $profile->first();
-  }
+    public function getFromUserId($user_id)
+    {
+        // checks if the user exists
+        try {
+            User::findOrFail($user_id);
+        } catch (ModelNotFoundException $e) {
+            throw new UserNotFoundException;
+        }
+        // gets the profile
+        $profile = $this->model->where('user_id', '=', $user_id)
+            ->get();
 
+        // check if the profile exists
+        if ($profile->isEmpty()) {
+            throw new ProfileNotFoundException;
+        }
 
-  public function attachEmptyProfile($user) {
-    if ($this->hasAlreadyAnUserProfile($user)) {
-      return;
+        return $profile->first();
     }
 
-    return $this->create(["user_id" => $user->id]);
-  }
 
-  /**
-   * @param $user
-   * @return mixed
-   */
-  protected function hasAlreadyAnUserProfile($user) {
-    return $user->user_profile()->count();
-  }
+    public function attachEmptyProfile($user)
+    {
+        if ($this->hasAlreadyAnUserProfile($user)) {
+            return;
+        }
+
+        return $this->create(["user_id" => $user->id]);
+    }
+
+    /**
+     * @param $user
+     * @return mixed
+     */
+    protected function hasAlreadyAnUserProfile($user)
+    {
+        return $user->user_profile()->count();
+    }
 }

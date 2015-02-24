@@ -1,6 +1,6 @@
 <?php
 return [
-    'superadmin' =>[],
+    'superadmin' => [],
     'admin' => ['superadmin'],
-    'mail notification' => ['admin','superadmin']
-        ];
+    'mail notification' => ['admin', 'superadmin']
+];

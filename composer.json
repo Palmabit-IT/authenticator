@@ -1,23 +1,23 @@
 {
     "name": "palmabit/authentication",
     "description": "",
-    "license" : "mit",
+    "license": "mit",
     "authors": [
-      {
-        "name": "jacopo beschi",
-        "email": "j.beschi@palmabit.com",
-        "homepage": "http://www.jacopobeschi.com"
-      },
-      {
-        "name" : "francesco falanga",
-        "email" : "f.falanga@palmabit.com",
-        "homepage" : "http://www.palmabit.com"
-      },
-      {
-        "name" : "alessandro sarzina",
-        "email" : "a.sarzina@palmabit.com",
-        "homepage" : "http://www.palmabit.com"
-      }
+        {
+            "name": "jacopo beschi",
+            "email": "j.beschi@palmabit.com",
+            "homepage": "http://www.jacopobeschi.com"
+        },
+        {
+            "name": "francesco falanga",
+            "email": "f.falanga@palmabit.com",
+            "homepage": "http://www.palmabit.com"
+        },
+        {
+            "name": "alessandro sarzina",
+            "email": "a.sarzina@palmabit.com",
+            "homepage": "http://www.palmabit.com"
+        }
     ],
     "repositories": [
         {
@@ -43,7 +43,7 @@
             "Palmabit\\Authentication": "src/"
         },
         "psr-4": {
-            "Palmabit\\Authentication\\Tests\\" : "tests/"
+            "Palmabit\\Authentication\\Tests\\": "tests/"
         },
         "classmap": [
             "src/controllers",

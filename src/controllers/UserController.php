@@ -2,6 +2,7 @@
 
 use Cartalyst\Sentry\Groups\GroupNotFoundException;
 use Illuminate\Support\MessageBag;
+use Palmabit\Authentication\Exceptions\PermissionException;
 use Palmabit\Authentication\Exceptions\ProfileNotFoundException;
 use Palmabit\Authentication\Models\UserProfile;
 use Palmabit\Authentication\Repository\SentryUserRepository as Repo;
@@ -69,7 +70,7 @@ class UserController extends \BaseController
         $execute = $this->r->inGroupExlude($this->sentry->getUser(), $exclude);
         $usersExclude = $this->r->excludeUserGroup($allUsers, $execute, $exclude['exclude_type']);
         $users = $this->r->paginate($usersExclude);
-        $users = $this->r->checkEditablePermission($users,$this->sentry->getUser());
+        $users = $this->r->checkEditablePermission($users, $this->sentry->getUser());
         return View::make('authentication::user.list')->with(["users" => $users]);
     }
 
@@ -89,7 +90,7 @@ class UserController extends \BaseController
         $id = Input::get('id');
         try {
             $this->r->hasPermissionToEditUser($this->sentry->getUser(), $id);
-        } catch (ProfileNotFoundException $e) {
+        } catch (PermissionException $e) {
             return Redirect::route("users.edit", $id ? ["id" => $id] : [])->withInput()
                 ->withErrors(new MessageBag(["permissionNotAllowed" => "Non hai i permessi per apportare modifiche a questo utente"]));
         }
@@ -108,7 +109,7 @@ class UserController extends \BaseController
     {
         try {
             $this->r->hasPermissionToEditUser($this->sentry->getUser(), Input::get('id'));
-        } catch (ProfileNotFoundException $e) {
+        } catch (PermissionException $e) {
             return Redirect::back()
                 ->withErrors(new MessageBag(["permissionNotAllowed" => "Non hai i permessi apportare modifiche a questo utente"]));
         }
@@ -129,7 +130,7 @@ class UserController extends \BaseController
             $this->r->hasPermissionToEditUser($this->sentry->getUser(), Input::get('id'));
             $this->r->permissionToAddGroup($this->sentry->getUser()->id, $group_id);
             $this->r->addGroup($user_id, $group_id);
-        } catch (ProfileNotFoundException $e) {
+        } catch (PermissionException $e) {
             return Redirect::back()
                 ->withErrors(new MessageBag(["permissionNotAllowed" => "Non hai i permessi per apportare modifiche a questo utente"]));
         } catch (GroupNotFoundException $e) {
@@ -152,7 +153,7 @@ class UserController extends \BaseController
         $group_id = Input::get('group_id');
         try {
             $this->r->hasPermissionToEditUser($this->sentry->getUser(), Input::get('id'));
-        } catch (ProfileNotFoundException $e) {
+        } catch (PermissionException $e) {
             return Redirect::back()->withErrors(new MessageBag(["permissionNotAllowed" => "Non hai i permessi per apportare modifiche a questo utente"]));
         }
         try {
@@ -183,17 +184,14 @@ class UserController extends \BaseController
     public function postEditProfile()
     {
         $input = Input::all();
-        try {
-            $this->r->hasPermissionToEditUser($this->sentry->getUser(), Input::get('user_id'));
-        } catch (ProfileNotFoundException $e) {
-            return Redirect::back()
-                ->withErrors(new MessageBag(["permissionNotAllowed" => "Non hai i permessi per apportare modifiche a questo utente"]));
-        }
         $service = new UserProfileService($this->v_p);
 
         try {
-            $user_profile = $service->processForm($input);
+            $user_profile = $service->processForm($input,$this->sentry->getUser());
         } catch (GroupNotFoundException $e) {
+            $errors = $service->getErrors();
+            return Redirect::route("users.profile.edit", ["user_id" => $input['user_id']])->withInput()->withErrors($errors);
+        } catch (PermissionException $e) {
             $errors = $service->getErrors();
             return Redirect::route("users.profile.edit", ["user_id" => $input['user_id']])->withInput()->withErrors($errors);
         }

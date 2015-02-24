@@ -45,9 +45,9 @@ class EloquentPermissionRepository extends EloquentBaseRepository
 
     public function checkIsNotSuperadminOrAdmin($permission)
     {
-            if ($permission->blocked == 1) {
-                throw new PermissionException;
-            }
+        if ($permission->blocked == 1) {
+            throw new PermissionException;
+        }
     }
 
     public function getPermission($id_permission)

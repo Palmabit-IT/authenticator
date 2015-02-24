@@ -5,8 +5,10 @@
 </head>
 <body>
 <h2>Application for {{Config::get('authentication::app_name')}}</h2>
+
 <div>
-    <strong>The request for registration has been submitted successfully. A moderator will validate the data you have entered</strong>
+    <strong>The request for registration has been submitted successfully. A moderator will validate the data you have
+        entered</strong>
     <br/>
     <strong>Summary data: </strong>
     <ul>

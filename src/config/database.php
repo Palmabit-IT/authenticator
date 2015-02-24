@@ -5,40 +5,40 @@ return array(
     'connections' => array(
 
         'sqlite' => array(
-            'driver'   => 'sqlite',
+            'driver' => 'sqlite',
             'database' => ':memory:',
-            'prefix'   => '',
+            'prefix' => '',
         ),
 
         'mysql' => array(
-            'driver'    => 'mysql',
-            'host'      => 'localhost',
-            'database'  => 'palmabit_base',
-            'username'  => 'root',
-            'password'  => 'root',
-            'charset'   => 'utf8',
+            'driver' => 'mysql',
+            'host' => 'localhost',
+            'database' => 'palmabit_base',
+            'username' => 'root',
+            'password' => 'root',
+            'charset' => 'utf8',
             'collation' => 'utf8_unicode_ci',
-            'prefix'    => '',
+            'prefix' => '',
         ),
 
         'pgsql2' => array(
-            'driver'   => 'pgsql',
-            'host'     => 'localhost',
+            'driver' => 'pgsql',
+            'host' => 'localhost',
             'database' => 'database',
             'username' => 'root',
             'password' => '',
-            'charset'  => 'utf8',
-            'prefix'   => '',
-            'schema'   => 'public',
+            'charset' => 'utf8',
+            'prefix' => '',
+            'schema' => 'public',
         ),
 
         'sqlsrv' => array(
-            'driver'   => 'sqlsrv',
-            'host'     => 'localhost',
+            'driver' => 'sqlsrv',
+            'host' => 'localhost',
             'database' => 'database',
             'username' => 'root',
             'password' => '',
-            'prefix'   => '',
+            'prefix' => '',
         ),
 
     ),

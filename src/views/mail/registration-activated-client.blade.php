@@ -5,6 +5,7 @@
 </head>
 <body>
 <h2>Welcome to {{Config::get('authentication::app_name')}}</h2>
+
 <div>
     Goodmorning {{ $body['email'] }}
     <strong>Your username has been activated</strong>

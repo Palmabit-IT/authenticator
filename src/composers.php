@@ -10,6 +10,9 @@ View::composer('*', function ($view) {
     $view->with('copy_name', Config::get('authentication::copy_name'));
     $view->with('copy_year', Config::get('authentication::copy_year'));
     $view->with('copy_website_url', Config::get('authentication::copy_website_url'));
+    $sentry = \App::make('sentry');
+    $user = $sentry->getUser();
+    $view->with('logged_user',$user);
 });
 
 use Palmabit\Authentication\Classes\Filters\GroupsFilter;
@@ -77,7 +80,7 @@ View::composer(['authentication::user.edit', 'authentication::group.edit'], func
     $sentry = \App::make('sentry');
     $groupFilter = new GroupsFilter();
     $values_group = $fh->getSelectValuesGroups();
-    $groupsAssignable = $groupFilter->getAssignableGroups($sentry->getUser(),$values_group);
+    $groupsAssignable = $groupFilter->getAssignableGroups($sentry->getUser(), $values_group);
     $view->with('group_values', $groupsAssignable);
 });
 

@@ -3,9 +3,11 @@
 use Mockery as m;
 use Palmabit\Authentication\Repository\SentryUserRepository;
 
-trait CreateUserTrait {
+trait CreateUserTrait
+{
 
-    public function createSuperadmin(){
+    public function createSuperadmin()
+    {
         $per_page = 5;
         $config = m::mock('ConfigMock');
         $config->shouldReceive('get')
@@ -18,11 +20,12 @@ trait CreateUserTrait {
             "password" => "password",
             "activated" => 1
         ];
-       return $repo->create($input);
+        return $repo->create($input);
     }
 
-    public function createAdmin(){
-       $repo =  $this->repository();
+    public function createAdmin()
+    {
+        $repo = $this->repository();
         $input = [
             "email" => "user@user.com",
             "password" => "password",

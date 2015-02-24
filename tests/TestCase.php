@@ -4,34 +4,39 @@
  * Test TestCase
 
  */
-class TestCase extends \Orchestra\Testbench\TestCase {
+class TestCase extends \Orchestra\Testbench\TestCase
+{
 
-  protected $fake;
+    protected $fake;
 
-  public function setUp() {
-    parent::setUp();
+    public function setUp()
+    {
+        parent::setUp();
 
-    $this->fake = \Faker\Factory::create();
-    require_once __DIR__ . "/../src/routes.php";
-  }
+        $this->fake = \Faker\Factory::create();
+        require_once __DIR__ . "/../src/routes.php";
+    }
 
-  protected function getPackageProviders() {
-    return [
+    protected function getPackageProviders()
+    {
+        return [
             'Cartalyst\Sentry\SentryServiceProvider',
             'Palmabit\Authentication\AuthenticationServiceProvider',
-    ];
-  }
+        ];
+    }
 
-  protected function getPackageAliases() {
-    return [
+    protected function getPackageAliases()
+    {
+        return [
             'Sentry' => 'Cartalyst\Sentry\Facades\Laravel\Sentry',
-    ];
-  }
+        ];
+    }
 
-  /**
-   * @test
-   **/
-  public function dummy() {
-  }
+    /**
+     * @test
+     **/
+    public function dummy()
+    {
+    }
 }
  

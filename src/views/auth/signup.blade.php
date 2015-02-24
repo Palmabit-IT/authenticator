@@ -17,20 +17,16 @@
                 <fieldset>
                     <div class="form-group">
                         {{Form::email('email',null,['class'=>'form-control','placeholder'=>'E-mail','autofocus','autocomplete'=>'off'])}}
-                        {{--<span class="text-danger">{{$errors->first('email')}}</span>--}}
                     </div>
                     <div class="form-group">
                         <input class="form-control" placeholder="Password" name="password" type="password" value=""
                                autocomplete="off">
-                        {{--<span class="text-danger">{{$errors->first('password')}}</span>--}}
                     </div>
                     <div class="form-group">
                         {{Form::text('first_name',null,['class'=>'form-control','placeholder'=>'First name','autofocus','autocomplete'=>'off'])}}
-                        {{--<span class="text-danger">{{$errors->first('first_name')}}</span>--}}
                     </div>
                     <div class="form-group">
                         {{Form::text('last_name',null,['class'=>'form-control','placeholder'=>'Last name','autofocus','autocomplete'=>'off'])}}
-                        {{--<span class="text-danger">{{$errors->first('last_name')}}</span>--}}
                     </div>
                     @include('authentication::layouts.partials.select_lang')
                     <!--                              <div class="form-group">-->
@@ -47,7 +43,7 @@
             </div>
         </div>
         <p>
-            <a href="{{URL::to('user/login')}}" alt="Sei gi&agrave; iscritto?">Already registered? signin here</a><br>
+            <a href="{{URL::to('user/login')}}" alt="Already registered? signin here">Already registered? signin here</a><br>
             <a href="/">Go to website</a>
         </p>
     </div>

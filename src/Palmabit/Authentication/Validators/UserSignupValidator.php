@@ -3,13 +3,15 @@
 use Palmabit\Library\Validators\OverrideConnectionValidator;
 use Event;
 use L;
+
 class UserSignupValidator extends OverrideConnectionValidator
 {
     public function __construct()
     {
-        Event::listen('validating.withvalidator', function($validator)
-        {
-            $validator->addReplacer("unique", function(){return L::t('Email already exists.');});
+        Event::listen('validating.withvalidator', function ($validator) {
+            $validator->addReplacer("unique", function () {
+                return L::t('Email already exists.');
+            });
         });
     }
 

@@ -4,13 +4,12 @@ namespace Palmabit\Authentication\Repository;
 use Cartalyst\Sentry\Groups\GroupNotFoundException;
 use Cartalyst\Sentry\Users\UserExistsException as CartaUserExists;
 use Illuminate\Support\Facades\Config;
-use Palmabit\Authentication\Exceptions\ProfileNotFoundException;
+use Palmabit\Authentication\Exceptions\PermissionException;
 use Palmabit\Authentication\Repository\Interfaces\UserRepositoryInterface;
 use Palmabit\Library\Repository\EloquentBaseRepository;
 use Palmabit\Authentication\Exceptions\UserNotFoundException as NotFoundException;
 use Palmabit\Authentication\Exceptions\UserExistsException as UserExistsException;
 use Cartalyst\Sentry\Users\UserNotFoundException;
-use Palmabit\Library\Exceptions\PalmabitExceptionsInterface;
 use Palmabit\Authentication\Models\User;
 use Palmabit\Authentication\Models\Group;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -336,14 +335,19 @@ class SentryUserRepository extends EloquentBaseRepository implements UserReposit
         }
     }
 
+    /**
+     * @param $loggedUser
+     * @param $userToEditId
+     * @throws \Palmabit\Authentication\Exceptions\PermissionException
+     */
     public function hasPermissionToEditUser($loggedUser, $userToEditId)
     {
         $exludedGroup = Config::get('authentication::no_access_group');
-        $userToEdit = User::find($userToEditId);
+        $userToEdit = User::findOrFail($userToEditId);
         foreach ($loggedUser->getGroups() as $groupsAssociatedUser) {
             $excludedGroups = $exludedGroup[$groupsAssociatedUser->name];
             if ($this->checkUserGroups($userToEdit, $excludedGroups)) {
-                throw new ProfileNotFoundException;
+                throw new PermissionException;
             }
         }
     }
@@ -394,7 +398,7 @@ class SentryUserRepository extends EloquentBaseRepository implements UserReposit
      */
     public function permissionToEditUsers($users, $excludedGroups)
     {
-        foreach ($users as $index=>$user) {
+        foreach ($users as $index => $user) {
             $user = User::find($user->id);
             if ($this->checkUserGroups($user, $excludedGroups)) {
                 $user->permissionToEdit = false;

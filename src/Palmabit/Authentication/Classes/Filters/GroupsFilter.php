@@ -22,13 +22,13 @@ class GroupsFilter implements GroupsFilterInterface
     }
 
 
-    public function getAssignableGroups($user,$listGroups)
+    public function getAssignableGroups($user, $listGroups)
     {
         $userGroups = $user->getGroups();
         $groups = Config::get('authentication::no_access_group');
         foreach ($userGroups as $userGroup) {
             $listGroupsToExclude = $groups[$userGroup->name];
-            $listAssignaleGroups = array_diff($listGroups,$listGroupsToExclude);
+            $listAssignaleGroups = array_diff($listGroups, $listGroupsToExclude);
             return $listAssignaleGroups;
         }
     }

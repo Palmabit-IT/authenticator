@@ -22,11 +22,11 @@ Admin area: new group
 @endif
 <div class="row">
     <div class="col-md-12">
-    @if($group->id)
-    <h3><i class="glyphicon glyphicon-list-alt"></i> Edit group</h3>
-    @else
-    <h3><i class="glyphicon glyphicon-list-alt"></i> New group</h3>
-    @endif
+        @if($group->id)
+        <h3><i class="glyphicon glyphicon-list-alt"></i> Edit group</h3>
+        @else
+        <h3><i class="glyphicon glyphicon-list-alt"></i> New group</h3>
+        @endif
 
         {{-- group base form --}}
         {{Form::model($group, [ 'url' =>
@@ -49,27 +49,28 @@ Admin area: new group
 <div class="row margin-top-20">
     @if($group->id)
     <div class="col-md-12">
-    <h3><span class="glyphicon glyphicon-lock"></span> Permissions Group</h3>
+        <h3><span class="glyphicon glyphicon-lock"></span> Permissions Group</h3>
 
         {{-- add permission --}}
-<div class="form-select">
-        {{Form::open(["route" => "groups.edit.permission","role"=>"form"])}}
-        <div class="form-group">
-            {{Form::label('permissions', 'Add permission:', ["class" => "control-label"])}}<br/>
-            {{Form::select('permissions', $permission_values, '', ["class"=>"form-control permission-select"])}}
-            <span class="text-danger">{{$errors->first('permission')}}</span>
-            {{Form::hidden('id', $group->id)}}
-            {{-- add permission operation --}}
-            {{Form::hidden('operation', 1)}}
+        <div class="form-select">
+            {{Form::open(["route" => "groups.edit.permission","role"=>"form"])}}
+            <div class="form-group">
+                {{Form::label('permissions', 'Add permission:', ["class" => "control-label"])}}<br/>
+                {{Form::select('permissions', $permission_values, '', ["class"=>"form-control permission-select"])}}
+                <span class="text-danger">{{$errors->first('permission')}}</span>
+                {{Form::hidden('id', $group->id)}}
+                {{-- add permission operation --}}
+                {{Form::hidden('operation', 1)}}
+            </div>
+            <div class="form-group">
+                {{Form::submit('Aggiungi', ["class" => " pull-right btn btn-primary margin-top-10", ($group->exists) ?
+                "" : "disabled"])}}
+                @if(! $group->exists)
+                <h5 style="color:gray">In order to associate permission you need to create the group first.</h5>
+                @endif
+            </div>
+            {{Form::close()}}
         </div>
-        <div class="form-group">
-            {{Form::submit('Aggiungi', ["class" => " pull-right btn btn-primary margin-top-10", ($group->exists) ? "" : "disabled"])}}
-            @if(! $group->exists)
-            <h5 style="color:gray">In order to associate permission you need to create the group first.</h5>
-            @endif
-        </div>
-        {{Form::close()}}
-    </div>
         {{-- group permission form --}}
         {{-- permission lists --}}
         @include('authentication::group.perm-list')

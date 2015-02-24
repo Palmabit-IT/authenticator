@@ -146,9 +146,9 @@ class SentryUserRepositoryTest extends DbTestCase
 
     /**
      * @test
-     * @expectedException Palmabit\Authentication\Exceptions\ProfileNotFoundException
+     * @expectedException Palmabit\Authentication\Exceptions\PermissionException
      */
-    public function permissionToEditOtherUserTest()
+    public function permissionToEditUserTest()
     {
         $user = $this->createAdmin();
         $adminGroup = $this->createAdminGroup();
@@ -182,10 +182,9 @@ class SentryUserRepositoryTest extends DbTestCase
         $execute = $sentryUserRepository->inGroupExlude($user, $exclude);
         $usersExclude = $sentryUserRepository->excludeUserGroup($allUsers, $execute, $exclude['exclude_type']);
         $users = $sentryUserRepository->paginate($usersExclude);
-
-        $users = $sentryUserRepository->checkEditablePermission($users,$user);
-
-        dd($users[0]);
+        $users = $sentryUserRepository->checkEditablePermission($users, $user);
+        $this->assertEquals('user@user.com',$users[0]->email);
+        $this->assertTrue($users[0]->permissionToEdit);
 
     }
 }

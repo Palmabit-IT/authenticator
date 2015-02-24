@@ -9,7 +9,7 @@
         <span class="clearfix"></span>
     </li>
     @endforeach
-@else
+    @else
     <li class="list-group-item">No permission associated.</li>
 </ul>
 @endif
