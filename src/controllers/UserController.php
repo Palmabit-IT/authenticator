@@ -70,9 +70,8 @@ class UserController extends \BaseController
         $exclude = Config::get('authentication::exclude_user_type');
         $allUsers = $this->r->all(Input::all());
         $execute = $this->r->inGroupExlude($this->sentry->getUser(), $exclude);
-        $usersExclude = $this->r->excludeUserGroup($allUsers, false, $exclude['exclude_type']);
+        $usersExclude = $this->r->excludeUserGroup($allUsers, $execute, $exclude['exclude_type']);
         $users = $this->r->paginate($usersExclude);
-        $users = $this->r->ifExludedAddLoggedUser($users,$this->sentry->getUser());
         $users = $this->r->checkEditablePermission($users, $this->sentry->getUser());
         return View::make('authentication::user.list')->with(["users" => $users]);
     }
@@ -80,15 +79,19 @@ class UserController extends \BaseController
     public function editUser()
     {
         $id = Input::get('id');
-        try {
-            $user = $this->r->find($id);
-        } catch (PalmabitExceptionsInterface $e) {
-            $user = new User;
+        if ($this->sentryAuthenticationHelper->checkAccessPage($id)) {
+            try {
+                $user = $this->r->find($id);
+            } catch (PalmabitExceptionsInterface $e) {
+                $user = new User;
+            }
+
+            return View::make('authentication::user.edit')->with(["user" => $user]);
+        } else {
+            return Redirect::action('Palmabit\Authentication\Controllers\UserController@getList')
+                ->withErrors(new MessageBag(['Non puoi accedere all\'area richiesta']));
         }
-
-        return View::make('authentication::user.edit')->with(["user" => $user]);
     }
-
 
     public function postEditUser()
     {

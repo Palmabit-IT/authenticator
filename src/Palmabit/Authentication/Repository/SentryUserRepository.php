@@ -276,7 +276,6 @@ class SentryUserRepository extends EloquentBaseRepository implements UserReposit
 
     public function excludeUserGroup($q, $toExclude = false, $groupsToExclude = [])
     {
-        $emailLoggedUser = $this->sentry->getUser()->email;
         if ($toExclude) {
             $q = $q->join('users_groups', 'users.id', '=', 'users_groups.user_id')
                 ->join('groups', 'users_groups.group_id', '=', 'groups.id');
@@ -422,19 +421,12 @@ class SentryUserRepository extends EloquentBaseRepository implements UserReposit
         return false;
     }
 
-    public function ifExludedAddLoggedUser($users, $loggedUser)
+
+    public function getLoggedUserFromDatabase()
     {
-        $existLoggedUser = false;
-        dd($users->getItems());
-        foreach($users as $user){
-            if($user->email == $loggedUser->email){
-                $existLoggedUser = true;
-            }
-        }
-        if(!$existLoggedUser){
-            array_push($users,$loggedUser);
-        }
-        return $users;
+        $loggedUser = $this->sentry->getUser();
+        $user = DB::table('users')->where('email','=',$loggedUser->email);
+        return $user;
     }
 
 }
