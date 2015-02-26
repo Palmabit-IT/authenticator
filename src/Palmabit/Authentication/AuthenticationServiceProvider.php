@@ -58,7 +58,6 @@ class AuthenticationServiceProvider extends ServiceProvider
         $this->setupConnection();
         $this->overrideValidationConnection();
         $this->overwriteSentryConfig();
-        $this->overwriteWayFormConfig();
         $this->registerCommands();
     }
 
@@ -76,11 +75,6 @@ class AuthenticationServiceProvider extends ServiceProvider
     protected function overwriteSentryConfig()
     {
         $this->app['config']->getLoader()->addNamespace('cartalyst/sentry', __DIR__ . '/../../config/sentry');
-    }
-
-    protected function overwriteWayFormConfig()
-    {
-        $this->app['config']->getLoader()->addNamespace('form', __DIR__ . '/../../config/way-form');
     }
 
     protected function bindMailer()
