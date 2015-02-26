@@ -39,7 +39,7 @@ class AuthenticationServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->package('palmabit/authenticator');
+        $this->package('palmabit/authentication');
 
         $this->bindMailer();
         $this->bindAuthenticator();
