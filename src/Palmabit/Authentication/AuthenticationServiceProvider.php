@@ -124,7 +124,6 @@ class AuthenticationServiceProvider extends ServiceProvider
     {
         $this->app->register('Cartalyst\Sentry\SentryServiceProvider');
         $this->app->register('Palmabit\Multilanguage\MultilanguageServiceProvider');
-        $this->app->register('Way\Form\FormServiceProvider');
     }
 
     protected function registerAliases()
