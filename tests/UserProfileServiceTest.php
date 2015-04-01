@@ -37,21 +37,7 @@ class UserProfileServiceTest extends DbTestCase
         $service->processForm(['user_id'=>$user->id],$user);
     }
 
-    /**
-     * @test
-     * @expectedException \Illuminate\Database\Eloquent\ModelNotFoundException
-     **/
-    public function it_throw_exception_if_cannot_process()
-    {
-        $mock_form_profile = m::mock('Palmabit\Library\Form\FormModel');
-//        $mock_form_profile->shouldReceive('process')->once()->andThrow(new ValidationException);
-//        $mock_form_profile->shouldReceive('getErrors')->once()->andReturn(["error"]);
 
-        $service = new UserProfileServiceNoPermStub(new VoidValidator(), $mock_form_profile);
-        $user = $this->createAdmin();
-        $service->processForm([],$user);
-        $this->assertEquals("error", $service->getErrors());
-    }
 
     /**
      * @test
