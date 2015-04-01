@@ -1,56 +1,57 @@
 {
-    "name": "palmabit/authentication",
-    "description": "",
-    "license": "mit",
-    "authors": [
-        {
-            "name": "giuseppe aremare",
-            "email": "g.aremare@palmabit.com",
-            "homepage": "http://www.palmabit.com"
-        },
-        {
-            "name": "francesco falanga",
-            "email": "f.falanga@palmabit.com",
-            "homepage": "http://www.palmabit.com"
-        },
-        {
-            "name": "alessandro sarzina",
-            "email": "a.sarzina@palmabit.com",
-            "homepage": "http://www.palmabit.com"
-        }
-    ],
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "git://github.com/orchestral/phpseclib.git"
-        }
-    ],
-    "require": {
-        "php": ">=5.4.0",
-        "illuminate/support": ">=4.2.0",
-        "palmabit/library": "dev-develop",
-        "cartalyst/sentry": "2.1.*",
-        "palmabit/multilanguage": "dev-develop"
+  "name": "palmabit/authentication",
+  "description": "",
+  "license": "mit",
+  "authors": [
+    {
+      "name": "giuseppe aremare",
+      "email": "g.aremare@palmabit.com",
+      "homepage": "http://www.palmabit.com"
     },
-    "require-dev": {
-        "mockery/mockery": "0.9.0",
-        "orchestra/testbench": "2.2.*",
-        "doctrine/dbal": "v2.4.2",
-        "fzaninotto/faker": "1.4.*"
+    {
+      "name": "francesco falanga",
+      "email": "f.falanga@palmabit.com",
+      "homepage": "http://www.palmabit.com"
     },
-    "autoload": {
-        "psr-0": {
-            "Palmabit\\Authentication": "src/"
-        },
-        "psr-4": {
-            "Palmabit\\Authentication\\Tests\\": "tests/"
-        },
-        "classmap": [
-            "src/controllers",
-            "src/commands",
-            "src/seeds"
-        ]
+    {
+      "name": "alessandro sarzina",
+      "email": "a.sarzina@palmabit.com",
+      "homepage": "http://www.palmabit.com"
+    }
+  ],
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "git://github.com/orchestral/phpseclib.git"
+    }
+  ],
+  "require": {
+    "php": ">=5.4.0",
+    "illuminate/support": ">=4.2.0",
+    "palmabit/library": "dev-develop",
+    "cartalyst/sentry": "2.1.*",
+    "palmabit/multilanguage": "dev-develop"
+  },
+  "require-dev": {
+    "mockery/mockery": "0.9.0",
+    "orchestra/testbench": "2.2.*",
+    "doctrine/dbal": "v2.4.2",
+    "fzaninotto/faker": "1.4.*",
+    "way/generators": "~2.0"
+  },
+  "autoload": {
+    "psr-0": {
+      "Palmabit\\Authentication": "src/"
     },
-    "minimum-stability": "dev",
-    "prefer-stable": true
+    "psr-4": {
+      "Palmabit\\Authentication\\Tests\\": "tests/"
+    },
+    "classmap": [
+      "src/controllers",
+      "src/commands",
+      "src/seeds"
+    ]
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
 }

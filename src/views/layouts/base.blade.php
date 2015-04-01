@@ -8,7 +8,7 @@
     <meta name="keywords" content="">
     <meta name="author" content="">
 
-    {{ HTML::style('packages/palmabit/authenticator/css/bootstrap.min.css') }}
+    {{HTML::style('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css')}}
     {{ HTML::style('packages/palmabit/authenticator/css/sticky-footer.css') }}
     {{ HTML::style('packages/palmabit/authenticator/css/style.css') }}
 
@@ -45,8 +45,8 @@
 {{-- Start footer scripts --}}
 @yield('before_footer_scripts')
 
-{{ HTML::script('packages/palmabit/authenticator/js/jquery-1.10.2.min.js') }}
-{{ HTML::script('packages/palmabit/authenticator/js/bootstrap.min.js') }}
+{{ HTML::script('http://code.jquery.com/jquery-1.11.0.js') }}
+{{ HTML::script('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js') }}
 
 @yield('footer_scripts')
 {{-- End footer scripts --}}

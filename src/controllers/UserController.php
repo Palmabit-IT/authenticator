@@ -97,14 +97,12 @@ class UserController extends \BaseController
 	public function postEditUser()
 	{
 		$id = Input::get('id');
-		if (empty($id)) {
 			try {
 				$this->r->hasPermissionToEditUser($this->sentry->getUser(), $id);
 			} catch (PermissionException $e) {
 				return Redirect::route("users.edit", $id ? ["id" => $id] : [])->withInput()
 					->withErrors(new MessageBag(["permissionNotAllowed" => "Non hai i permessi per apportare modifiche a questo utente"]));
 			}
-		}
 		try {
 			$obj = $this->f->process(Input::all());
 		} catch (PalmabitExceptionsInterface $e) {

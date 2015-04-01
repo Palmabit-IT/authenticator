@@ -343,7 +343,7 @@ class SentryUserRepository extends EloquentBaseRepository implements UserReposit
     public function hasPermissionToEditUser($loggedUser, $userToEditId)
     {
         $exludedGroup = Config::get('authentication::no_access_group');
-        $userToEdit = User::findOrFail($userToEditId);
+        $userToEdit = User::findOrNew($userToEditId);
         foreach ($loggedUser->getGroups() as $groupsAssociatedUser) {
             $excludedGroups = $exludedGroup[$groupsAssociatedUser->name];
             if ($this->checkUserGroups($userToEdit, $excludedGroups)) {
