@@ -11,9 +11,6 @@
     <br/>
     Sent you a registration request
     <br/>
-    @if(! empty($body['comments']) )
-    Comments : {{$body['comments']}}<br/>
-    @endif
     <a href="{{URL::action('Palmabit\Authentication\Controllers\UserController@editUser', [ 'id' => $body['id'] ] )}}"
        target="_blank">See user</a>
 </div>
