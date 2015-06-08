@@ -426,11 +426,9 @@ class SentryUserRepository extends EloquentBaseRepository implements UserReposit
 
 	public function checkAccessMyPage($loggedUser, $id)
 	{
-		if (!is_null($loggedUser)) {
 			if ($loggedUser->id == $id) {
 				return true;
 			}
-		}
 
 		return false;
 	}
