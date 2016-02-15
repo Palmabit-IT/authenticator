@@ -28,9 +28,9 @@
   "require": {
     "php": ">=5.4.0",
     "illuminate/support": ">=4.2.0",
-    "palmabit/library": "dev-develop",
+    "palmabit/library": "v1.1",
     "cartalyst/sentry": "2.1.*",
-    "palmabit/multilanguage": "dev-develop"
+    "palmabit/multilanguage": "v1.1"
   },
   "require-dev": {
     "mockery/mockery": "0.9.0",
